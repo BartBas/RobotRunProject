@@ -34,17 +34,18 @@ void bubbleSort(int arr[],int orderY[], int n) {
 
 
 
-void drive()
+void drive(int junctions)
 {
 	Junctions situatie;
 	motorControl('S');
 	int driving = 1;
+	int count = 0;
 	while(driving) {
 		situatie = lineType();
-		clear();
+		//clear();
 		switch (situatie) {
 			case Barcode: // end of parcour
-			motorControl('N');
+			//motorControl('N');
 			break;
 			
 			case Straight:
@@ -61,7 +62,14 @@ void drive()
 			case Straight_left_junction:
 			case Right_corner:
 			case Straight_right_junction:
-				driving = 0;
+				count++;
+				motorControl('S');
+				if(count == junctions)
+				{
+					motorControl('N');
+					driving = 0;
+				}
+				
 				break;
 			
 			
@@ -74,7 +82,7 @@ void drive()
 void waitForTurn()
 {
 	Junctions lijn;
-	delay(50);
+	delay(15);
 	while(lijn != Straight)
 	{
 		lijn  = lineType();
@@ -202,10 +210,9 @@ void moveX(int orderPos, piRobot *robot)
             junctions = robot->posX - orderPos;
         }
 
-        for(int i = 0; i < junctions; i++)
-        {
-			drive();
-        }
+        
+		drive(junctions);
+        
 
     }
 }
@@ -226,10 +233,8 @@ void moveY(int orderPos, piRobot *robot)
             junctions = robot->posY - orderPos;
         }
 
-        for(int i = 0; i < junctions; i++)
-        {
-            drive();
-        }
+            drive(junctions);
+        
 
     }
 }
@@ -256,13 +261,17 @@ void warehouse(void)
 	
     for(int locaties = 0; locaties<arrayGrootte;locaties++)
     {
+		float completed = locaties;
+		float total = arrayGrootte;
+		
 		
         moveX(orderX[locaties], &robot);
 		robot.posX = orderX[locaties];
         moveY(orderY[locaties], &robot);
 		robot.posY = orderY[locaties];
         delay(1000);//wait 1 second
-        updateDisplay(((locaties/arrayGrootte)*100),batteryPercentage(),logicsBot);
+		
+        updateDisplay(((completed/total)*100),batteryPercentage(),logicsBot);
     }
     moveY(0, &robot);
     moveX(0, &robot);
