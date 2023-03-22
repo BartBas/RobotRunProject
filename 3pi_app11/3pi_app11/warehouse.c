@@ -6,11 +6,12 @@
  */ 
 #include "warehouse.h"
 #include "display.h"
-#include <pololu/3pi.h>
-#include <avr/pgmspace.h>
+#include "movementManagement.h"
 //#include "motor.h"
 //#include "sensor.h"
-//#include <pololu/3pi.h>
+
+#include <pololu/3pi.h>
+#include <avr/pgmspace.h>
 
 
 void swap(int *a, int *b) {
@@ -32,6 +33,51 @@ void bubbleSort(int arr[],int orderY[], int n) {
 }
 
 
+
+void drive()
+{
+	Junctions situatie;
+	while(1) {
+		situatie = direction();
+		
+		switch (situatie) {
+			case Barcode: // end of parcour
+			set_motors(0,0);
+			return route;
+			
+			case X_junction:
+			case Left_corner:
+			case T_junction:
+			case Straight_left_junction:
+			motorControl('L');
+			richting = 'L';
+			strncat(route, &richting, 1);
+			break;
+			
+			case Right_corner:
+			motorControl('R');
+			richting = 'L';
+			strncat(route, &richting, 1);
+			break;
+			
+			case Straight_right_junction:
+			richting = 'L';
+			strncat(route, &richting, 1);
+			case Straight:
+			motorControl('S');
+			break;
+			
+			case Line_end:
+			motorControl('T');
+			richting = 'L';
+			strncat(route, &richting, 1);
+			break;
+		}
+		
+		//if  route[-2]
+	}
+}
+
 void turnRobot(char direction, piRobot *myRobot)
 {
     int changing = 1;
@@ -52,7 +98,7 @@ void turnRobot(char direction, piRobot *myRobot)
                 }
                 else if(direction == 'S')
                 {
-                    motorControl('B');
+                    motorControl('T');
                     myRobot->direction = 'S';
                 }
                 break;
@@ -69,7 +115,7 @@ void turnRobot(char direction, piRobot *myRobot)
                 }
                 else if(direction == 'S')
                 {
-                    motorControl('B');
+                    motorControl('T');
                     myRobot->direction = 'S';
                 }
                 break;
@@ -86,7 +132,7 @@ void turnRobot(char direction, piRobot *myRobot)
                 }
                 else if(direction == 'N')
                 {
-                    motorControl('B');
+                    motorControl('T');
                     myRobot->direction = 'N';
                 }
                 break;
@@ -103,7 +149,7 @@ void turnRobot(char direction, piRobot *myRobot)
                 }
                 else if(direction == 'E')
                 {
-                    motorControl('B');
+                    motorControl('T');
                     myRobot->direction = 'E';
                 }
                 break;
@@ -136,7 +182,18 @@ void moveX(int orderPos)
 
         for(int i = 0; i < junctions; i++)
         {
-            motorControl('S');
+			int driving = 1;
+			while(driving)
+			{
+				motorControl('S');
+				Junctions situation;
+				situation = direction();
+				if(situation != Straight)
+				{
+					driving = 0;
+				}
+			}
+            
         }
 
     }
@@ -160,7 +217,17 @@ void moveY(int orderPos)
 
         for(int i = 0; i < junctions; i++)
         {
-            motorControl('S');
+            int driving = 1;
+            while(driving)
+            {
+	            motorControl('S');
+	            Junctions situation;
+	            situation = direction();
+	            if(situation != Straight)
+	            {
+		            driving = 0;
+				}
+            }
         }
 
     }
@@ -173,7 +240,6 @@ void warehouse(void)
  robot.direction = 'W';
  robot.posX = 0;
  robot.posY = 0;
-   motorControl('S');
 //int orderX[] = getWixel("posX");
 //int orderY[] = getWixel("posY");
 
@@ -182,6 +248,9 @@ void warehouse(void)
 
     int arrayGrootte = sizeof(orderX) / sizeof(orderX[0]);
     bubbleSort(orderX, orderY, arrayGrootte);
+	
+	
+	 //motorControl('S');
 
     for(int locaties = 0; locaties<arrayGrootte;locaties++)
     {
