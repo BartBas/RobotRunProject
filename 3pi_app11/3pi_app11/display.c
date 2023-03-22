@@ -12,7 +12,7 @@ int batteryPercentage()//Should this function be in main or in display.c or some
 {
 	
 	int milliVolts = read_battery_millivolts();
-	int batteryPercent = milliVolts/50;
+	int batteryPercent = 0.000000000632*((milliVolts)*(milliVolts)*(milliVolts));
 	return batteryPercent;
 }
 
@@ -20,7 +20,7 @@ void updateDisplay(int orderPercent, int batteryPercent, robotStates currentStat
 {
 	clear();
 	lcd_goto_xy(0,0);
-	print("Task:");
+	print("Job:");
 	print_long(orderPercent);
 	print("%");
 	

@@ -271,7 +271,7 @@ void warehouse(void)
 		robot.posY = orderY[locaties];
         delay(1000);//wait 1 second
 		
-        updateDisplay(((completed/total)*100),batteryPercentage(),logicsBot);
+        updateDisplay((((completed+1)/total)*100),batteryPercentage(),logicsBot);
     }
     moveY(0, &robot);
     moveX(0, &robot);
