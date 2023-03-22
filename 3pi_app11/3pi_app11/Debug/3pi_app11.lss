@@ -258,7 +258,7 @@ int main()
 
 void inch(){
 	set_motors(50,50);
-	delay(150);
+	delay(200);
 	set_motors(0,0);
      178:	cf 93       	push	r28
      17a:	df 93       	push	r29
