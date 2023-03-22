@@ -168,7 +168,7 @@
     <Compile Include="parcour.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Parcour.h">
+    <Compile Include="parcour.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="warehouse.c">

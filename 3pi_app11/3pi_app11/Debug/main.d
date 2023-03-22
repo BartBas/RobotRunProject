@@ -1,5 +1,5 @@
 main.d main.o: .././main.c .././warehouse.h .././display.h \
- .././movementManagement.h .././Parcour.h \
+ .././movementManagement.h .././parcour.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\3pi.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\Pololu3pi/Pololu3pi.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\orangutananalog\orangutananalog.h \
@@ -48,7 +48,7 @@ main.d main.o: .././main.c .././warehouse.h .././display.h \
 
 .././movementManagement.h:
 
-.././Parcour.h:
+.././parcour.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\3pi.h:
 

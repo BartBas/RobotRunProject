@@ -5,7 +5,7 @@
  *  Author: joren
  */ 
 
-#include "Parcour.h"
+#include "parcour.h"
 #include "movementManagement.h"
 
 #include <pololu/3pi.h>

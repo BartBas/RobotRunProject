@@ -8,7 +8,7 @@
 #include "warehouse.h"
 #include "display.h"
 #include "movementManagement.h"
-#include "Parcour.h"
+#include "parcour.h"
 
 #include <pololu/3pi.h>
 #include <avr/pgmspace.h>
