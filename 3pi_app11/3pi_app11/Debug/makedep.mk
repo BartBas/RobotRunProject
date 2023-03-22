@@ -8,5 +8,7 @@ main.c
 
 movementManagement.c
 
+parcour.c
+
 warehouse.c
 
