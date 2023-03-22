@@ -1,4 +1,4 @@
-main.d main.o: .././main.c .././warehouse.h .././display.h \
+movementManagement.d movementManagement.o: .././movementManagement.c \
  .././movementManagement.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\3pi.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\Pololu3pi/Pololu3pi.h \
@@ -41,10 +41,6 @@ main.d main.o: .././main.c .././warehouse.h .././display.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\orangutantime\orangutantime.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\orangutanspimaster\orangutanspimaster.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\workaround.h
-
-.././warehouse.h:
-
-.././display.h:
 
 .././movementManagement.h:
 

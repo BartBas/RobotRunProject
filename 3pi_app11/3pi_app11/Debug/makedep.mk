@@ -6,5 +6,7 @@ display.c
 
 main.c
 
+movementManagement.c
+
 warehouse.c
 
