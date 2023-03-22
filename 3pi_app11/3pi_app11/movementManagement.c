@@ -58,7 +58,7 @@ void initialize()
 
 void inch(){
 	set_motors(50,50);
-	delay(150);
+	delay(200);
 	set_motors(0,0);
 }
 
