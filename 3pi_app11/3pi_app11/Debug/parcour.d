@@ -1,5 +1,4 @@
-parcour.d parcour.o: .././parcour.c .././parcour.h \
- .././movementManagement.h \
+parcour.d parcour.o: .././parcour.c .././movementManagement.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\3pi.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\Pololu3pi/Pololu3pi.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\orangutananalog\orangutananalog.h \
@@ -41,8 +40,6 @@ parcour.d parcour.o: .././parcour.c .././parcour.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\orangutantime\orangutantime.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\orangutanspimaster\orangutanspimaster.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\workaround.h
-
-.././parcour.h:
 
 .././movementManagement.h:
 

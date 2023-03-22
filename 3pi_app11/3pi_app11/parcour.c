@@ -11,6 +11,23 @@
 #include <avr/pgmspace.h>
 
 char route[20];
+/*
+typedef enum {					// enum for the corners and junctions
+	Straight,					// ?
+	Line_end,					//
+	Barcode,					// ?
+	
+	Left_corner,				// ?
+	Right_corner,				// ?
+	
+	Straight_right_junction,    // ?
+	Straight_left_junction,		// ?
+	T_junction,					// ?
+	
+	X_junction					// ?
+	
+} Junctions;
+*/
 
 Junctions situatie = Straight;
 
@@ -27,24 +44,24 @@ void parcour(void) {
 			case Left_corner:
 			case T_junction:
 			case Straight_left_junction:
-			motorcontrol('L');
-			route += 'L';
+			motorControl('L');
+			//route += 'L';
 			break;
 			
 			case Right_corner:
-			motorcontrol('R');
-			route += 'R';
+			motorControl('R');
+			//route += 'R';
 			break;
 			
 			case Straight_right_junction:
-			route += 'S';
+			//route += 'S';
 			case Straight:
-			motorcontrol('S');
+			motorControl('S');
 			break;
 			
 			case Line_end:
-			motorcontrol('T');
-			route += 'T';
+			motorControl('T');
+			//route += 'T';
 			break;
 		}
 		
