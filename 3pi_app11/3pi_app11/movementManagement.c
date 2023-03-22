@@ -87,6 +87,7 @@ char lineType(){																																	// function that returns the ty
 		
 		
 		else if(sensors[2] <=200){																													// check if the line ends
+			set_motors(0,0);	
 			return Line_end;
 		}
 
@@ -174,8 +175,10 @@ void motorControl(char x){													// function that controlls the motor move
 		
 }
 
+
 void manualControl(char X){
 int speed = 0;
+
 	if(X == 'W'){
 		set_motors(speed,speed);
 		speed++;
