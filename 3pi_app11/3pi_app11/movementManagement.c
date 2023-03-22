@@ -62,7 +62,7 @@ void inch(){
 	set_motors(0,0);
 }
 
-char direction(){																											// function that returns the type of junction it detects
+char lineType(){																											// function that returns the type of junction it detects
 	while(1){																												// >= 500 = black line		<=500 = white
 		read_line(sensors,IR_EMITTERS_ON);
 		

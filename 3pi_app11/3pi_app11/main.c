@@ -18,7 +18,8 @@ int main()
 {
 	pololu_3pi_init(2000);
 	initialize();
-	char parecour[20];
+	/*char parecour[20];
 	parcour(parecour);
-	print(parecour);
+	print(parecour);*/
+	warehouse();
 }

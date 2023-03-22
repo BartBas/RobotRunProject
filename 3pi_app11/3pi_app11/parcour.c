@@ -18,7 +18,7 @@ Junctions situatie = Straight;
 
 char parcour(char *route) {
 	while(1) {
-		situatie = direction();
+		situatie = lineType();
 		
 		switch (situatie) {
 			case Barcode: // end of parcour

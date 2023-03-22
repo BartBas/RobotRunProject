@@ -37,8 +37,9 @@ void bubbleSort(int arr[],int orderY[], int n) {
 void drive()
 {
 	Junctions situatie;
+	motorControl('S');
 	while(1) {
-		situatie = direction();
+		situatie = lineType();
 		
 		switch (situatie) {
 			case Barcode: // end of parcour
@@ -71,7 +72,8 @@ void drive()
 void turnRobot(char direction, piRobot *myRobot)
 {
     int changing = 1;
-    while(changing)
+	Junctions lijn;
+    while(changing==1)
     {
         switch(myRobot->direction)
         {
@@ -140,6 +142,11 @@ void turnRobot(char direction, piRobot *myRobot)
                 else if(direction == 'E')
                 {
                     motorControl('T');
+					
+					while(lijn != Straight)
+					{
+						lijn  = lineType();	
+					}
                     myRobot->direction = 'E';
                 }
                 break;
@@ -219,8 +226,9 @@ void warehouse(void)
     bubbleSort(orderX, orderY, arrayGrootte);
 	
 	
-	 motorControl('S');
-
+	 //motorControl('S');
+	//drive();
+	turnRobot('E', &robot);
     for(int locaties = 0; locaties<arrayGrootte;locaties++)
     {
         moveX(orderX[locaties]);
