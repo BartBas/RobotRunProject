@@ -139,10 +139,10 @@ void motorControl(char x){													// function that controlls the motor move
 	else if(x == 'S'){														//drive straight and adjusts the robot so it follows the line
 		set_motors(50,50);
 		
-		if (sensors[3] >= 600 && sensors[4] <= 300 )
-			set_motors(120,40);
-		if (sensors[1] >= 600 && sensors[0] <= 300 )
-			set_motors(40,120);
+		if (sensors[3] >= 500 && sensors[4] <= 300 )
+			set_motors(50,30);
+		if (sensors[1] >= 500 && sensors[0] <= 300 )
+			set_motors(30,50);
 	}
 	
 	
