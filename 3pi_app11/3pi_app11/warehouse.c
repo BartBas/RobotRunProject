@@ -42,39 +42,29 @@ void drive()
 		
 		switch (situatie) {
 			case Barcode: // end of parcour
-			set_motors(0,0);
-			return route;
+			motorControl('N');
+			break;
+			
+			case Straight:
+			motorControl('S');
+			break;
 			
 			case X_junction:
 			case Left_corner:
 			case T_junction:
 			case Straight_left_junction:
-			motorControl('L');
-			richting = 'L';
-			strncat(route, &richting, 1);
-			break;
-			
 			case Right_corner:
-			motorControl('R');
-			richting = 'L';
-			strncat(route, &richting, 1);
+			case Straight_right_junction:
+			motorControl('N');
+			
 			break;
 			
-			case Straight_right_junction:
-			richting = 'L';
-			strncat(route, &richting, 1);
-			case Straight:
-			motorControl('S');
-			break;
 			
 			case Line_end:
 			motorControl('T');
-			richting = 'L';
-			strncat(route, &richting, 1);
 			break;
 		}
 		
-		//if  route[-2]
 	}
 }
 
@@ -182,18 +172,7 @@ void moveX(int orderPos)
 
         for(int i = 0; i < junctions; i++)
         {
-			int driving = 1;
-			while(driving)
-			{
-				motorControl('S');
-				Junctions situation;
-				situation = direction();
-				if(situation != Straight)
-				{
-					driving = 0;
-				}
-			}
-            
+			drive();
         }
 
     }
@@ -217,17 +196,7 @@ void moveY(int orderPos)
 
         for(int i = 0; i < junctions; i++)
         {
-            int driving = 1;
-            while(driving)
-            {
-	            motorControl('S');
-	            Junctions situation;
-	            situation = direction();
-	            if(situation != Straight)
-	            {
-		            driving = 0;
-				}
-            }
+            drive();
         }
 
     }
