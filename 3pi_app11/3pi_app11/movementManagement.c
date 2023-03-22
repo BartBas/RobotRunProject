@@ -148,10 +148,10 @@ void motorControl(char x){
 	else if(x == 'S'){									//drive straight and corrects the adjusment of the robot if it aint straight
 		set_motors(50,50);
 		
-		if (sensors[3] >=800)
-		set_motors(100,40);
-		if (sensors[1] >=800)
-		set_motors(40,100);
+		if (sensors[3] >= 600 && sensors[4] <= 300 )
+			set_motors(120,50);
+		if (sensors[1] >= 600 && sensors[4] <= 300 )
+			set_motors(50,120);
 	}
 	
 	else if(x == 'B'){									// reverse
