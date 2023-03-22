@@ -86,8 +86,7 @@ char lineType(){																																	// function that returns the ty
 		}
 		
 		
-		else if(sensors[2] <=200){																													// check if the line ends
-			set_motors(0,0);	
+		else if(sensors[2] <=200){																													// check if the line ends	
 			return Line_end;
 		}
 
