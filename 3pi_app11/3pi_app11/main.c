@@ -16,8 +16,12 @@
 
 int main()
 {
+	clear();
 	pololu_3pi_init(2000);
 	initialize();
+	
+	
+	
 	/*char parecour[20];
 	parcour(parecour);
 	print(parecour);*/
