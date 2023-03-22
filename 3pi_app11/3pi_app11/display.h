@@ -17,7 +17,7 @@ typedef enum
 }robotStates;
 
 
-int batteryPercentage();
+float batteryPercentage();
 void updateDisplay(int orderPercent, int batteryPercent, robotStates currentState);
 void errorDisplay();
 
