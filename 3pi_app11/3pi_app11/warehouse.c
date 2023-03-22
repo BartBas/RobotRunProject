@@ -219,7 +219,7 @@ void warehouse(void)
     bubbleSort(orderX, orderY, arrayGrootte);
 	
 	
-	 //motorControl('S');
+	 motorControl('S');
 
     for(int locaties = 0; locaties<arrayGrootte;locaties++)
     {
