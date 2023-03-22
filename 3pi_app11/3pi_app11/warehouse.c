@@ -22,8 +22,9 @@ void bubbleSort(int arr[],int orderY[], int n) {
             if (arr[j] > arr[j + 1]) {
                 swap(&arr[j], &arr[j + 1]);
                 swap(&orderY[j], &orderY[j + 1]);
+				
             }
-        }
+		}
     }
 }
 
