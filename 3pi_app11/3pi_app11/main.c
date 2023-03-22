@@ -16,7 +16,7 @@
 
 int main()
 {
-	pololu_3pi_init(2000);
 	initialize();
-	parcour();
+	//parcour();
+	warehouse();
 }

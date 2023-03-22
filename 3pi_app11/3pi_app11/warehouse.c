@@ -6,6 +6,8 @@
  */ 
 #include "warehouse.h"
 #include "display.h"
+#include <pololu/3pi.h>
+#include <avr/pgmspace.h>
 //#include "motor.h"
 //#include "sensor.h"
 //#include <pololu/3pi.h>
