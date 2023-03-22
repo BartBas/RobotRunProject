@@ -22,8 +22,8 @@ int main()
 	
 	
 	
-	/*char parecour[20];
+	char parecour[20];
 	parcour(parecour);
-	print(parecour);*/
-	warehouse();
+	print(parecour);
+	
 }
