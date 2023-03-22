@@ -11,9 +11,9 @@
 
 typedef struct
 {
-	int posX = 0;
-	int posY = 0;
-	char direction = 'W';
+	int posX;
+	int posY;
+	char direction;
 }piRobot;
 
 void warehouse(void);

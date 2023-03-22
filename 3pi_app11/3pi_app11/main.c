@@ -247,61 +247,46 @@ void motorcontrol(char x){
  
 
 
+char route[20];
 
 Junctions situatie = Straight;
 
 void parcour() {
 	while(1) {
 		situatie = direction();
-	
- 		switch (situatie) {
+		
+		switch (situatie) {
 			case Barcode: // end of parcour
-				clear();
-				lcd_goto_xy(0, 0);
-				print("bar code");
-				set_motors(0,0);
-				delay(1000);
-				break;
-				
+			set_motors(0,0);
+			return;
+			
 			case X_junction:
 			case Left_corner:
 			case T_junction:
 			case Straight_left_junction:
-				clear();
-				lcd_goto_xy(0, 0);
-				print("L");
-		 		motorcontrol('L');
-				clear();
-		 		break;
-					 
- 			case Right_corner:
-				clear();
-				lcd_goto_xy(0, 0);
-				print("R");
- 				motorcontrol('R');
-				clear();
-				break;
-				
-			case Straight_right_junction:
-			case Straight:
-				clear();
-				lcd_goto_xy(0, 0);
-				print("S");
-				motorcontrol('S');
-				clear();
-				break;
-				
-			case Line_end:
-				clear();
-				lcd_goto_xy(0, 0);
-				print("End");
-				motorcontrol('T');
-				clear();
-				break;
+			motorcontrol('L');
+			route += 'L';
+			break;
 			
- 		}
+			case Right_corner:
+			motorcontrol('R');
+			route += 'R';
+			break;
+			
+			case Straight_right_junction:
+			route += 'S';
+			case Straight:
+			motorcontrol('S');
+			break;
+			
+			case Line_end:
+			motorcontrol('T');
+			route += 'T';
+			break;
+		}
 	}
 }
+		
 
 
 int main()
