@@ -149,9 +149,9 @@ void motorControl(char x){
 		set_motors(50,50);
 		
 		if (sensors[3] >= 600 && sensors[4] <= 300 )
-			set_motors(120,50);
+			set_motors(120,40);
 		if (sensors[1] >= 600 && sensors[4] <= 300 )
-			set_motors(50,120);
+			set_motors(40,120);
 	}
 	
 	else if(x == 'B'){									// reverse

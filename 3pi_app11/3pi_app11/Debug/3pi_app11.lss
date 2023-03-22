@@ -527,8 +527,8 @@ void motorControl(char x){
      300:	8d 32       	cpi	r24, 0x2D	; 45
      302:	91 40       	sbci	r25, 0x01	; 1
      304:	30 f4       	brcc	.+12     	; 0x312 <motorControl+0xe4>
-			set_motors(120,50);
-     306:	62 e3       	ldi	r22, 0x32	; 50
+			set_motors(120,40);
+     306:	68 e2       	ldi	r22, 0x28	; 40
      308:	70 e0       	ldi	r23, 0x00	; 0
      30a:	88 e7       	ldi	r24, 0x78	; 120
      30c:	90 e0       	ldi	r25, 0x00	; 0
@@ -546,10 +546,10 @@ void motorControl(char x){
      32c:	91 40       	sbci	r25, 0x01	; 1
      32e:	08 f0       	brcs	.+2      	; 0x332 <motorControl+0x104>
      330:	3f c0       	rjmp	.+126    	; 0x3b0 <motorControl+0x182>
-			set_motors(50,120);
+			set_motors(40,120);
      332:	68 e7       	ldi	r22, 0x78	; 120
      334:	70 e0       	ldi	r23, 0x00	; 0
-     336:	82 e3       	ldi	r24, 0x32	; 50
+     336:	88 e2       	ldi	r24, 0x28	; 40
      338:	90 e0       	ldi	r25, 0x00	; 0
      33a:	0e 94 ab 09 	call	0x1356	; 0x1356 <set_motors>
      33e:	38 c0       	rjmp	.+112    	; 0x3b0 <motorControl+0x182>
