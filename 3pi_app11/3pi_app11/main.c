@@ -194,7 +194,7 @@ char direction(){																												// function that returns the type o
 }
 
 
-void motorcontrol(char x){
+void motorControl(char x){
 	read_line(sensors,IR_EMITTERS_ON);
 	
 	if(x == 'N')
@@ -270,7 +270,7 @@ void parcour() {
 				clear();
 				lcd_goto_xy(0, 0);
 				print("L");
-		 		motorcontrol('L');
+		 		motorControl('L');
 				clear();
 		 		break;
 					 
@@ -278,7 +278,7 @@ void parcour() {
 				clear();
 				lcd_goto_xy(0, 0);
 				print("R");
- 				motorcontrol('R');
+ 				motorControl('R');
 				clear();
 				break;
 				
@@ -287,7 +287,7 @@ void parcour() {
 				clear();
 				lcd_goto_xy(0, 0);
 				print("S");
-				motorcontrol('S');
+				motorControl('S');
 				clear();
 				break;
 				
@@ -295,7 +295,7 @@ void parcour() {
 				clear();
 				lcd_goto_xy(0, 0);
 				print("End");
-				motorcontrol('T');
+				motorControl('T');
 				clear();
 				break;
 			
