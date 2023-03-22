@@ -516,35 +516,35 @@ void motorControl(char x){
      2e4:	90 e0       	ldi	r25, 0x00	; 0
      2e6:	0e 94 f6 07 	call	0xfec	; 0xfec <set_motors>
 		
-		if (sensors[3] <=400  && sensors[4] >=400 )
+		if (sensors[3] >=400  && sensors[4] <=400 )
      2ea:	80 91 a1 01 	lds	r24, 0x01A1	; 0x8001a1 <sensors+0x6>
      2ee:	90 91 a2 01 	lds	r25, 0x01A2	; 0x8001a2 <sensors+0x7>
-     2f2:	81 39       	cpi	r24, 0x91	; 145
+     2f2:	80 39       	cpi	r24, 0x90	; 144
      2f4:	91 40       	sbci	r25, 0x01	; 1
-     2f6:	68 f4       	brcc	.+26     	; 0x312 <motorControl+0xe4>
+     2f6:	68 f0       	brcs	.+26     	; 0x312 <motorControl+0xe4>
      2f8:	80 91 a3 01 	lds	r24, 0x01A3	; 0x8001a3 <sensors+0x8>
      2fc:	90 91 a4 01 	lds	r25, 0x01A4	; 0x8001a4 <sensors+0x9>
-     300:	80 39       	cpi	r24, 0x90	; 144
+     300:	81 39       	cpi	r24, 0x91	; 145
      302:	91 40       	sbci	r25, 0x01	; 1
-     304:	30 f0       	brcs	.+12     	; 0x312 <motorControl+0xe4>
+     304:	30 f4       	brcc	.+12     	; 0x312 <motorControl+0xe4>
 		set_motors(100,40);
      306:	68 e2       	ldi	r22, 0x28	; 40
      308:	70 e0       	ldi	r23, 0x00	; 0
      30a:	84 e6       	ldi	r24, 0x64	; 100
      30c:	90 e0       	ldi	r25, 0x00	; 0
      30e:	0e 94 f6 07 	call	0xfec	; 0xfec <set_motors>
-		if (sensors[1] <=400 && sensors[0] >=400  )
+		if (sensors[1] >=400 && sensors[0] <=400  )
      312:	80 91 9d 01 	lds	r24, 0x019D	; 0x80019d <sensors+0x2>
      316:	90 91 9e 01 	lds	r25, 0x019E	; 0x80019e <sensors+0x3>
-     31a:	81 39       	cpi	r24, 0x91	; 145
+     31a:	80 39       	cpi	r24, 0x90	; 144
      31c:	91 40       	sbci	r25, 0x01	; 1
-     31e:	08 f0       	brcs	.+2      	; 0x322 <motorControl+0xf4>
+     31e:	08 f4       	brcc	.+2      	; 0x322 <motorControl+0xf4>
      320:	47 c0       	rjmp	.+142    	; 0x3b0 <motorControl+0x182>
      322:	80 91 9b 01 	lds	r24, 0x019B	; 0x80019b <sensors>
      326:	90 91 9c 01 	lds	r25, 0x019C	; 0x80019c <sensors+0x1>
-     32a:	80 39       	cpi	r24, 0x90	; 144
+     32a:	81 39       	cpi	r24, 0x91	; 145
      32c:	91 40       	sbci	r25, 0x01	; 1
-     32e:	08 f4       	brcc	.+2      	; 0x332 <motorControl+0x104>
+     32e:	08 f0       	brcs	.+2      	; 0x332 <motorControl+0x104>
      330:	3f c0       	rjmp	.+126    	; 0x3b0 <motorControl+0x182>
 		set_motors(40,100);
      332:	64 e6       	ldi	r22, 0x64	; 100
