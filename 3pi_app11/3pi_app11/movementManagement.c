@@ -150,7 +150,7 @@ void motorControl(char x){
 		
 		if (sensors[3] >= 600 && sensors[4] <= 300 )
 			set_motors(120,40);
-		if (sensors[1] >= 600 && sensors[4] <= 300 )
+		if (sensors[1] >= 600 && sensors[0] <= 300 )
 			set_motors(40,120);
 	}
 	
@@ -167,4 +167,12 @@ void motorControl(char x){
 			read_line(sensors,IR_EMITTERS_ON);
 		}
 	}
+	
+	else if(x == 'P'){									// robot stopt rustig met rijden
+		for( int i=50;i==10;i-=3){
+			set_motors(i,i);
+			delay(1);
+		}
+		set_motors(0,0);
+		}
 }
