@@ -16,34 +16,6 @@ unsigned int position;
 	Junctions junction;	
 
 
-const char levels[] PROGMEM = {
-	0b00000,
-	0b00000,
-	0b00000,
-	0b00000,
-	0b00000,
-	0b00000,
-	0b00000,
-	0b11111,
-	0b11111,
-	0b11111,
-	0b11111,
-	0b11111,
-	0b11111,
-	0b11111
-};
-
-void load_custom_characters()
-{
-	lcd_load_custom_character(levels+0,0); // no offset, e.g. one bar
-	lcd_load_custom_character(levels+1,1); // two bars
-	lcd_load_custom_character(levels+2,2); // etc...
-	lcd_load_custom_character(levels+3,3);
-	lcd_load_custom_character(levels+4,4);
-	lcd_load_custom_character(levels+5,5);
-	lcd_load_custom_character(levels+6,6);
-	clear(); // the LCD must be cleared for the characters to take effect
-}
 
 void display_readings(const unsigned int *calibrated_values)
 {
@@ -59,24 +31,10 @@ void display_readings(const unsigned int *calibrated_values)
 void initialize()
 {
 	unsigned int counter; // used as a simple timer
-	unsigned int sensors[5]; // an array to hold sensor values
 	
 	pololu_3pi_init(2000);
-	load_custom_characters(); // load the custom characters
 	
-	while(!button_is_pressed(BUTTON_B))
-	{
-		int bat = read_battery_millivolts();
-		
-		clear();
-		print_long(bat);
-		print("mV");
-		lcd_goto_xy(0,1);
-		print("Press B");
-		
-		delay_ms(100);
-	}
-	
+	while(!button_is_pressed(BUTTON_B)){}	
 	wait_for_button_release(BUTTON_B);
 	delay_ms(1000);
 
@@ -87,39 +45,20 @@ void initialize()
 		else
 		set_motors(-40,40);
 		calibrate_line_sensors(IR_EMITTERS_ON);
-
+		
 		delay_ms(20);
 	}
 	set_motors(0,0);
 	
-	// Display calibrated values as a bar graph.
-	while(!button_is_pressed(BUTTON_B))
-	{
-		// Read the sensor values and get the position measurement.
-		unsigned int position = read_line(sensors,IR_EMITTERS_ON);
-		
-		// Display the position measurement, which will go from 0
-		// (when the leftmost sensor is over the line) to 4000 (when
-		// the rightmost sensor is over the line) on the 3pi, along
-		// with a bar graph of the sensor readings.  This allows you
-		// to make sure the robot is ready to go.
-		clear();
-		print_long(position);
-		lcd_goto_xy(0,1);
-		display_readings(sensors);
-		
-		delay_ms(100);
-	}
+	while(!button_is_pressed(BUTTON_B)){}
 	wait_for_button_release(BUTTON_B);
 	
 	clear();
-	
-	
 }
 
 void inch(){
 	set_motors(50,50);
-	delay(150);
+	delay(200);
 	set_motors(0,0);
 }
 
@@ -222,7 +161,7 @@ void motorControl(char x){
 		if (sensors[1] >=400)
 		set_motors(-55,-50);
 	}
-	else if(x == 'T'){
+	else if(x == 'T'){									// Turn around
 		set_motors(-75,75);
 		while (sensors[2] >=500){
 			read_line(sensors,IR_EMITTERS_ON);
