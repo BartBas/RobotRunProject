@@ -27,11 +27,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  11 .debug_frame  000002bc  00000000  00000000  00013930  2**2
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_str    00000734  00000000  00000000  00013bec  2**0
+ 12 .debug_str    00000788  00000000  00000000  00013bec  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_loc    0000091a  00000000  00000000  00014320  2**0
+ 13 .debug_loc    0000091a  00000000  00000000  00014374  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_ranges 000000e0  00000000  00000000  00014c3a  2**0
+ 14 .debug_ranges 000000e0  00000000  00000000  00014c8e  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -115,13 +115,24 @@ static inline unsigned int read_battery_millivolts(void)
 {
   return read_battery_millivolts_3pi();
       a8:	0e 94 b0 05 	call	0xb60	; 0xb60 <read_battery_millivolts_3pi>
+
+int batteryPercentage()//Should this function be in main or in display.c or something else?
+{
+	
+	int milliVolts = read_battery_millivolts();
+	int batteryPercent = milliVolts/50;
       ac:	62 e3       	ldi	r22, 0x32	; 50
       ae:	70 e0       	ldi	r23, 0x00	; 0
       b0:	0e 94 20 0e 	call	0x1c40	; 0x1c40 <__divmodhi4>
       b4:	cb 01       	movw	r24, r22
+	return batteryPercent;
+}
       b6:	08 95       	ret
 
 000000b8 <updateDisplay>:
+
+void updateDisplay(int orderPercent, int batteryPercent, robotStates currentState)
+{
       b8:	ef 92       	push	r14
       ba:	ff 92       	push	r15
       bc:	0f 93       	push	r16
@@ -130,35 +141,46 @@ static inline unsigned int read_battery_millivolts(void)
       c2:	7c 01       	movw	r14, r24
       c4:	8b 01       	movw	r16, r22
       c6:	c4 2f       	mov	r28, r20
+	clear();
       c8:	0e 94 b9 06 	call	0xd72	; 0xd72 <clear>
+	lcd_goto_xy(0,0);
       cc:	60 e0       	ldi	r22, 0x00	; 0
       ce:	80 e0       	ldi	r24, 0x00	; 0
       d0:	0e 94 40 07 	call	0xe80	; 0xe80 <lcd_goto_xy>
+	print("Task:");
       d4:	83 e2       	ldi	r24, 0x23	; 35
       d6:	91 e0       	ldi	r25, 0x01	; 1
       d8:	0e 94 c8 06 	call	0xd90	; 0xd90 <print>
+	print_long(orderPercent);
       dc:	b7 01       	movw	r22, r14
       de:	ff 0c       	add	r15, r15
       e0:	88 0b       	sbc	r24, r24
       e2:	99 0b       	sbc	r25, r25
       e4:	0e 94 1d 07 	call	0xe3a	; 0xe3a <print_long>
+	print("%");
       e8:	89 e2       	ldi	r24, 0x29	; 41
       ea:	91 e0       	ldi	r25, 0x01	; 1
       ec:	0e 94 c8 06 	call	0xd90	; 0xd90 <print>
+	
+	lcd_goto_xy(0,1);
       f0:	61 e0       	ldi	r22, 0x01	; 1
       f2:	80 e0       	ldi	r24, 0x00	; 0
       f4:	0e 94 40 07 	call	0xe80	; 0xe80 <lcd_goto_xy>
+	print("Bat:");
       f8:	8b e2       	ldi	r24, 0x2B	; 43
       fa:	91 e0       	ldi	r25, 0x01	; 1
       fc:	0e 94 c8 06 	call	0xd90	; 0xd90 <print>
+	print_long(batteryPercent);
      100:	b8 01       	movw	r22, r16
      102:	11 0f       	add	r17, r17
      104:	88 0b       	sbc	r24, r24
      106:	99 0b       	sbc	r25, r25
      108:	0e 94 1d 07 	call	0xe3a	; 0xe3a <print_long>
+	print("%");
      10c:	89 e2       	ldi	r24, 0x29	; 41
      10e:	91 e0       	ldi	r25, 0x01	; 1
      110:	0e 94 c8 06 	call	0xd90	; 0xd90 <print>
+	switch(currentState)
      114:	c2 30       	cpi	r28, 0x02	; 2
      116:	a9 f0       	breq	.+42     	; 0x142 <updateDisplay+0x8a>
      118:	28 f4       	brcc	.+10     	; 0x124 <updateDisplay+0x6c>
@@ -172,25 +194,43 @@ static inline unsigned int read_battery_millivolts(void)
      128:	c4 30       	cpi	r28, 0x04	; 4
      12a:	a9 f0       	breq	.+42     	; 0x156 <updateDisplay+0x9e>
      12c:	18 c0       	rjmp	.+48     	; 0x15e <updateDisplay+0xa6>
+	{
+		case manualControl:
+		print("M");//M for Manual
      12e:	80 e3       	ldi	r24, 0x30	; 48
      130:	91 e0       	ldi	r25, 0x01	; 1
      132:	0e 94 c8 06 	call	0xd90	; 0xd90 <print>
+		break;
      136:	13 c0       	rjmp	.+38     	; 0x15e <updateDisplay+0xa6>
+		case mazeSolver:
+		print("P");//P for Parcours
      138:	82 e3       	ldi	r24, 0x32	; 50
      13a:	91 e0       	ldi	r25, 0x01	; 1
      13c:	0e 94 c8 06 	call	0xd90	; 0xd90 <print>
+		break;
      140:	0e c0       	rjmp	.+28     	; 0x15e <updateDisplay+0xa6>
+		case logicsBot:
+		print("O");//O for Order
      142:	84 e3       	ldi	r24, 0x34	; 52
      144:	91 e0       	ldi	r25, 0x01	; 1
      146:	0e 94 c8 06 	call	0xd90	; 0xd90 <print>
+		break;
      14a:	09 c0       	rjmp	.+18     	; 0x15e <updateDisplay+0xa6>
+		case chargeMode:
+		print("C");//C for Charge
      14c:	86 e3       	ldi	r24, 0x36	; 54
      14e:	91 e0       	ldi	r25, 0x01	; 1
      150:	0e 94 c8 06 	call	0xd90	; 0xd90 <print>
+		break;
      154:	04 c0       	rjmp	.+8      	; 0x15e <updateDisplay+0xa6>
+		case homingMode:
+		print("H");//H for Homing
      156:	88 e3       	ldi	r24, 0x38	; 56
      158:	91 e0       	ldi	r25, 0x01	; 1
      15a:	0e 94 c8 06 	call	0xd90	; 0xd90 <print>
+		break;
+	}
+}
      15e:	cf 91       	pop	r28
      160:	1f 91       	pop	r17
      162:	0f 91       	pop	r16
@@ -199,25 +239,11 @@ static inline unsigned int read_battery_millivolts(void)
      168:	08 95       	ret
 
 0000016a <main>:
-#include <avr/pgmspace.h>
-
-
-int main()
-{
-	clear();
      16a:	0e 94 b9 06 	call	0xd72	; 0xd72 <clear>
-	pololu_3pi_init(2000);
      16e:	80 ed       	ldi	r24, 0xD0	; 208
      170:	97 e0       	ldi	r25, 0x07	; 7
      172:	0e 94 fc 08 	call	0x11f8	; 0x11f8 <pololu_3pi_init>
-	initialize();
      176:	0e 94 c2 00 	call	0x184	; 0x184 <initialize>
-	
-	
-	/*char parecour[20];
-	parcour(parecour);
-	print(parecour);*/
-	warehouse();
      17a:	0e 94 51 04 	call	0x8a2	; 0x8a2 <warehouse>
      17e:	80 e0       	ldi	r24, 0x00	; 0
      180:	90 e0       	ldi	r25, 0x00	; 0
@@ -490,35 +516,35 @@ void motorControl(char x){
      2e4:	90 e0       	ldi	r25, 0x00	; 0
      2e6:	0e 94 f6 07 	call	0xfec	; 0xfec <set_motors>
 		
-		if (sensors[3] >=400  && sensors[4] <=400 )
+		if (sensors[3] <=400  && sensors[4] >=400 )
      2ea:	80 91 a1 01 	lds	r24, 0x01A1	; 0x8001a1 <sensors+0x6>
      2ee:	90 91 a2 01 	lds	r25, 0x01A2	; 0x8001a2 <sensors+0x7>
-     2f2:	80 39       	cpi	r24, 0x90	; 144
+     2f2:	81 39       	cpi	r24, 0x91	; 145
      2f4:	91 40       	sbci	r25, 0x01	; 1
-     2f6:	68 f0       	brcs	.+26     	; 0x312 <motorControl+0xe4>
+     2f6:	68 f4       	brcc	.+26     	; 0x312 <motorControl+0xe4>
      2f8:	80 91 a3 01 	lds	r24, 0x01A3	; 0x8001a3 <sensors+0x8>
      2fc:	90 91 a4 01 	lds	r25, 0x01A4	; 0x8001a4 <sensors+0x9>
-     300:	81 39       	cpi	r24, 0x91	; 145
+     300:	80 39       	cpi	r24, 0x90	; 144
      302:	91 40       	sbci	r25, 0x01	; 1
-     304:	30 f4       	brcc	.+12     	; 0x312 <motorControl+0xe4>
+     304:	30 f0       	brcs	.+12     	; 0x312 <motorControl+0xe4>
 		set_motors(100,40);
      306:	68 e2       	ldi	r22, 0x28	; 40
      308:	70 e0       	ldi	r23, 0x00	; 0
      30a:	84 e6       	ldi	r24, 0x64	; 100
      30c:	90 e0       	ldi	r25, 0x00	; 0
      30e:	0e 94 f6 07 	call	0xfec	; 0xfec <set_motors>
-		if (sensors[1] >=400 && sensors[0] <=400  )
+		if (sensors[1] <=400 && sensors[0] >=400  )
      312:	80 91 9d 01 	lds	r24, 0x019D	; 0x80019d <sensors+0x2>
      316:	90 91 9e 01 	lds	r25, 0x019E	; 0x80019e <sensors+0x3>
-     31a:	80 39       	cpi	r24, 0x90	; 144
+     31a:	81 39       	cpi	r24, 0x91	; 145
      31c:	91 40       	sbci	r25, 0x01	; 1
-     31e:	08 f4       	brcc	.+2      	; 0x322 <motorControl+0xf4>
+     31e:	08 f0       	brcs	.+2      	; 0x322 <motorControl+0xf4>
      320:	47 c0       	rjmp	.+142    	; 0x3b0 <motorControl+0x182>
      322:	80 91 9b 01 	lds	r24, 0x019B	; 0x80019b <sensors>
      326:	90 91 9c 01 	lds	r25, 0x019C	; 0x80019c <sensors+0x1>
-     32a:	81 39       	cpi	r24, 0x91	; 145
+     32a:	80 39       	cpi	r24, 0x90	; 144
      32c:	91 40       	sbci	r25, 0x01	; 1
-     32e:	08 f0       	brcs	.+2      	; 0x332 <motorControl+0x104>
+     32e:	08 f4       	brcc	.+2      	; 0x332 <motorControl+0x104>
      330:	3f c0       	rjmp	.+126    	; 0x3b0 <motorControl+0x182>
 		set_motors(40,100);
      332:	64 e6       	ldi	r22, 0x64	; 100
@@ -866,32 +892,21 @@ char lineType(){																											// function that returns the type of 
      544:	08 95       	ret
 
 00000546 <swap>:
-#include <pololu/3pi.h>
-#include <avr/pgmspace.h>
-
-
-void swap(int *a, int *b) {
-    int temp = *a;
      546:	fc 01       	movw	r30, r24
      548:	20 81       	ld	r18, Z
      54a:	31 81       	ldd	r19, Z+1	; 0x01
-    *a = *b;
      54c:	fb 01       	movw	r30, r22
      54e:	40 81       	ld	r20, Z
      550:	51 81       	ldd	r21, Z+1	; 0x01
      552:	fc 01       	movw	r30, r24
      554:	51 83       	std	Z+1, r21	; 0x01
      556:	40 83       	st	Z, r20
-    *b = temp;
      558:	fb 01       	movw	r30, r22
      55a:	31 83       	std	Z+1, r19	; 0x01
      55c:	20 83       	st	Z, r18
      55e:	08 95       	ret
 
 00000560 <bubbleSort>:
-}
-
-void bubbleSort(int arr[],int orderY[], int n) {
      560:	6f 92       	push	r6
      562:	7f 92       	push	r7
      564:	8f 92       	push	r8
@@ -909,12 +924,9 @@ void bubbleSort(int arr[],int orderY[], int n) {
      57c:	6c 01       	movw	r12, r24
      57e:	3b 01       	movw	r6, r22
      580:	4a 01       	movw	r8, r20
-    for (int i = 0; i < n - 1; i++) {
      582:	a1 2c       	mov	r10, r1
      584:	b1 2c       	mov	r11, r1
      586:	30 c0       	rjmp	.+96     	; 0x5e8 <bubbleSort+0x88>
-        for (int j = 0; j < n - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
      588:	7e 01       	movw	r14, r28
      58a:	ee 0c       	add	r14, r14
      58c:	ff 1c       	adc	r15, r15
@@ -937,11 +949,9 @@ void bubbleSort(int arr[],int orderY[], int n) {
      5ae:	82 17       	cp	r24, r18
      5b0:	93 07       	cpc	r25, r19
      5b2:	64 f4       	brge	.+24     	; 0x5cc <bubbleSort+0x6c>
-                swap(&arr[j], &arr[j + 1]);
      5b4:	bd 01       	movw	r22, r26
      5b6:	cf 01       	movw	r24, r30
      5b8:	0e 94 a3 02 	call	0x546	; 0x546 <swap>
-                swap(&orderY[j], &orderY[j + 1]);
      5bc:	b3 01       	movw	r22, r6
      5be:	60 0f       	add	r22, r16
      5c0:	71 1f       	adc	r23, r17
@@ -949,12 +959,6 @@ void bubbleSort(int arr[],int orderY[], int n) {
      5c4:	8e 0d       	add	r24, r14
      5c6:	9f 1d       	adc	r25, r15
      5c8:	0e 94 a3 02 	call	0x546	; 0x546 <swap>
-    *b = temp;
-}
-
-void bubbleSort(int arr[],int orderY[], int n) {
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
      5cc:	21 96       	adiw	r28, 0x01	; 1
      5ce:	02 c0       	rjmp	.+4      	; 0x5d4 <bubbleSort+0x74>
      5d0:	c0 e0       	ldi	r28, 0x00	; 0
@@ -966,12 +970,6 @@ void bubbleSort(int arr[],int orderY[], int n) {
      5dc:	c8 17       	cp	r28, r24
      5de:	d9 07       	cpc	r29, r25
      5e0:	9c f2       	brlt	.-90     	; 0x588 <bubbleSort+0x28>
-    *a = *b;
-    *b = temp;
-}
-
-void bubbleSort(int arr[],int orderY[], int n) {
-    for (int i = 0; i < n - 1; i++) {
      5e2:	8f ef       	ldi	r24, 0xFF	; 255
      5e4:	a8 1a       	sub	r10, r24
      5e6:	b8 0a       	sbc	r11, r24
@@ -980,12 +978,6 @@ void bubbleSort(int arr[],int orderY[], int n) {
      5ec:	a8 16       	cp	r10, r24
      5ee:	b9 06       	cpc	r11, r25
      5f0:	7c f3       	brlt	.-34     	; 0x5d0 <bubbleSort+0x70>
-                swap(&orderY[j], &orderY[j + 1]);
-				
-            }
-		}
-    }
-}
      5f2:	df 91       	pop	r29
      5f4:	cf 91       	pop	r28
      5f6:	1f 91       	pop	r17
@@ -1003,30 +995,18 @@ void bubbleSort(int arr[],int orderY[], int n) {
      60e:	08 95       	ret
 
 00000610 <drive>:
-
-
-
-void drive()
-{
      610:	0f 93       	push	r16
      612:	1f 93       	push	r17
      614:	cf 93       	push	r28
      616:	df 93       	push	r29
-	Junctions situatie;
-	motorControl('S');
      618:	83 e5       	ldi	r24, 0x53	; 83
      61a:	0e 94 17 01 	call	0x22e	; 0x22e <motorControl>
-	int driving = 1;
      61e:	01 e0       	ldi	r16, 0x01	; 1
      620:	10 e0       	ldi	r17, 0x00	; 0
-	while(driving) {
      622:	1b c0       	rjmp	.+54     	; 0x65a <drive+0x4a>
-		situatie = lineType();
      624:	0e 94 da 01 	call	0x3b4	; 0x3b4 <lineType>
      628:	ec 01       	movw	r28, r24
-		clear();
      62a:	0e 94 b9 06 	call	0xd72	; 0xd72 <clear>
-		switch (situatie) {
      62e:	ce 01       	movw	r24, r28
      630:	99 27       	eor	r25, r25
      632:	82 30       	cpi	r24, 0x02	; 2
@@ -1039,42 +1019,17 @@ void drive()
      640:	09 97       	sbiw	r24, 0x09	; 9
      642:	4c f0       	brlt	.+18     	; 0x656 <drive+0x46>
      644:	0a c0       	rjmp	.+20     	; 0x65a <drive+0x4a>
-			case Barcode: // end of parcour
-			motorControl('N');
      646:	8e e4       	ldi	r24, 0x4E	; 78
      648:	0e 94 17 01 	call	0x22e	; 0x22e <motorControl>
-			break;
      64c:	06 c0       	rjmp	.+12     	; 0x65a <drive+0x4a>
-			
-			case Straight:
-			motorControl('S');
      64e:	83 e5       	ldi	r24, 0x53	; 83
      650:	0e 94 17 01 	call	0x22e	; 0x22e <motorControl>
-			break;
      654:	02 c0       	rjmp	.+4      	; 0x65a <drive+0x4a>
-			case Left_corner:
-			case T_junction:
-			case Straight_left_junction:
-			case Right_corner:
-			case Straight_right_junction:
-				driving = 0;
      656:	00 e0       	ldi	r16, 0x00	; 0
      658:	10 e0       	ldi	r17, 0x00	; 0
-void drive()
-{
-	Junctions situatie;
-	motorControl('S');
-	int driving = 1;
-	while(driving) {
      65a:	01 15       	cp	r16, r1
      65c:	11 05       	cpc	r17, r1
      65e:	11 f7       	brne	.-60     	; 0x624 <drive+0x14>
-			
-			
-		}
-		
-	}
-}
      660:	df 91       	pop	r29
      662:	cf 91       	pop	r28
      664:	1f 91       	pop	r17
@@ -1082,43 +1037,21 @@ void drive()
      668:	08 95       	ret
 
 0000066a <waitForTurn>:
-
-void waitForTurn()
-{
      66a:	cf 93       	push	r28
      66c:	82 e3       	ldi	r24, 0x32	; 50
      66e:	90 e0       	ldi	r25, 0x00	; 0
      670:	0e 94 84 08 	call	0x1108	; 0x1108 <delay_ms>
      674:	03 c0       	rjmp	.+6      	; 0x67c <waitForTurn+0x12>
-	Junctions lijn;
-	delay(50);
-	while(lijn != Straight)
-	{
-		lijn  = lineType();
      676:	0e 94 da 01 	call	0x3b4	; 0x3b4 <lineType>
      67a:	c8 2f       	mov	r28, r24
-
-void waitForTurn()
-{
-	Junctions lijn;
-	delay(50);
-	while(lijn != Straight)
      67c:	c1 11       	cpse	r28, r1
      67e:	fb cf       	rjmp	.-10     	; 0x676 <waitForTurn+0xc>
-	{
-		lijn  = lineType();
-	}
-	motorControl('N');
      680:	8e e4       	ldi	r24, 0x4E	; 78
      682:	0e 94 17 01 	call	0x22e	; 0x22e <motorControl>
-}
      686:	cf 91       	pop	r28
      688:	08 95       	ret
 
 0000068a <turnRobot>:
-
-void turnRobot(char direction, piRobot *myRobot)
-{
      68a:	ef 92       	push	r14
      68c:	ff 92       	push	r15
      68e:	0f 93       	push	r16
@@ -1126,16 +1059,10 @@ void turnRobot(char direction, piRobot *myRobot)
      692:	cf 93       	push	r28
      694:	c8 2f       	mov	r28, r24
      696:	8b 01       	movw	r16, r22
-    int changing = 1;
      698:	ee 24       	eor	r14, r14
      69a:	e3 94       	inc	r14
      69c:	f1 2c       	mov	r15, r1
-
-    while(changing==1)
      69e:	9a c0       	rjmp	.+308    	; 0x7d4 <turnRobot+0x14a>
-    {
-		
-        switch(myRobot->direction)
      6a0:	f8 01       	movw	r30, r16
      6a2:	84 81       	ldd	r24, Z+4	; 0x04
      6a4:	8e 34       	cpi	r24, 0x4E	; 78
@@ -1151,225 +1078,126 @@ void turnRobot(char direction, piRobot *myRobot)
      6b8:	09 f4       	brne	.+2      	; 0x6bc <turnRobot+0x32>
      6ba:	66 c0       	rjmp	.+204    	; 0x788 <turnRobot+0xfe>
      6bc:	85 c0       	rjmp	.+266    	; 0x7c8 <turnRobot+0x13e>
-        {
-            case 'N':
-                if(direction == 'E')
      6be:	c5 34       	cpi	r28, 0x45	; 69
      6c0:	49 f4       	brne	.+18     	; 0x6d4 <turnRobot+0x4a>
-                {
-                    motorControl('R');
      6c2:	82 e5       	ldi	r24, 0x52	; 82
      6c4:	0e 94 17 01 	call	0x22e	; 0x22e <motorControl>
-					waitForTurn();
      6c8:	0e 94 35 03 	call	0x66a	; 0x66a <waitForTurn>
-                    myRobot->direction = 'E';
      6cc:	85 e4       	ldi	r24, 0x45	; 69
      6ce:	f8 01       	movw	r30, r16
      6d0:	84 83       	std	Z+4, r24	; 0x04
      6d2:	7a c0       	rjmp	.+244    	; 0x7c8 <turnRobot+0x13e>
-                }
-                else if(direction == 'W')
      6d4:	c7 35       	cpi	r28, 0x57	; 87
      6d6:	49 f4       	brne	.+18     	; 0x6ea <turnRobot+0x60>
-                {
-                    motorControl('L');
      6d8:	8c e4       	ldi	r24, 0x4C	; 76
      6da:	0e 94 17 01 	call	0x22e	; 0x22e <motorControl>
-					waitForTurn();
      6de:	0e 94 35 03 	call	0x66a	; 0x66a <waitForTurn>
-                    myRobot->direction = 'W';
      6e2:	87 e5       	ldi	r24, 0x57	; 87
      6e4:	f8 01       	movw	r30, r16
      6e6:	84 83       	std	Z+4, r24	; 0x04
      6e8:	6f c0       	rjmp	.+222    	; 0x7c8 <turnRobot+0x13e>
-                }
-                else if(direction == 'S')
      6ea:	c3 35       	cpi	r28, 0x53	; 83
      6ec:	09 f0       	breq	.+2      	; 0x6f0 <turnRobot+0x66>
      6ee:	6c c0       	rjmp	.+216    	; 0x7c8 <turnRobot+0x13e>
-                {
-                    motorControl('T');
      6f0:	84 e5       	ldi	r24, 0x54	; 84
      6f2:	0e 94 17 01 	call	0x22e	; 0x22e <motorControl>
-					waitForTurn();
      6f6:	0e 94 35 03 	call	0x66a	; 0x66a <waitForTurn>
-                    myRobot->direction = 'S';
      6fa:	83 e5       	ldi	r24, 0x53	; 83
      6fc:	f8 01       	movw	r30, r16
      6fe:	84 83       	std	Z+4, r24	; 0x04
      700:	63 c0       	rjmp	.+198    	; 0x7c8 <turnRobot+0x13e>
-                }
-                break;
-            case 'E':
-                if(direction == 'S')
      702:	c3 35       	cpi	r28, 0x53	; 83
      704:	49 f4       	brne	.+18     	; 0x718 <turnRobot+0x8e>
-                {
-                    motorControl('R');
      706:	82 e5       	ldi	r24, 0x52	; 82
      708:	0e 94 17 01 	call	0x22e	; 0x22e <motorControl>
-					waitForTurn();
      70c:	0e 94 35 03 	call	0x66a	; 0x66a <waitForTurn>
-                    myRobot->direction = 'S';
      710:	83 e5       	ldi	r24, 0x53	; 83
      712:	f8 01       	movw	r30, r16
      714:	84 83       	std	Z+4, r24	; 0x04
      716:	58 c0       	rjmp	.+176    	; 0x7c8 <turnRobot+0x13e>
-                }
-                else if(direction == 'W')
      718:	c7 35       	cpi	r28, 0x57	; 87
      71a:	49 f4       	brne	.+18     	; 0x72e <turnRobot+0xa4>
-                {
-                    motorControl('L');
      71c:	8c e4       	ldi	r24, 0x4C	; 76
      71e:	0e 94 17 01 	call	0x22e	; 0x22e <motorControl>
-					waitForTurn();
      722:	0e 94 35 03 	call	0x66a	; 0x66a <waitForTurn>
-                    myRobot->direction = 'W';
      726:	87 e5       	ldi	r24, 0x57	; 87
      728:	f8 01       	movw	r30, r16
      72a:	84 83       	std	Z+4, r24	; 0x04
      72c:	4d c0       	rjmp	.+154    	; 0x7c8 <turnRobot+0x13e>
-                }
-                else if(direction == 'S')
      72e:	c3 35       	cpi	r28, 0x53	; 83
      730:	09 f0       	breq	.+2      	; 0x734 <turnRobot+0xaa>
      732:	4a c0       	rjmp	.+148    	; 0x7c8 <turnRobot+0x13e>
-                {
-                    motorControl('T');
      734:	84 e5       	ldi	r24, 0x54	; 84
      736:	0e 94 17 01 	call	0x22e	; 0x22e <motorControl>
-					waitForTurn();
      73a:	0e 94 35 03 	call	0x66a	; 0x66a <waitForTurn>
-                    myRobot->direction = 'S';
      73e:	83 e5       	ldi	r24, 0x53	; 83
      740:	f8 01       	movw	r30, r16
      742:	84 83       	std	Z+4, r24	; 0x04
      744:	41 c0       	rjmp	.+130    	; 0x7c8 <turnRobot+0x13e>
-                }
-                break;
-            case 'S':
-                if(direction == 'W')
      746:	c7 35       	cpi	r28, 0x57	; 87
      748:	49 f4       	brne	.+18     	; 0x75c <turnRobot+0xd2>
-                {
-                    motorControl('R');
      74a:	82 e5       	ldi	r24, 0x52	; 82
      74c:	0e 94 17 01 	call	0x22e	; 0x22e <motorControl>
-					waitForTurn();
      750:	0e 94 35 03 	call	0x66a	; 0x66a <waitForTurn>
-                    myRobot->direction = 'W';
      754:	87 e5       	ldi	r24, 0x57	; 87
      756:	f8 01       	movw	r30, r16
      758:	84 83       	std	Z+4, r24	; 0x04
      75a:	36 c0       	rjmp	.+108    	; 0x7c8 <turnRobot+0x13e>
-                }
-                else if(direction == 'E')
      75c:	c5 34       	cpi	r28, 0x45	; 69
      75e:	49 f4       	brne	.+18     	; 0x772 <turnRobot+0xe8>
-                {
-                    motorControl('L');
      760:	8c e4       	ldi	r24, 0x4C	; 76
      762:	0e 94 17 01 	call	0x22e	; 0x22e <motorControl>
-					waitForTurn();
      766:	0e 94 35 03 	call	0x66a	; 0x66a <waitForTurn>
-                    myRobot->direction = 'E';
      76a:	85 e4       	ldi	r24, 0x45	; 69
      76c:	f8 01       	movw	r30, r16
      76e:	84 83       	std	Z+4, r24	; 0x04
      770:	2b c0       	rjmp	.+86     	; 0x7c8 <turnRobot+0x13e>
-                }
-                else if(direction == 'N')
      772:	ce 34       	cpi	r28, 0x4E	; 78
      774:	49 f5       	brne	.+82     	; 0x7c8 <turnRobot+0x13e>
-                {
-                    motorControl('T');
      776:	84 e5       	ldi	r24, 0x54	; 84
      778:	0e 94 17 01 	call	0x22e	; 0x22e <motorControl>
-					waitForTurn();
      77c:	0e 94 35 03 	call	0x66a	; 0x66a <waitForTurn>
-                    myRobot->direction = 'N';
      780:	8e e4       	ldi	r24, 0x4E	; 78
      782:	f8 01       	movw	r30, r16
      784:	84 83       	std	Z+4, r24	; 0x04
      786:	20 c0       	rjmp	.+64     	; 0x7c8 <turnRobot+0x13e>
-                }
-                break;
-            case 'W':
-                if(direction == 'N')
      788:	ce 34       	cpi	r28, 0x4E	; 78
      78a:	49 f4       	brne	.+18     	; 0x79e <turnRobot+0x114>
-                {
-					
-                    motorControl('R');
      78c:	82 e5       	ldi	r24, 0x52	; 82
      78e:	0e 94 17 01 	call	0x22e	; 0x22e <motorControl>
-					waitForTurn();
      792:	0e 94 35 03 	call	0x66a	; 0x66a <waitForTurn>
-                    myRobot->direction = 'N';
      796:	8e e4       	ldi	r24, 0x4E	; 78
      798:	f8 01       	movw	r30, r16
      79a:	84 83       	std	Z+4, r24	; 0x04
      79c:	15 c0       	rjmp	.+42     	; 0x7c8 <turnRobot+0x13e>
-                }
-                else if(direction == 'S')
      79e:	c3 35       	cpi	r28, 0x53	; 83
      7a0:	49 f4       	brne	.+18     	; 0x7b4 <turnRobot+0x12a>
-                {
-                    motorControl('L');
      7a2:	8c e4       	ldi	r24, 0x4C	; 76
      7a4:	0e 94 17 01 	call	0x22e	; 0x22e <motorControl>
-					waitForTurn();
      7a8:	0e 94 35 03 	call	0x66a	; 0x66a <waitForTurn>
-                    myRobot->direction = 'S';
      7ac:	83 e5       	ldi	r24, 0x53	; 83
      7ae:	f8 01       	movw	r30, r16
      7b0:	84 83       	std	Z+4, r24	; 0x04
      7b2:	0a c0       	rjmp	.+20     	; 0x7c8 <turnRobot+0x13e>
-                }
-                else if(direction == 'E')
      7b4:	c5 34       	cpi	r28, 0x45	; 69
      7b6:	41 f4       	brne	.+16     	; 0x7c8 <turnRobot+0x13e>
-                {
-                    motorControl('T');
      7b8:	84 e5       	ldi	r24, 0x54	; 84
      7ba:	0e 94 17 01 	call	0x22e	; 0x22e <motorControl>
-					waitForTurn();
      7be:	0e 94 35 03 	call	0x66a	; 0x66a <waitForTurn>
-                    myRobot->direction = 'E';
      7c2:	85 e4       	ldi	r24, 0x45	; 69
      7c4:	f8 01       	movw	r30, r16
      7c6:	84 83       	std	Z+4, r24	; 0x04
-                }
-                break;
-		}
-		
-				if(myRobot->direction == direction)
      7c8:	f8 01       	movw	r30, r16
      7ca:	84 81       	ldd	r24, Z+4	; 0x04
      7cc:	c8 13       	cpse	r28, r24
      7ce:	02 c0       	rjmp	.+4      	; 0x7d4 <turnRobot+0x14a>
-				{
-					changing = 0;
      7d0:	e1 2c       	mov	r14, r1
      7d2:	f1 2c       	mov	r15, r1
-
-void turnRobot(char direction, piRobot *myRobot)
-{
-    int changing = 1;
-
-    while(changing==1)
      7d4:	f1 e0       	ldi	r31, 0x01	; 1
      7d6:	ef 16       	cp	r14, r31
      7d8:	f1 04       	cpc	r15, r1
      7da:	09 f4       	brne	.+2      	; 0x7de <turnRobot+0x154>
      7dc:	61 cf       	rjmp	.-318    	; 0x6a0 <turnRobot+0x16>
-				{
-					changing = 0;
-				}
-		
-    }
-}
      7de:	cf 91       	pop	r28
      7e0:	1f 91       	pop	r17
      7e2:	0f 91       	pop	r16
@@ -1378,19 +1206,10 @@ void turnRobot(char direction, piRobot *myRobot)
      7e8:	08 95       	ret
 
 000007ea <moveX>:
-
-
-void moveX(int orderPos, piRobot *robot)
-{
      7ea:	0f 93       	push	r16
      7ec:	1f 93       	push	r17
      7ee:	cf 93       	push	r28
      7f0:	df 93       	push	r29
-	
-    int junctions;
-	
-	
-    if(robot->posX != orderPos)
      7f2:	fb 01       	movw	r30, r22
      7f4:	20 81       	ld	r18, Z
      7f6:	31 81       	ldd	r19, Z+1	; 0x01
@@ -1399,59 +1218,32 @@ void moveX(int orderPos, piRobot *robot)
      7fc:	f9 f0       	breq	.+62     	; 0x83c <__DATA_REGION_LENGTH__+0x3c>
      7fe:	eb 01       	movw	r28, r22
      800:	8c 01       	movw	r16, r24
-    {
-		
-        if(robot->posX < orderPos)
      802:	28 17       	cp	r18, r24
      804:	39 07       	cpc	r19, r25
      806:	44 f4       	brge	.+16     	; 0x818 <__DATA_REGION_LENGTH__+0x18>
-        {
-            turnRobot('W', robot);
      808:	87 e5       	ldi	r24, 0x57	; 87
      80a:	0e 94 45 03 	call	0x68a	; 0x68a <turnRobot>
-            junctions = orderPos-robot->posX;
      80e:	88 81       	ld	r24, Y
      810:	99 81       	ldd	r25, Y+1	; 0x01
      812:	08 1b       	sub	r16, r24
      814:	19 0b       	sbc	r17, r25
      816:	09 c0       	rjmp	.+18     	; 0x82a <__DATA_REGION_LENGTH__+0x2a>
-        }
-        else{
-            turnRobot('E', robot);
      818:	85 e4       	ldi	r24, 0x45	; 69
      81a:	0e 94 45 03 	call	0x68a	; 0x68a <turnRobot>
-            junctions = robot->posX - orderPos;
      81e:	28 81       	ld	r18, Y
      820:	39 81       	ldd	r19, Y+1	; 0x01
      822:	c9 01       	movw	r24, r18
      824:	80 1b       	sub	r24, r16
      826:	91 0b       	sbc	r25, r17
      828:	8c 01       	movw	r16, r24
-        }
-
-        for(int i = 0; i < junctions; i++)
      82a:	c0 e0       	ldi	r28, 0x00	; 0
      82c:	d0 e0       	ldi	r29, 0x00	; 0
      82e:	03 c0       	rjmp	.+6      	; 0x836 <__DATA_REGION_LENGTH__+0x36>
-        {
-			drive();
      830:	0e 94 08 03 	call	0x610	; 0x610 <drive>
-        else{
-            turnRobot('E', robot);
-            junctions = robot->posX - orderPos;
-        }
-
-        for(int i = 0; i < junctions; i++)
      834:	21 96       	adiw	r28, 0x01	; 1
      836:	c0 17       	cp	r28, r16
      838:	d1 07       	cpc	r29, r17
      83a:	d4 f3       	brlt	.-12     	; 0x830 <__DATA_REGION_LENGTH__+0x30>
-        {
-			drive();
-        }
-
-    }
-}
      83c:	df 91       	pop	r29
      83e:	cf 91       	pop	r28
      840:	1f 91       	pop	r17
@@ -1459,16 +1251,10 @@ void moveX(int orderPos, piRobot *robot)
      844:	08 95       	ret
 
 00000846 <moveY>:
-
-void moveY(int orderPos, piRobot *robot)
-{
      846:	0f 93       	push	r16
      848:	1f 93       	push	r17
      84a:	cf 93       	push	r28
      84c:	df 93       	push	r29
-
-    int junctions;
-    if(robot->posY != orderPos)
      84e:	fb 01       	movw	r30, r22
      850:	22 81       	ldd	r18, Z+2	; 0x02
      852:	33 81       	ldd	r19, Z+3	; 0x03
@@ -1477,58 +1263,32 @@ void moveY(int orderPos, piRobot *robot)
      858:	f9 f0       	breq	.+62     	; 0x898 <moveY+0x52>
      85a:	eb 01       	movw	r28, r22
      85c:	8c 01       	movw	r16, r24
-    {
-        if(robot->posY < orderPos)
      85e:	28 17       	cp	r18, r24
      860:	39 07       	cpc	r19, r25
      862:	44 f4       	brge	.+16     	; 0x874 <moveY+0x2e>
-        {
-            turnRobot('N', robot);
      864:	8e e4       	ldi	r24, 0x4E	; 78
      866:	0e 94 45 03 	call	0x68a	; 0x68a <turnRobot>
-            junctions = orderPos-robot->posY;
      86a:	8a 81       	ldd	r24, Y+2	; 0x02
      86c:	9b 81       	ldd	r25, Y+3	; 0x03
      86e:	08 1b       	sub	r16, r24
      870:	19 0b       	sbc	r17, r25
      872:	09 c0       	rjmp	.+18     	; 0x886 <moveY+0x40>
-        }
-        else{
-            turnRobot('S', robot);
      874:	83 e5       	ldi	r24, 0x53	; 83
      876:	0e 94 45 03 	call	0x68a	; 0x68a <turnRobot>
-            junctions = robot->posY - orderPos;
      87a:	2a 81       	ldd	r18, Y+2	; 0x02
      87c:	3b 81       	ldd	r19, Y+3	; 0x03
      87e:	c9 01       	movw	r24, r18
      880:	80 1b       	sub	r24, r16
      882:	91 0b       	sbc	r25, r17
      884:	8c 01       	movw	r16, r24
-        }
-
-        for(int i = 0; i < junctions; i++)
      886:	c0 e0       	ldi	r28, 0x00	; 0
      888:	d0 e0       	ldi	r29, 0x00	; 0
      88a:	03 c0       	rjmp	.+6      	; 0x892 <moveY+0x4c>
-        {
-            drive();
      88c:	0e 94 08 03 	call	0x610	; 0x610 <drive>
-        else{
-            turnRobot('S', robot);
-            junctions = robot->posY - orderPos;
-        }
-
-        for(int i = 0; i < junctions; i++)
      890:	21 96       	adiw	r28, 0x01	; 1
      892:	c0 17       	cp	r28, r16
      894:	d1 07       	cpc	r29, r17
      896:	d4 f3       	brlt	.-12     	; 0x88c <moveY+0x46>
-        {
-            drive();
-        }
-
-    }
-}
      898:	df 91       	pop	r29
      89a:	cf 91       	pop	r28
      89c:	1f 91       	pop	r17
@@ -1536,10 +1296,6 @@ void moveY(int orderPos, piRobot *robot)
      8a0:	08 95       	ret
 
 000008a2 <warehouse>:
-
-
-void warehouse(void)
-{
      8a2:	ef 92       	push	r14
      8a4:	ff 92       	push	r15
      8a6:	0f 93       	push	r16
@@ -1554,22 +1310,14 @@ void warehouse(void)
      8b8:	de bf       	out	0x3e, r29	; 62
      8ba:	0f be       	out	0x3f, r0	; 63
      8bc:	cd bf       	out	0x3d, r28	; 61
- piRobot robot;
- robot.direction = 'W';
      8be:	87 e5       	ldi	r24, 0x57	; 87
      8c0:	8d 83       	std	Y+5, r24	; 0x05
- robot.posX = -1;
      8c2:	8f ef       	ldi	r24, 0xFF	; 255
      8c4:	9f ef       	ldi	r25, 0xFF	; 255
      8c6:	9a 83       	std	Y+2, r25	; 0x02
      8c8:	89 83       	std	Y+1, r24	; 0x01
- robot.posY = 0;
      8ca:	1c 82       	std	Y+4, r1	; 0x04
      8cc:	1b 82       	std	Y+3, r1	; 0x03
-//int orderX[] = getWixel("posX");
-//int orderY[] = getWixel("posY");
-
-    int orderX[] = {0,3,1,2,4};
      8ce:	8a e0       	ldi	r24, 0x0A	; 10
      8d0:	ea e0       	ldi	r30, 0x0A	; 10
      8d2:	f1 e0       	ldi	r31, 0x01	; 1
@@ -1579,7 +1327,6 @@ void warehouse(void)
      8da:	0d 92       	st	X+, r0
      8dc:	8a 95       	dec	r24
      8de:	e1 f7       	brne	.-8      	; 0x8d8 <warehouse+0x36>
-    int orderY[] = {1,2,3,3,4};
      8e0:	8a e0       	ldi	r24, 0x0A	; 10
      8e2:	e4 e1       	ldi	r30, 0x14	; 20
      8e4:	f1 e0       	ldi	r31, 0x01	; 1
@@ -1589,9 +1336,6 @@ void warehouse(void)
      8ec:	0d 92       	st	X+, r0
      8ee:	8a 95       	dec	r24
      8f0:	e1 f7       	brne	.-8      	; 0x8ea <warehouse+0x48>
-
-    int arrayGrootte = sizeof(orderX) / sizeof(orderX[0]);
-    bubbleSort(orderX, orderY, arrayGrootte);
      8f2:	45 e0       	ldi	r20, 0x05	; 5
      8f4:	50 e0       	ldi	r21, 0x00	; 0
      8f6:	be 01       	movw	r22, r28
@@ -1600,18 +1344,9 @@ void warehouse(void)
      8fc:	ce 01       	movw	r24, r28
      8fe:	06 96       	adiw	r24, 0x06	; 6
      900:	0e 94 b0 02 	call	0x560	; 0x560 <bubbleSort>
-	
-	
-	 //motorControl('S');
-	//drive();
-	
-    for(int locaties = 0; locaties<arrayGrootte;locaties++)
      904:	e1 2c       	mov	r14, r1
      906:	f1 2c       	mov	r15, r1
      908:	3b c0       	rjmp	.+118    	; 0x980 <__stack+0x81>
-    {
-		
-        moveX(orderX[locaties], &robot);
      90a:	87 01       	movw	r16, r14
      90c:	00 0f       	add	r16, r16
      90e:	11 1f       	adc	r17, r17
@@ -1626,20 +1361,17 @@ void warehouse(void)
      920:	85 81       	ldd	r24, Z+5	; 0x05
      922:	96 81       	ldd	r25, Z+6	; 0x06
      924:	0e 94 f5 03 	call	0x7ea	; 0x7ea <moveX>
-		robot.posX = orderX[locaties];
      928:	f8 01       	movw	r30, r16
      92a:	85 81       	ldd	r24, Z+5	; 0x05
      92c:	96 81       	ldd	r25, Z+6	; 0x06
      92e:	9a 83       	std	Y+2, r25	; 0x02
      930:	89 83       	std	Y+1, r24	; 0x01
-        moveY(orderY[locaties], &robot);
      932:	be 01       	movw	r22, r28
      934:	6f 5f       	subi	r22, 0xFF	; 255
      936:	7f 4f       	sbci	r23, 0xFF	; 255
      938:	87 85       	ldd	r24, Z+15	; 0x0f
      93a:	90 89       	ldd	r25, Z+16	; 0x10
      93c:	0e 94 23 04 	call	0x846	; 0x846 <moveY>
-		robot.posY = orderY[locaties];
      940:	f8 01       	movw	r30, r16
      942:	87 85       	ldd	r24, Z+15	; 0x0f
      944:	90 89       	ldd	r25, Z+16	; 0x10
@@ -1648,8 +1380,6 @@ void warehouse(void)
      94a:	88 ee       	ldi	r24, 0xE8	; 232
      94c:	93 e0       	ldi	r25, 0x03	; 3
      94e:	0e 94 84 08 	call	0x1108	; 0x1108 <delay_ms>
-        delay(1000);//wait 1 second
-        updateDisplay(((locaties/arrayGrootte)*100),batteryPercentage(),logicsBot);
      952:	0e 94 54 00 	call	0xa8	; 0xa8 <batteryPercentage>
      956:	9c 01       	movw	r18, r24
      958:	c7 01       	movw	r24, r14
@@ -1667,12 +1397,6 @@ void warehouse(void)
      972:	90 0d       	add	r25, r0
      974:	11 24       	eor	r1, r1
      976:	0e 94 5c 00 	call	0xb8	; 0xb8 <updateDisplay>
-	
-	
-	 //motorControl('S');
-	//drive();
-	
-    for(int locaties = 0; locaties<arrayGrootte;locaties++)
      97a:	ff ef       	ldi	r31, 0xFF	; 255
      97c:	ef 1a       	sub	r14, r31
      97e:	ff 0a       	sbc	r15, r31
@@ -1680,27 +1404,18 @@ void warehouse(void)
      982:	e8 16       	cp	r14, r24
      984:	f1 04       	cpc	r15, r1
      986:	0c f2       	brlt	.-126    	; 0x90a <__stack+0xb>
-        moveY(orderY[locaties], &robot);
-		robot.posY = orderY[locaties];
-        delay(1000);//wait 1 second
-        updateDisplay(((locaties/arrayGrootte)*100),batteryPercentage(),logicsBot);
-    }
-    moveY(0, &robot);
      988:	be 01       	movw	r22, r28
      98a:	6f 5f       	subi	r22, 0xFF	; 255
      98c:	7f 4f       	sbci	r23, 0xFF	; 255
      98e:	80 e0       	ldi	r24, 0x00	; 0
      990:	90 e0       	ldi	r25, 0x00	; 0
      992:	0e 94 23 04 	call	0x846	; 0x846 <moveY>
-    moveX(0, &robot);
      996:	be 01       	movw	r22, r28
      998:	6f 5f       	subi	r22, 0xFF	; 255
      99a:	7f 4f       	sbci	r23, 0xFF	; 255
      99c:	80 e0       	ldi	r24, 0x00	; 0
      99e:	90 e0       	ldi	r25, 0x00	; 0
      9a0:	0e 94 f5 03 	call	0x7ea	; 0x7ea <moveX>
-    //goHome();
-}
      9a4:	69 96       	adiw	r28, 0x19	; 25
      9a6:	0f b6       	in	r0, 0x3f	; 63
      9a8:	f8 94       	cli
