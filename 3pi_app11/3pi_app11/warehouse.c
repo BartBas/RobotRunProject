@@ -22,15 +22,16 @@ void bubbleSort(int arr[],int orderY[], int n) {
             if (arr[j] > arr[j + 1]) {
                 swap(&arr[j], &arr[j + 1]);
                 swap(&orderY[j], &orderY[j + 1]);
+				
             }
-        }
+		}
     }
 }
 
 
 void turnRobot(char direction, piRobot *myRobot)
 {
-    int changing = true;
+    int changing = 1;
     while(changing)
     {
         switch(myRobot->direction)
@@ -116,11 +117,11 @@ void moveX(int orderPos)
     {
         if(robot.posX < orderPos)
         {
-            turnRobot('W');
+            turnRobot('W', &robot);
             junctions = orderPos-robot.posX;
         }
         else{
-            turnRobot('E');
+            turnRobot('E', &robot);
             junctions = robot.posX - orderPos;
         }
 
@@ -140,11 +141,11 @@ void moveY(int orderPos)
     {
         if(robot.posY < orderPos)
         {
-            turnRobot('N');
+            turnRobot('N', &robot);
             junctions = orderPos-robot.posY;
         }
         else{
-            turnRobot('S');
+            turnRobot('S', &robot);
             junctions = robot.posY - orderPos;
         }
 
