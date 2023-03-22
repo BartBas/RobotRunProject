@@ -163,8 +163,9 @@ void motorControl(char x){
 	}
 	else if(x == 'T'){									// Turn around
 		set_motors(-75,75);
-		while (sensors[2] >=500){
+		while (sensors[2] <=500){
 			read_line(sensors,IR_EMITTERS_ON);
 		}
+		set_motors(0,0);
 	}
 }

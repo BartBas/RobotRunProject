@@ -22,3 +22,17 @@ int main()
 	parcour(parecour);
 	print(parecour);
 }
+
+
+
+
+/* main voor testen (Joost)
+int main()
+{
+	pololu_3pi_init(2000);
+	initialize();
+	char parecour[20];
+	parcour(parecour);
+	print(parecour);
+}
+*/
