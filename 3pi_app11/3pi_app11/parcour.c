@@ -9,20 +9,21 @@
 
 #include <pololu/3pi.h>
 #include <avr/pgmspace.h>
+#include <stdio.h>
+#include <string.h>
 
-char route[20];
 char richting;
 
 Junctions situatie = Straight;
 
-void parcour(void) {
+char parcour(char *route) {
 	while(1) {
 		situatie = direction();
 		
 		switch (situatie) {
 			case Barcode: // end of parcour
 				set_motors(0,0);
-				return route;
+				return 0;
 			
 			case X_junction:
 			case Left_corner:
@@ -35,12 +36,12 @@ void parcour(void) {
 			
 			case Right_corner:
 				motorControl('R');
-				richting = 'L';
+				richting = 'R';
 				strncat(route, &richting, 1);
 				break;
 			
 			case Straight_right_junction:
-				richting = 'L';
+				richting = 'S';
 				strncat(route, &richting, 1);
 			case Straight:
 				motorControl('S');
@@ -48,11 +49,27 @@ void parcour(void) {
 			
 			case Line_end:
 				motorControl('T');
-				richting = 'L';
+				richting = 'T';
 				strncat(route, &richting, 1);
 				break;
 		}
 		
-		//if  route[-2]
+		
+		if (route[-2] == 'T') {
+			route[strlen(route)-3] = '\0';
+			if (route[-3] == 'L' && route[-1] == 'L') {
+				richting = 'S';
+			} else if (route[-3] == 'S' && route[-1] == 'L'){
+				richting = 'R';			
+			} else if (route[-3] == 'R' && route[-1] == 'L'){
+				richting = 'T';			
+			} else if (route[-3] == 'L' && route[-1] == 'R'){
+				richting = 'T';			
+			} else if (route[-3] == 'L' && route[-1] == 'S'){
+				richting = 'R';			
+			}
+			strncat(route, &richting, 1);				
+		}
 	}
+	return 0;
 }
