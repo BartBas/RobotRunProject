@@ -9,7 +9,7 @@
 
 typedef enum
 {
-	manualControl,//M
+	manual,//M
 	mazeSolver,//L
 	logicsBot,//O
 	chargeMode,//C

@@ -164,14 +164,36 @@ void motorControl(char x){													// function that controlls the motor move
 	}
 	
 	
-	else if(x == 'P'){														//Robot stops on a slow pace
-		for( int i=50;i<10;i-=3)
+	else if(x == 'P')														//Robot stops on a slow pace
+		for( int i=50;i>=0;i-=2)
 		{
 			set_motors(i,i);
-			delay(1);
-		}
-		set_motors(0,0);
+			delay(5);
 		}
 		
 		
+}
+
+void manualControl(char X){
+int speed = 0;
+	if(X == 'W'){
+		set_motors(speed,speed);
+		speed++;
+	}
+	
+	if(X == 'S'){
+		set_motors(-speed,-speed);
+		speed++;
+	}
+	
+	if(X == 'A'){
+		set_motors(speed/2,speed);
+		speed++;
+	}
+	
+	if(X == 'D'){
+		set_motors(speed,speed/2);
+		speed++;
+	}
+	
 }

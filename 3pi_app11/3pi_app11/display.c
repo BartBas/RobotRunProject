@@ -30,7 +30,7 @@ void updateDisplay(int orderPercent, int batteryPercent, robotStates currentStat
 	print("%");
 	switch(currentState)
 	{
-		case manualControl:
+		case manual:
 		print("M");//M for Manual
 		break;
 		case mazeSolver:
