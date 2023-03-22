@@ -17,21 +17,21 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   6 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00010314  2**2
                   CONTENTS, READONLY
-  7 .debug_aranges 00000108  00000000  00000000  00010354  2**0
+  7 .debug_aranges 00000100  00000000  00000000  00010354  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_info   00001a69  00000000  00000000  0001045c  2**0
+  8 .debug_info   000019d1  00000000  00000000  00010454  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_abbrev 00000c17  00000000  00000000  00011ec5  2**0
+  9 .debug_abbrev 00000bd1  00000000  00000000  00011e25  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_line   0000117b  00000000  00000000  00012adc  2**0
+ 10 .debug_line   0000112a  00000000  00000000  000129f6  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_frame  000002dc  00000000  00000000  00013c58  2**2
+ 11 .debug_frame  000002ac  00000000  00000000  00013b20  2**2
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_str    000007a4  00000000  00000000  00013f34  2**0
+ 12 .debug_str    0000075e  00000000  00000000  00013dcc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_loc    00000985  00000000  00000000  000146d8  2**0
+ 13 .debug_loc    000008ae  00000000  00000000  0001452a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_ranges 000000e0  00000000  00000000  0001505d  2**0
+ 14 .debug_ranges 000000d8  00000000  00000000  00014dd8  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -250,9 +250,9 @@ void updateDisplay(int orderPercent, int batteryPercent, robotStates currentStat
      182:	08 95       	ret
 
 00000184 <initialize>:
-		print_character(c);
-	}
-}
+#include <avr/pgmspace.h>
+
+	Junctions junction;	
 
 void initialize()
 {
@@ -376,12 +376,12 @@ static inline void delay(unsigned int milliseconds) { delay_ms(milliseconds); }
      22c:	08 95       	ret
 
 0000022e <motorControl>:
-		
+		}	
 	}
 }
 
 
-void motorControl(char x){
+void motorControl(char x){													// function that controlls the motor movement and the turns
      22e:	cf 93       	push	r28
      230:	c8 2f       	mov	r28, r24
 	read_line(sensors,IR_EMITTERS_ON);
@@ -390,10 +390,10 @@ void motorControl(char x){
      236:	91 e0       	ldi	r25, 0x01	; 1
      238:	0e 94 84 0a 	call	0x1508	; 0x1508 <read_line>
 	
-	if(x == 'N')
+	if(x == 'N')															//Emergency Brake
      23c:	ce 34       	cpi	r28, 0x4E	; 78
      23e:	39 f4       	brne	.+14     	; 0x24e <motorControl+0x20>
-	set_motors(0,0);
+		set_motors(0,0);	
      240:	60 e0       	ldi	r22, 0x00	; 0
      242:	70 e0       	ldi	r23, 0x00	; 0
      244:	80 e0       	ldi	r24, 0x00	; 0
@@ -402,7 +402,7 @@ void motorControl(char x){
      24c:	ba c0       	rjmp	.+372    	; 0x3c2 <motorControl+0x194>
 	
 	
-	else if(x == 'L'){										//turn left
+	else if(x == 'L'){														//Turn Left
      24e:	cc 34       	cpi	r28, 0x4C	; 76
      250:	09 f5       	brne	.+66     	; 0x294 <motorControl+0x66>
 		set_motors(-50,50);
@@ -411,19 +411,20 @@ void motorControl(char x){
      256:	8e ec       	ldi	r24, 0xCE	; 206
      258:	9f ef       	ldi	r25, 0xFF	; 255
      25a:	0e 94 b4 09 	call	0x1368	; 0x1368 <set_motors>
-		while (sensors[2] >=500){
+		
+		while (sensors[2] >=500)
      25e:	05 c0       	rjmp	.+10     	; 0x26a <motorControl+0x3c>
 			read_line(sensors,IR_EMITTERS_ON);
      260:	61 e0       	ldi	r22, 0x01	; 1
      262:	8b e9       	ldi	r24, 0x9B	; 155
      264:	91 e0       	ldi	r25, 0x01	; 1
      266:	0e 94 84 0a 	call	0x1508	; 0x1508 <read_line>
-	set_motors(0,0);
 	
 	
-	else if(x == 'L'){										//turn left
+	else if(x == 'L'){														//Turn Left
 		set_motors(-50,50);
-		while (sensors[2] >=500){
+		
+		while (sensors[2] >=500)
      26a:	80 91 9f 01 	lds	r24, 0x019F	; 0x80019f <sensors+0x4>
      26e:	90 91 a0 01 	lds	r25, 0x01A0	; 0x8001a0 <sensors+0x5>
      272:	84 3f       	cpi	r24, 0xF4	; 244
@@ -431,19 +432,18 @@ void motorControl(char x){
      276:	a0 f7       	brcc	.-24     	; 0x260 <motorControl+0x32>
      278:	05 c0       	rjmp	.+10     	; 0x284 <motorControl+0x56>
 			read_line(sensors,IR_EMITTERS_ON);
-		}
-		while (sensors[2] <=500){
+		while (sensors[2] <=500)
 			read_line(sensors,IR_EMITTERS_ON);
      27a:	61 e0       	ldi	r22, 0x01	; 1
      27c:	8b e9       	ldi	r24, 0x9B	; 155
      27e:	91 e0       	ldi	r25, 0x01	; 1
      280:	0e 94 84 0a 	call	0x1508	; 0x1508 <read_line>
-	else if(x == 'L'){										//turn left
+	else if(x == 'L'){														//Turn Left
 		set_motors(-50,50);
-		while (sensors[2] >=500){
+		
+		while (sensors[2] >=500)
 			read_line(sensors,IR_EMITTERS_ON);
-		}
-		while (sensors[2] <=500){
+		while (sensors[2] <=500)
      284:	80 91 9f 01 	lds	r24, 0x019F	; 0x80019f <sensors+0x4>
      288:	90 91 a0 01 	lds	r25, 0x01A0	; 0x8001a0 <sensors+0x5>
      28c:	85 3f       	cpi	r24, 0xF5	; 245
@@ -451,10 +451,10 @@ void motorControl(char x){
      290:	a0 f3       	brcs	.-24     	; 0x27a <motorControl+0x4c>
      292:	97 c0       	rjmp	.+302    	; 0x3c2 <motorControl+0x194>
 			read_line(sensors,IR_EMITTERS_ON);
-		}
 	}
 	
-	else if(x == 'R'){									//turn right
+	
+	else if(x == 'R'){														//Turn Right
      294:	c2 35       	cpi	r28, 0x52	; 82
      296:	09 f5       	brne	.+66     	; 0x2da <motorControl+0xac>
 		set_motors(50,-50);
@@ -463,19 +463,20 @@ void motorControl(char x){
      29c:	82 e3       	ldi	r24, 0x32	; 50
      29e:	90 e0       	ldi	r25, 0x00	; 0
      2a0:	0e 94 b4 09 	call	0x1368	; 0x1368 <set_motors>
-		while (sensors[2] >=500){
+		
+		while (sensors[2] >=500)
      2a4:	05 c0       	rjmp	.+10     	; 0x2b0 <motorControl+0x82>
 			read_line(sensors,IR_EMITTERS_ON);
      2a6:	61 e0       	ldi	r22, 0x01	; 1
      2a8:	8b e9       	ldi	r24, 0x9B	; 155
      2aa:	91 e0       	ldi	r25, 0x01	; 1
      2ac:	0e 94 84 0a 	call	0x1508	; 0x1508 <read_line>
-		}
-	}
 	
-	else if(x == 'R'){									//turn right
+	
+	else if(x == 'R'){														//Turn Right
 		set_motors(50,-50);
-		while (sensors[2] >=500){
+		
+		while (sensors[2] >=500)
      2b0:	80 91 9f 01 	lds	r24, 0x019F	; 0x80019f <sensors+0x4>
      2b4:	90 91 a0 01 	lds	r25, 0x01A0	; 0x8001a0 <sensors+0x5>
      2b8:	84 3f       	cpi	r24, 0xF4	; 244
@@ -483,19 +484,18 @@ void motorControl(char x){
      2bc:	a0 f7       	brcc	.-24     	; 0x2a6 <motorControl+0x78>
      2be:	05 c0       	rjmp	.+10     	; 0x2ca <motorControl+0x9c>
 			read_line(sensors,IR_EMITTERS_ON);
-		}
-		while (sensors[2] <=500){
+		while (sensors[2] <=500)
 			read_line(sensors,IR_EMITTERS_ON);
      2c0:	61 e0       	ldi	r22, 0x01	; 1
      2c2:	8b e9       	ldi	r24, 0x9B	; 155
      2c4:	91 e0       	ldi	r25, 0x01	; 1
      2c6:	0e 94 84 0a 	call	0x1508	; 0x1508 <read_line>
-	else if(x == 'R'){									//turn right
+	else if(x == 'R'){														//Turn Right
 		set_motors(50,-50);
-		while (sensors[2] >=500){
+		
+		while (sensors[2] >=500)
 			read_line(sensors,IR_EMITTERS_ON);
-		}
-		while (sensors[2] <=500){
+		while (sensors[2] <=500)
      2ca:	80 91 9f 01 	lds	r24, 0x019F	; 0x80019f <sensors+0x4>
      2ce:	90 91 a0 01 	lds	r25, 0x01A0	; 0x8001a0 <sensors+0x5>
      2d2:	85 3f       	cpi	r24, 0xF5	; 245
@@ -503,10 +503,10 @@ void motorControl(char x){
      2d6:	a0 f3       	brcs	.-24     	; 0x2c0 <motorControl+0x92>
      2d8:	74 c0       	rjmp	.+232    	; 0x3c2 <motorControl+0x194>
 			read_line(sensors,IR_EMITTERS_ON);
-		}
 	}
-	
-	else if(x == 'S'){									//drive straight and corrects the adjusment of the robot if it aint straight
+		
+			
+	else if(x == 'S'){														//drive straight and adjusts the robot so it follows the line
      2da:	c3 35       	cpi	r28, 0x53	; 83
      2dc:	89 f5       	brne	.+98     	; 0x340 <motorControl+0x112>
 		set_motors(50,50);
@@ -555,7 +555,8 @@ void motorControl(char x){
      33e:	41 c0       	rjmp	.+130    	; 0x3c2 <motorControl+0x194>
 	}
 	
-	else if(x == 'B'){									// reverse
+	
+	else if(x == 'B'){														//Reverse while following the line
      340:	c2 34       	cpi	r28, 0x42	; 66
      342:	09 f5       	brne	.+66     	; 0x386 <motorControl+0x158>
 		set_motors(-50,-50);
@@ -564,13 +565,14 @@ void motorControl(char x){
      348:	8e ec       	ldi	r24, 0xCE	; 206
      34a:	9f ef       	ldi	r25, 0xFF	; 255
      34c:	0e 94 b4 09 	call	0x1368	; 0x1368 <set_motors>
+		
 		if (sensors[3] >=400)
      350:	80 91 a1 01 	lds	r24, 0x01A1	; 0x8001a1 <sensors+0x6>
      354:	90 91 a2 01 	lds	r25, 0x01A2	; 0x8001a2 <sensors+0x7>
      358:	80 39       	cpi	r24, 0x90	; 144
      35a:	91 40       	sbci	r25, 0x01	; 1
      35c:	30 f0       	brcs	.+12     	; 0x36a <motorControl+0x13c>
-		set_motors(-50,-55);
+			set_motors(-50,-55);
      35e:	69 ec       	ldi	r22, 0xC9	; 201
      360:	7f ef       	ldi	r23, 0xFF	; 255
      362:	8e ec       	ldi	r24, 0xCE	; 206
@@ -582,7 +584,7 @@ void motorControl(char x){
      372:	80 39       	cpi	r24, 0x90	; 144
      374:	91 40       	sbci	r25, 0x01	; 1
      376:	28 f1       	brcs	.+74     	; 0x3c2 <motorControl+0x194>
-		set_motors(-55,-50);
+			set_motors(-55,-50);
      378:	6e ec       	ldi	r22, 0xCE	; 206
      37a:	7f ef       	ldi	r23, 0xFF	; 255
      37c:	89 ec       	ldi	r24, 0xC9	; 201
@@ -590,7 +592,9 @@ void motorControl(char x){
      380:	0e 94 b4 09 	call	0x1368	; 0x1368 <set_motors>
      384:	1e c0       	rjmp	.+60     	; 0x3c2 <motorControl+0x194>
 	}
-	else if(x == 'T'){									// Turn around
+	
+	
+	else if(x == 'T'){														// Turn around
      386:	c4 35       	cpi	r28, 0x54	; 84
      388:	a1 f4       	brne	.+40     	; 0x3b2 <motorControl+0x184>
 		set_motors(-75,75);
@@ -599,19 +603,20 @@ void motorControl(char x){
      38e:	85 eb       	ldi	r24, 0xB5	; 181
      390:	9f ef       	ldi	r25, 0xFF	; 255
      392:	0e 94 b4 09 	call	0x1368	; 0x1368 <set_motors>
-		while (sensors[2] >=500){
+		
+		while (sensors[2] >=500)
      396:	05 c0       	rjmp	.+10     	; 0x3a2 <motorControl+0x174>
 			read_line(sensors,IR_EMITTERS_ON);
      398:	61 e0       	ldi	r22, 0x01	; 1
      39a:	8b e9       	ldi	r24, 0x9B	; 155
      39c:	91 e0       	ldi	r25, 0x01	; 1
      39e:	0e 94 84 0a 	call	0x1508	; 0x1508 <read_line>
-		if (sensors[1] >=400)
-		set_motors(-55,-50);
-	}
-	else if(x == 'T'){									// Turn around
+	
+	
+	else if(x == 'T'){														// Turn around
 		set_motors(-75,75);
-		while (sensors[2] >=500){
+		
+		while (sensors[2] >=500)
      3a2:	80 91 9f 01 	lds	r24, 0x019F	; 0x80019f <sensors+0x4>
      3a6:	90 91 a0 01 	lds	r25, 0x01A0	; 0x8001a0 <sensors+0x5>
      3aa:	84 3f       	cpi	r24, 0xF4	; 244
@@ -619,13 +624,14 @@ void motorControl(char x){
      3ae:	a0 f7       	brcc	.-24     	; 0x398 <motorControl+0x16a>
      3b0:	08 c0       	rjmp	.+16     	; 0x3c2 <motorControl+0x194>
 			read_line(sensors,IR_EMITTERS_ON);
-		}
 	}
 	
-	else if(x == 'P'){									// robot stopt rustig met rijden
+	
+	else if(x == 'P'){														//Robot stops on a slow paste
      3b2:	c0 35       	cpi	r28, 0x50	; 80
      3b4:	31 f4       	brne	.+12     	; 0x3c2 <motorControl+0x194>
-		for( int i=50;i==10;i-=3){
+		for( int i=50;i==10;i-=3)
+		{
 			set_motors(i,i);
 			delay(1);
 		}
@@ -636,6 +642,8 @@ void motorControl(char x){
      3bc:	90 e0       	ldi	r25, 0x00	; 0
      3be:	0e 94 b4 09 	call	0x1368	; 0x1368 <set_motors>
 		}
+		
+		
      3c2:	cf 91       	pop	r28
      3c4:	08 95       	ret
 
@@ -643,15 +651,15 @@ void motorControl(char x){
 	set_motors(0,0);
 }
 
-char lineType(){																											// function that returns the type of junction it detects
-	while(1){																												// >= 500 = black line		<=500 = white
+char lineType(){																																	// function that returns the type of junction it detects
+	while(1){																																		// >= 500 = black line		<=500 = white
 		read_line(sensors,IR_EMITTERS_ON);
      3c6:	61 e0       	ldi	r22, 0x01	; 1
      3c8:	8b e9       	ldi	r24, 0x9B	; 155
      3ca:	91 e0       	ldi	r25, 0x01	; 1
      3cc:	0e 94 84 0a 	call	0x1508	; 0x1508 <read_line>
 		
-		if (sensors[1] >=500 && sensors[3] >= 500){																			// this checks if its a X junction or a T junction
+		if (sensors[1] >=500 && sensors[3] >= 500){																									//Checks if its a X junction or a T junction
      3d0:	80 91 9d 01 	lds	r24, 0x019D	; 0x80019d <sensors+0x2>
      3d4:	90 91 9e 01 	lds	r25, 0x019E	; 0x80019e <sensors+0x3>
      3d8:	84 3f       	cpi	r24, 0xF4	; 244
@@ -678,14 +686,15 @@ char lineType(){																											// function that returns the type of 
      406:	91 40       	sbci	r25, 0x01	; 1
      408:	08 f4       	brcc	.+2      	; 0x40c <__EEPROM_REGION_LENGTH__+0xc>
      40a:	90 c0       	rjmp	.+288    	; 0x52c <__EEPROM_REGION_LENGTH__+0x12c>
-			return X_junction;
+				return X_junction;
      40c:	88 e0       	ldi	r24, 0x08	; 8
      40e:	08 95       	ret
 			else
-			return T_junction;
+				return T_junction;
 		}
-		
-		else if (sensors[1] >=500 && sensors[0] >= 500){																// this function checks if its a left corner or a straight with left corner
+			
+			
+		else if (sensors[1] >=500 && sensors[0] >= 500){																							//Checks if its a left corner or a straight with left corner
      410:	84 3f       	cpi	r24, 0xF4	; 244
      412:	21 e0       	ldi	r18, 0x01	; 1
      414:	92 07       	cpc	r25, r18
@@ -716,14 +725,15 @@ char lineType(){																											// function that returns the type of 
      44e:	91 40       	sbci	r25, 0x01	; 1
      450:	08 f4       	brcc	.+2      	; 0x454 <__EEPROM_REGION_LENGTH__+0x54>
      452:	70 c0       	rjmp	.+224    	; 0x534 <__EEPROM_REGION_LENGTH__+0x134>
-			return Straight_left_junction;
+				return Straight_left_junction;
      454:	86 e0       	ldi	r24, 0x06	; 6
      456:	08 95       	ret
 			else
-			return Left_corner;
+				return Left_corner;
 		}
 		
-		else if (sensors[3] >=500 && sensors[4] >= 500){																	// this function checks if its a right corner or a straight with right corner
+		
+		else if (sensors[3] >=500 && sensors[4] >= 500){																							//Checks if its a right corner or a straight with right corner
      458:	40 91 a1 01 	lds	r20, 0x01A1	; 0x8001a1 <sensors+0x6>
      45c:	50 91 a2 01 	lds	r21, 0x01A2	; 0x8001a2 <sensors+0x7>
      460:	44 3f       	cpi	r20, 0xF4	; 244
@@ -756,14 +766,15 @@ char lineType(){																											// function that returns the type of 
      49e:	91 40       	sbci	r25, 0x01	; 1
      4a0:	08 f4       	brcc	.+2      	; 0x4a4 <__EEPROM_REGION_LENGTH__+0xa4>
      4a2:	4c c0       	rjmp	.+152    	; 0x53c <__EEPROM_REGION_LENGTH__+0x13c>
-			return Straight_right_junction;
+				return Straight_right_junction;
      4a4:	85 e0       	ldi	r24, 0x05	; 5
      4a6:	08 95       	ret
 			else
-			return Right_corner;
+				return Right_corner;
 		}
 		
-		else if(sensors[2] <=200){																						// check if the line ends
+		
+		else if(sensors[2] <=200){																													// check if the line ends
      4a8:	20 91 9f 01 	lds	r18, 0x019F	; 0x80019f <sensors+0x4>
      4ac:	30 91 a0 01 	lds	r19, 0x01A0	; 0x8001a0 <sensors+0x5>
      4b0:	29 3c       	cpi	r18, 0xC9	; 201
@@ -774,13 +785,13 @@ char lineType(){																											// function that returns the type of 
 		}
 
 		
-		else if (sensors[2] >=500){
+		else if (sensors[2] >=500){																													//Checks if the line is straight
      4b8:	24 3f       	cpi	r18, 0xF4	; 244
      4ba:	61 e0       	ldi	r22, 0x01	; 1
      4bc:	36 07       	cpc	r19, r22
      4be:	08 f4       	brcc	.+2      	; 0x4c2 <__EEPROM_REGION_LENGTH__+0xc2>
      4c0:	82 cf       	rjmp	.-252    	; 0x3c6 <lineType>
-			if ((sensors[2] >=500 && sensors[3] <=500 && sensors[4] >=500) && (sensors[0] >=500 && sensors[1] <=500 && sensors[2] >=500)){
+			if ((sensors[2] >=500 && sensors[3] <=500 && sensors[4] >=500) && (sensors[0] >=500 && sensors[1] <=500 && sensors[2] >=500))			//Checks the line for a "Barcode"
      4c2:	24 3f       	cpi	r18, 0xF4	; 244
      4c4:	61 e0       	ldi	r22, 0x01	; 1
      4c6:	36 07       	cpc	r19, r22
@@ -805,18 +816,18 @@ char lineType(){																											// function that returns the type of 
      4f4:	31 40       	sbci	r19, 0x01	; 1
      4f6:	50 f4       	brcc	.+20     	; 0x50c <__EEPROM_REGION_LENGTH__+0x10c>
 					motorControl('S');
-				}		// checks if it detects the "barcode"
+				}
 				return Barcode;
 			}
 			else
-			return Straight;																						// check if its straight without any corners
+				return Straight;																									// check if its straight without any corners
      4f8:	80 e0       	ldi	r24, 0x00	; 0
      4fa:	08 95       	ret
-
-		
-		else if (sensors[2] >=500){
-			if ((sensors[2] >=500 && sensors[3] <=500 && sensors[4] >=500) && (sensors[0] >=500 && sensors[1] <=500 && sensors[2] >=500)){
-				while(sensors[4] >= 400 || sensors[0] >=400){
+		else if (sensors[2] >=500){																													//Checks if the line is straight
+			if ((sensors[2] >=500 && sensors[3] <=500 && sensors[4] >=500) && (sensors[0] >=500 && sensors[1] <=500 && sensors[2] >=500))			//Checks the line for a "Barcode"
+			{
+				while(sensors[4] >= 400 || sensors[0] >=400)
+				{
 					read_line(sensors,IR_EMITTERS_ON);
      4fc:	61 e0       	ldi	r22, 0x01	; 1
      4fe:	8b e9       	ldi	r24, 0x9B	; 155
@@ -825,12 +836,12 @@ char lineType(){																											// function that returns the type of 
 					motorControl('S');
      506:	83 e5       	ldi	r24, 0x53	; 83
      508:	0e 94 17 01 	call	0x22e	; 0x22e <motorControl>
-		}
 
 		
-		else if (sensors[2] >=500){
-			if ((sensors[2] >=500 && sensors[3] <=500 && sensors[4] >=500) && (sensors[0] >=500 && sensors[1] <=500 && sensors[2] >=500)){
-				while(sensors[4] >= 400 || sensors[0] >=400){
+		else if (sensors[2] >=500){																													//Checks if the line is straight
+			if ((sensors[2] >=500 && sensors[3] <=500 && sensors[4] >=500) && (sensors[0] >=500 && sensors[1] <=500 && sensors[2] >=500))			//Checks the line for a "Barcode"
+			{
+				while(sensors[4] >= 400 || sensors[0] >=400)
      50c:	80 91 a3 01 	lds	r24, 0x01A3	; 0x8001a3 <sensors+0x8>
      510:	90 91 a4 01 	lds	r25, 0x01A4	; 0x8001a4 <sensors+0x9>
      514:	80 39       	cpi	r24, 0x90	; 144
@@ -841,56 +852,58 @@ char lineType(){																											// function that returns the type of 
      522:	80 39       	cpi	r24, 0x90	; 144
      524:	91 40       	sbci	r25, 0x01	; 1
      526:	50 f7       	brcc	.-44     	; 0x4fc <__EEPROM_REGION_LENGTH__+0xfc>
+				{
 					read_line(sensors,IR_EMITTERS_ON);
 					motorControl('S');
-				}		// checks if it detects the "barcode"
+				}
 				return Barcode;
      528:	82 e0       	ldi	r24, 0x02	; 2
      52a:	08 95       	ret
 			read_line(sensors,IR_EMITTERS_ON);
 			
 			if (sensors[2] >=500)
-			return X_junction;
+				return X_junction;
 			else
-			return T_junction;
+				return T_junction;
      52c:	87 e0       	ldi	r24, 0x07	; 7
      52e:	08 95       	ret
-		else if (sensors[1] >=500 && sensors[0] >= 500){																// this function checks if its a left corner or a straight with left corner
+		else if (sensors[1] >=500 && sensors[0] >= 500){																							//Checks if its a left corner or a straight with left corner
 			inch();
 			read_line(sensors,IR_EMITTERS_ON);
 			
 			if (sensors[2] >= 500 || sensors[3] >=500)
-			return Straight_left_junction;
+				return Straight_left_junction;
      530:	86 e0       	ldi	r24, 0x06	; 6
      532:	08 95       	ret
 			else
-			return Left_corner;
+				return Left_corner;
      534:	83 e0       	ldi	r24, 0x03	; 3
      536:	08 95       	ret
-		else if (sensors[3] >=500 && sensors[4] >= 500){																	// this function checks if its a right corner or a straight with right corner
+		else if (sensors[3] >=500 && sensors[4] >= 500){																							//Checks if its a right corner or a straight with right corner
 			inch();
 			read_line(sensors,IR_EMITTERS_ON);
 			
 			if (sensors[2] >= 500 || sensors[1] >=500)
-			return Straight_right_junction;
+				return Straight_right_junction;
      538:	85 e0       	ldi	r24, 0x05	; 5
      53a:	08 95       	ret
 			else
-			return Right_corner;
+				return Right_corner;
      53c:	84 e0       	ldi	r24, 0x04	; 4
      53e:	08 95       	ret
 		}
 		
-		else if(sensors[2] <=200){																						// check if the line ends
+		
+		else if(sensors[2] <=200){																													// check if the line ends
 			return Line_end;
      540:	81 e0       	ldi	r24, 0x01	; 1
      542:	08 95       	ret
 					motorControl('S');
-				}		// checks if it detects the "barcode"
+				}
 				return Barcode;
 			}
 			else
-			return Straight;																						// check if its straight without any corners
+				return Straight;																									// check if its straight without any corners
      544:	80 e0       	ldi	r24, 0x00	; 0
      546:	08 95       	ret
      548:	80 e0       	ldi	r24, 0x00	; 0
@@ -901,8 +914,7 @@ char lineType(){																											// function that returns the type of 
      552:	08 95       	ret
      554:	80 e0       	ldi	r24, 0x00	; 0
 			
-		}
-		
+		}	
 	}
 }
      556:	08 95       	ret

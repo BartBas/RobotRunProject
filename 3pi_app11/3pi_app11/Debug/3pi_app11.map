@@ -31,7 +31,7 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib\libpololu_atmega328p.a(OrangutanAnalog.o)
                               display.o (read_battery_millivolts_3pi)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib\libpololu_atmega328p.a(OrangutanLCD.o)
-                              movementManagement.o (print_character)
+                              display.o (clear)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib\libpololu_atmega328p.a(OrangutanMotors.o)
                               movementManagement.o (set_motors)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib\libpololu_atmega328p.a(OrangutanPushbuttons.o)
@@ -63,7 +63,7 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_dtors.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib\libpololu_atmega328p.a(Pololu3pi.o) (__do_global_dtors)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_umulhisi3.o)
-                              movementManagement.o (__umulhisi3)
+                              c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib\libpololu_atmega328p.a(OrangutanAnalog.o) (__umulhisi3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muluhisi3.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib\libpololu_atmega328p.a(PololuQTRSensors.o) (__muluhisi3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_mulshisi3.o)
@@ -125,9 +125,6 @@ Discarded input sections
  .bss           0x00000000        0x0 movementManagement.o
  .text._pololu_atmel_studio_6_workaround
                 0x00000000        0xc movementManagement.o
- .rodata        0x00000000        0xa movementManagement.o
- .text.display_readings
-                0x00000000       0x86 movementManagement.o
  .data.w.2175   0x00000000        0x1 movementManagement.o
  .text          0x00000000        0x0 parcour.o
  .data          0x00000000        0x0 parcour.o
@@ -1427,68 +1424,68 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x108
+.debug_aranges  0x00000000      0x100
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x38 display.o
  .debug_aranges
                 0x00000038       0x28 main.o
  .debug_aranges
-                0x00000060       0x48 movementManagement.o
+                0x00000060       0x40 movementManagement.o
  .debug_aranges
-                0x000000a8       0x60 warehouse.o
+                0x000000a0       0x60 warehouse.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x1a69
+.debug_info     0x00000000     0x19d1
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_info    0x000005f4      0x35e display.o
  .debug_info    0x00000952      0x11f main.o
- .debug_info    0x00000a71      0x781 movementManagement.o
- .debug_info    0x000011f2      0x877 warehouse.o
+ .debug_info    0x00000a71      0x6e9 movementManagement.o
+ .debug_info    0x0000115a      0x877 warehouse.o
 
-.debug_abbrev   0x00000000      0xc17
+.debug_abbrev   0x00000000      0xbd1
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x5a2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_abbrev  0x000005a2      0x16a display.o
  .debug_abbrev  0x0000070c       0xbc main.o
- .debug_abbrev  0x000007c8      0x1f5 movementManagement.o
- .debug_abbrev  0x000009bd      0x25a warehouse.o
+ .debug_abbrev  0x000007c8      0x1af movementManagement.o
+ .debug_abbrev  0x00000977      0x25a warehouse.o
 
-.debug_line     0x00000000     0x117b
+.debug_line     0x00000000     0x112a
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x134 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_line    0x00000134      0x280 display.o
  .debug_line    0x000003b4      0x1f5 main.o
- .debug_line    0x000005a9      0x6b8 movementManagement.o
- .debug_line    0x00000c61      0x51a warehouse.o
+ .debug_line    0x000005a9      0x667 movementManagement.o
+ .debug_line    0x00000c10      0x51a warehouse.o
 
-.debug_frame    0x00000000      0x2dc
+.debug_frame    0x00000000      0x2ac
  *(.debug_frame)
  .debug_frame   0x00000000       0x70 display.o
  .debug_frame   0x00000070       0x34 main.o
- .debug_frame   0x000000a4       0xa8 movementManagement.o
- .debug_frame   0x0000014c      0x190 warehouse.o
+ .debug_frame   0x000000a4       0x78 movementManagement.o
+ .debug_frame   0x0000011c      0x190 warehouse.o
 
-.debug_str      0x00000000      0x7a4
+.debug_str      0x00000000      0x75e
  *(.debug_str)
  .debug_str     0x00000000      0x208 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_str     0x00000208      0x256 display.o
                                 0x28a (size before relaxing)
  .debug_str     0x0000045e       0x7f main.o
                                 0x1be (size before relaxing)
- .debug_str     0x000004dd      0x1dd movementManagement.o
-                                0x348 (size before relaxing)
- .debug_str     0x000006ba       0xea warehouse.o
+ .debug_str     0x000004dd      0x197 movementManagement.o
+                                0x302 (size before relaxing)
+ .debug_str     0x00000674       0xea warehouse.o
                                 0x38c (size before relaxing)
 
-.debug_loc      0x00000000      0x985
+.debug_loc      0x00000000      0x8ae
  *(.debug_loc)
  .debug_loc     0x00000000      0x106 display.o
- .debug_loc     0x00000106      0x18d movementManagement.o
- .debug_loc     0x00000293      0x6f2 warehouse.o
+ .debug_loc     0x00000106       0xb6 movementManagement.o
+ .debug_loc     0x000001bc      0x6f2 warehouse.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1508,12 +1505,12 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000       0xe0
+.debug_ranges   0x00000000       0xd8
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x28 display.o
  .debug_ranges  0x00000028       0x18 main.o
- .debug_ranges  0x00000040       0x38 movementManagement.o
- .debug_ranges  0x00000078       0x68 warehouse.o
+ .debug_ranges  0x00000040       0x30 movementManagement.o
+ .debug_ranges  0x00000070       0x68 warehouse.o
 
 .debug_macro
  *(.debug_macro)

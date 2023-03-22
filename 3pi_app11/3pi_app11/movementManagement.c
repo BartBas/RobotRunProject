@@ -15,19 +15,6 @@ unsigned int position;
 
 	Junctions junction;	
 
-
-
-void display_readings(const unsigned int *calibrated_values)
-{
-	unsigned char i;
-	
-	for(i=0;i<5;i++) {
-		const char display_characters[10] = {' ',0,0,1,2,3,4,5,6,255};		// Initialize the array of characters that we will use for the
-		char c = display_characters[calibrated_values[i]/101];			    // The variable c will have values from 0 to 9, since
-		print_character(c);
-	}
-}
-
 void initialize()
 {
 	unsigned int counter; // used as a simple timer
@@ -62,90 +49,94 @@ void inch(){
 	set_motors(0,0);
 }
 
-char lineType(){																											// function that returns the type of junction it detects
-	while(1){																												// >= 500 = black line		<=500 = white
+char lineType(){																																	// function that returns the type of junction it detects
+	while(1){																																		// >= 500 = black line		<=500 = white
 		read_line(sensors,IR_EMITTERS_ON);
 		
-		if (sensors[1] >=500 && sensors[3] >= 500){																			// this checks if its a X junction or a T junction
+		if (sensors[1] >=500 && sensors[3] >= 500){																									//Checks if its a X junction or a T junction
 			inch();
 			read_line(sensors,IR_EMITTERS_ON);
 			
 			if (sensors[2] >=500)
-			return X_junction;
+				return X_junction;
 			else
-			return T_junction;
+				return T_junction;
 		}
-		
-		else if (sensors[1] >=500 && sensors[0] >= 500){																// this function checks if its a left corner or a straight with left corner
+			
+			
+		else if (sensors[1] >=500 && sensors[0] >= 500){																							//Checks if its a left corner or a straight with left corner
 			inch();
 			read_line(sensors,IR_EMITTERS_ON);
 			
 			if (sensors[2] >= 500 || sensors[3] >=500)
-			return Straight_left_junction;
+				return Straight_left_junction;
 			else
-			return Left_corner;
+				return Left_corner;
 		}
 		
-		else if (sensors[3] >=500 && sensors[4] >= 500){																	// this function checks if its a right corner or a straight with right corner
+		
+		else if (sensors[3] >=500 && sensors[4] >= 500){																							//Checks if its a right corner or a straight with right corner
 			inch();
 			read_line(sensors,IR_EMITTERS_ON);
 			
 			if (sensors[2] >= 500 || sensors[1] >=500)
-			return Straight_right_junction;
+				return Straight_right_junction;
 			else
-			return Right_corner;
+				return Right_corner;
 		}
 		
-		else if(sensors[2] <=200){																						// check if the line ends
+		
+		else if(sensors[2] <=200){																													// check if the line ends
 			return Line_end;
 		}
 
 		
-		else if (sensors[2] >=500){
-			if ((sensors[2] >=500 && sensors[3] <=500 && sensors[4] >=500) && (sensors[0] >=500 && sensors[1] <=500 && sensors[2] >=500)){
-				while(sensors[4] >= 400 || sensors[0] >=400){
+		else if (sensors[2] >=500){																													//Checks if the line is straight
+			if ((sensors[2] >=500 && sensors[3] <=500 && sensors[4] >=500) && (sensors[0] >=500 && sensors[1] <=500 && sensors[2] >=500))			//Checks the line for a "Barcode"
+			{
+				while(sensors[4] >= 400 || sensors[0] >=400)
+				{
 					read_line(sensors,IR_EMITTERS_ON);
 					motorControl('S');
-				}		// checks if it detects the "barcode"
+				}
 				return Barcode;
 			}
 			else
-			return Straight;																						// check if its straight without any corners
+				return Straight;																									// check if its straight without any corners
 			
-		}
-		
+		}	
 	}
 }
 
 
-void motorControl(char x){
+void motorControl(char x){													// function that controlls the motor movement and the turns
 	read_line(sensors,IR_EMITTERS_ON);
 	
-	if(x == 'N')
-	set_motors(0,0);
+	if(x == 'N')															//Emergency Brake
+		set_motors(0,0);	
 	
 	
-	else if(x == 'L'){										//turn left
+	else if(x == 'L'){														//Turn Left
 		set_motors(-50,50);
-		while (sensors[2] >=500){
+		
+		while (sensors[2] >=500)
 			read_line(sensors,IR_EMITTERS_ON);
-		}
-		while (sensors[2] <=500){
+		while (sensors[2] <=500)
 			read_line(sensors,IR_EMITTERS_ON);
-		}
 	}
 	
-	else if(x == 'R'){									//turn right
+	
+	else if(x == 'R'){														//Turn Right
 		set_motors(50,-50);
-		while (sensors[2] >=500){
+		
+		while (sensors[2] >=500)
 			read_line(sensors,IR_EMITTERS_ON);
-		}
-		while (sensors[2] <=500){
+		while (sensors[2] <=500)
 			read_line(sensors,IR_EMITTERS_ON);
-		}
 	}
-	
-	else if(x == 'S'){									//drive straight and corrects the adjusment of the robot if it aint straight
+		
+			
+	else if(x == 'S'){														//drive straight and adjusts the robot so it follows the line
 		set_motors(50,50);
 		
 		if (sensors[3] >= 600 && sensors[4] <= 300 )
@@ -154,25 +145,33 @@ void motorControl(char x){
 			set_motors(40,120);
 	}
 	
-	else if(x == 'B'){									// reverse
+	
+	else if(x == 'B'){														//Reverse while following the line
 		set_motors(-50,-50);
+		
 		if (sensors[3] >=400)
-		set_motors(-50,-55);
+			set_motors(-50,-55);
 		if (sensors[1] >=400)
-		set_motors(-55,-50);
-	}
-	else if(x == 'T'){									// Turn around
-		set_motors(-75,75);
-		while (sensors[2] >=500){
-			read_line(sensors,IR_EMITTERS_ON);
-		}
+			set_motors(-55,-50);
 	}
 	
-	else if(x == 'P'){									// robot stopt rustig met rijden
-		for( int i=50;i==10;i-=3){
+	
+	else if(x == 'T'){														// Turn around
+		set_motors(-75,75);
+		
+		while (sensors[2] >=500)
+			read_line(sensors,IR_EMITTERS_ON);
+	}
+	
+	
+	else if(x == 'P'){														//Robot stops on a slow paste
+		for( int i=50;i==10;i-=3)
+		{
 			set_motors(i,i);
 			delay(1);
 		}
 		set_motors(0,0);
 		}
+		
+		
 }
