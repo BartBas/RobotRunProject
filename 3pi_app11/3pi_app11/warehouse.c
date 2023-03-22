@@ -45,12 +45,12 @@ void turnRobot(char direction, piRobot *myRobot)
                     motorControl('R');
                     myRobot->direction = 'E';
                 }
-                if(direction == 'W')
+                else if(direction == 'W')
                 {
                     motorControl('L');
                     myRobot->direction = 'W';
                 }
-                if(direction == 'S')
+                else if(direction == 'S')
                 {
                     motorControl('B');
                     myRobot->direction = 'S';
@@ -62,12 +62,12 @@ void turnRobot(char direction, piRobot *myRobot)
                     motorControl('R');
                     myRobot->direction = 'S';
                 }
-                if(direction == 'W')
+                else if(direction == 'W')
                 {
                     motorControl('L');
                     myRobot->direction = 'W';
                 }
-                if(direction == 'S')
+                else if(direction == 'S')
                 {
                     motorControl('B');
                     myRobot->direction = 'S';
@@ -79,12 +79,12 @@ void turnRobot(char direction, piRobot *myRobot)
                     motorControl('R');
                     myRobot->direction = 'W';
                 }
-                if(direction == 'E')
+                else if(direction == 'E')
                 {
                     motorControl('L');
                     myRobot->direction = 'E';
                 }
-                if(direction == 'N')
+                else if(direction == 'N')
                 {
                     motorControl('B');
                     myRobot->direction = 'N';
@@ -96,18 +96,24 @@ void turnRobot(char direction, piRobot *myRobot)
                     motorControl('R');
                     myRobot->direction = 'N';
                 }
-                if(direction == 'S')
+                else if(direction == 'S')
                 {
                     motorControl('L');
                     myRobot->direction = 'S';
                 }
-                if(direction == 'E')
+                else if(direction == 'E')
                 {
                     motorControl('B');
                     myRobot->direction = 'E';
                 }
                 break;
-        }
+		}
+		
+				if(myRobot->direction == direction)
+				{
+					changing = 0;
+				}
+		
     }
 }
 
@@ -167,7 +173,7 @@ void warehouse(void)
  robot.direction = 'W';
  robot.posX = 0;
  robot.posY = 0;
-   
+   motorControl('S');
 //int orderX[] = getWixel("posX");
 //int orderY[] = getWixel("posY");
 
