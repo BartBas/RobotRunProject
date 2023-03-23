@@ -186,7 +186,7 @@ void parcour(){
 		switch (situatie) {
 			case Barcode: // end of parcour
 			set_motors(0,0);
-			clear;
+			clear();
 			print("barcode");
 			while(1);
 			break;
@@ -217,9 +217,6 @@ void parcour(){
 int main()
 {
 	initialize();
-	print("parcour");
 	parcour();
-	
-				/*print("warehouse");
-			delay(10000);*/
+
 }
