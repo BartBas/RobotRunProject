@@ -1,6 +1,27 @@
 #include <pololu/3pi.h>
 #include <avr/pgmspace.h>
 
+typedef enum {					// enum for the corners and junctions
+	Straight,					// ?
+	Line_end,					//
+	Barcode,					// ?
+	
+	Left_corner,				// ?
+	Right_corner,				// ?
+	
+	Straight_right_junction,    // ?
+	Straight_left_junction,		// ?
+	T_junction,					// ?
+	
+	X_junction					// ?
+	
+} Junctions;
+
+Junctions junction;	
+Junctions situatie = Straight;
+unsigned int sensors[5]; // an array to hold sensor values
+unsigned int position;
+
 void initialize()
 {
 	unsigned int counter; // used as a simple timer
@@ -28,6 +49,13 @@ void initialize()
 	
 	clear();
 }
+
+void inch(){
+	set_motors(50,50);
+	delay(200);
+	set_motors(0,0);
+}
+
 char lineType(){																																	// function that returns the type of junction it detects
 	while(1){																																		// >= 500 = black line		<=500 = white
 		read_line(sensors,IR_EMITTERS_ON);
@@ -189,7 +217,7 @@ void parcour(){
 int main()
 {
 	initialize();
-	print(parcour);
+	print("parcour");
 	parcour();
 	
 				/*print("warehouse");
