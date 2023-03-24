@@ -16,13 +16,13 @@ char richting;
 
 Junctions situatie = Straight;
 
-char parcour(char *route) {
+char parcours_search(char *route) {
 	while(1) {
 		situatie = lineType();
 		
 		switch (situatie) {
 			case Barcode: // end of parcour
-				warehouse();
+				motorControl('P');
 				return 0;
 			
 			case X_junction:
@@ -31,18 +31,18 @@ char parcour(char *route) {
 			case Straight_left_junction:
 				motorControl('L');
 				richting = 'L';
-				strncat(route, &richting, 1);
+				//strncat(route, &richting, 1);
 				break;
 			
 			case Right_corner:
 				motorControl('R');
 				richting = 'R';
-				strncat(route, &richting, 1);
+				//strncat(route, &richting, 1);
 				break;
 			
 			case Straight_right_junction:
 				richting = 'S';
-				strncat(route, &richting, 1);
+				//strncat(route, &richting, 1);
 			case Straight:
 				motorControl('S');
 				break;
@@ -50,7 +50,7 @@ char parcour(char *route) {
 			case Line_end:
 				motorControl('T');
 				richting = 'T';
-				strncat(route, &richting, 1);
+				//strncat(route, &richting, 1);
 				break;
 		}
 		
@@ -72,4 +72,8 @@ char parcour(char *route) {
 		}
 	}
 	return 0;
+}
+
+void parcours() {
+	
 }

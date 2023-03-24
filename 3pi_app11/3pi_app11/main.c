@@ -13,17 +13,46 @@
 #include <pololu/3pi.h>
 #include <avr/pgmspace.h>
 
+const char welcome[] PROGMEM = ">g32>>c32";
 
 int main()
 {
-	clear();
 	pololu_3pi_init(2000);
+	play_from_program_space(welcome);
 	initialize();
+	updateDisplay(0, batteryPercentage(), mazeSolver);
+	parcoursSearch();
 	
+	while(1) 
+	{
+		if (read_battery_millivolts_3pi() < 0.6 * 5200) {
+			charge_3pi();
+		} else {
+			// if order
+			motorControl('S');
+			while (lineType() != Barcode){}
+			parcours();
+			warehouse();
+			parcours();
+			motorControl('S');
+			while (lineType() != Line_end){}
+		}
+	}
 	
+}
+
+void charge_3pi() {
 	
-	char parecour[20];
-	parcour(parecour);
-	print(parecour);
-	
+	while (lineType() != Barcode){motorControl('S');}
+	updateDisplay(0, batteryPercentage(), mazeSolver);
+	parcours();
+	warehouse(charging);
+	updateDisplay(0, batteryPercentage(), chargeMode);
+	// while robot full
+	warehouse(charging);
+	while (lineType() != Barcode){motorControl('S');}
+	updateDisplay(0, batteryPercentage(), mazeSolver);
+	parcours();
+	while (lineType() != Line_end){motorControl('S');}
+		motorControl('P');
 }

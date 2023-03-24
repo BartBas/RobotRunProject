@@ -16,9 +16,18 @@ typedef enum
 	homingMode//H
 }robotStates;
 
+typedef enum
+{
+	slipped,
+	emergency,
+	object,
+	batLow,
+	NoConnection
+	}errorStates;
 
-int batteryPercentage();
+
+float batteryPercentage();
 void updateDisplay(int orderPercent, int batteryPercent, robotStates currentState);
-void errorDisplay();
+void errorDisplay(errorStates error, int batteryPercent);
 
 #endif //DISPLAY_H_

@@ -52,10 +52,8 @@ void drive(int junctions)
 			motorControl('S');
 			break;
 			
-			case Line_end:
-				//motorControl('N');
-				break;
 			
+			case Line_end:
 			case X_junction:
 			case Left_corner:
 			case T_junction:
@@ -66,7 +64,7 @@ void drive(int junctions)
 				motorControl('S');
 				if(count == junctions)
 				{
-					motorControl('N');
+					motorControl('P');
 					driving = 0;
 				}
 				
@@ -81,11 +79,11 @@ void drive(int junctions)
 
 void waitForTurn()
 {
-	Junctions lijn;
-	delay(15);
-	while(lijn != Straight)
+	Junctions line;
+	delay(15);//Short delay so it won't accidentally think it found the line instantly
+	while(line != Straight)
 	{
-		lijn  = lineType();
+		line  = lineType();
 	}
 	motorControl('N');
 }
@@ -240,7 +238,7 @@ void moveY(int orderPos, piRobot *robot)
 }
 
 
-void warehouse(void)
+void warehouse(objective objective)
 {
  piRobot robot;
  robot.direction = 'W';
@@ -252,28 +250,53 @@ void warehouse(void)
     int orderX[] = {0,3,1,2,4};
     int orderY[] = {1,2,3,3,4};
 
-    int arrayGrootte = sizeof(orderX) / sizeof(orderX[0]);
-    bubbleSort(orderX, orderY, arrayGrootte);
+    int arraySize = sizeof(orderX) / sizeof(orderX[0]);
+    bubbleSort(orderX, orderY, arraySize);
 	
 	
 	 //motorControl('S');
 	//drive();
-	
-    for(int locaties = 0; locaties<arrayGrootte;locaties++)
-    {
-		float completed = locaties;
-		float total = arrayGrootte;
+	if(objective == orderPicking)
+	{
+		for(int locations = 0; locations<arraySize;locations++)
+		{
+			float completed = locations;
+			float total = arraySize;
 		
 		
-        moveX(orderX[locaties], &robot);
-		robot.posX = orderX[locaties];
-        moveY(orderY[locaties], &robot);
-		robot.posY = orderY[locaties];
-        delay(1000);//wait 1 second
+			moveX(orderX[locations], &robot);
+			robot.posX = orderX[locations];
+			moveY(orderY[locations], &robot);
+			robot.posY = orderY[locations];
+			delay(1000);//wait 1 second
 		
-        updateDisplay(((completed/total)*100),batteryPercentage(),logicsBot);
-    }
-    moveY(0, &robot);
-    moveX(0, &robot);
+			updateDisplay((((completed+1)/total)*100),batteryPercentage(),logicsBot);
+		}
+			moveY(0, &robot);
+			moveX(0, &robot);
+	}
+	else
+	{
+		static int charged = 0;
+		if(charged == 0)
+		{
+			drive(1);
+			motorControl('R');
+			drive(3);
+			motorControl('R');
+			drive(1);
+			charged = 1;
+		}
+		else
+		{
+			motorControl('T');
+			drive(1);
+			motorControl('L');
+			drive(3);
+			motorControl('L');
+			
+		}
+		
+	}
     //goHome();
 }

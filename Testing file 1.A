@@ -1,0 +1,222 @@
+#include <pololu/3pi.h>
+#include <avr/pgmspace.h>
+
+typedef enum {					// enum for the corners and junctions
+	Straight,					// ?
+	Line_end,					//
+	Barcode,					// ?
+	
+	Left_corner,				// ?
+	Right_corner,				// ?
+	
+	Straight_right_junction,    // ?
+	Straight_left_junction,		// ?
+	T_junction,					// ?
+	
+	X_junction					// ?
+	
+} Junctions;
+
+Junctions junction;	
+Junctions situatie = Straight;
+unsigned int sensors[5]; // an array to hold sensor values
+unsigned int position;
+
+void initialize()
+{
+	unsigned int counter; // used as a simple timer
+	
+	pololu_3pi_init(2000);
+	
+	while(!button_is_pressed(BUTTON_B)){}
+	wait_for_button_release(BUTTON_B);
+	delay_ms(1000);
+
+	for(counter=0;counter<80;counter++)
+	{
+		if(counter < 20 || counter >= 60)
+		set_motors(40,-40);
+		else
+		set_motors(-40,40);
+		calibrate_line_sensors(IR_EMITTERS_ON);
+		
+		delay_ms(20);
+	}
+	set_motors(0,0);
+	
+	while(!button_is_pressed(BUTTON_B)){}
+	wait_for_button_release(BUTTON_B);
+	
+	clear();
+}
+
+void inch(){
+	set_motors(50,50);
+	delay(200);
+	set_motors(0,0);
+}
+
+char lineType(){																																	// function that returns the type of junction it detects
+	while(1){																																		// >= 500 = black line		<=500 = white
+		read_line(sensors,IR_EMITTERS_ON);
+		
+		if (sensors[1] >=500 && sensors[3] >= 500){																									//Checks if its a X junction or a T junction
+			inch();
+			read_line(sensors,IR_EMITTERS_ON);
+			
+			if (sensors[2] >=500)
+			return X_junction;
+			else
+			return T_junction;
+		}
+		
+		
+		else if (sensors[1] >=500 && sensors[0] >= 500){																							//Checks if its a left corner or a straight with left corner
+			inch();
+			read_line(sensors,IR_EMITTERS_ON);
+			
+			if (sensors[2] >= 500 || sensors[3] >=500)
+			return Straight_left_junction;
+			else
+			return Left_corner;
+		}
+		
+		
+		else if (sensors[3] >=500 && sensors[4] >= 500){																							//Checks if its a right corner or a straight with right corner
+			inch();
+			read_line(sensors,IR_EMITTERS_ON);
+			
+			if (sensors[2] >= 500 || sensors[1] >=500)
+			return Straight_right_junction;
+			else
+			return Right_corner;
+		}
+		
+		
+		else if(sensors[2] <=200){																													// check if the line ends
+			return Line_end;
+		}
+
+		
+		else if (sensors[2] >=500){																													//Checks if the line is straight
+			if ((sensors[2] >=500 && sensors[3] <=500 && sensors[4] >=500) && (sensors[0] >=500 && sensors[1] <=500 && sensors[2] >=500))			//Checks the line for a "Barcode"
+			{
+				while(sensors[4] >= 400 || sensors[0] >=400)
+				{
+					read_line(sensors,IR_EMITTERS_ON);
+					motorControl('S');
+				}
+				return Barcode;
+			}
+			else
+			return Straight;																									// check if its straight without any corners
+			
+		}
+	}
+}
+void motorControl(char x){													// function that controlls the motor movement and the turns
+	read_line(sensors,IR_EMITTERS_ON);
+	
+	if(x == 'N')															//Emergency Brake
+	set_motors(0,0);
+	
+	
+	else if(x == 'L'){														//Turn Left
+		set_motors(-50,50);
+		
+		while (sensors[2] >=500)
+		read_line(sensors,IR_EMITTERS_ON);
+		while (sensors[2] <=500)
+		read_line(sensors,IR_EMITTERS_ON);
+	}
+	
+	
+	else if(x == 'R'){														//Turn Right
+		set_motors(50,-50);
+		
+		while (sensors[2] >=500)
+		read_line(sensors,IR_EMITTERS_ON);
+		while (sensors[2] <=500)
+		read_line(sensors,IR_EMITTERS_ON);
+	}
+	
+	
+	else if(x == 'S'){														//drive straight and adjusts the robot so it follows the line
+		set_motors(50,50);
+		
+		if (sensors[3] >= 500 && sensors[4] <= 300 )
+		set_motors(50,30);
+		if (sensors[1] >= 500 && sensors[0] <= 300 )
+		set_motors(30,50);
+	}
+	
+	
+	else if(x == 'B'){														//Reverse while following the line
+		set_motors(-50,-50);
+		
+		if (sensors[3] >=400)
+		set_motors(-50,-55);
+		if (sensors[1] >=400)
+		set_motors(-55,-50);
+	}
+	
+	
+	else if(x == 'T'){														// Turn around
+		set_motors(-75,75);
+		
+		while (sensors[2] >=500)
+		read_line(sensors,IR_EMITTERS_ON);
+	}
+	
+	
+	else if(x == 'P')														//Robot stops on a slow pace
+	for( int i=50;i>=0;i-=2)
+	{
+		set_motors(i,i);
+		delay(5);
+	}
+	
+	
+}
+
+void parcour(){
+	while(1) {
+		situatie = lineType();
+	
+		switch (situatie) {
+			case Barcode: // end of parcour
+			set_motors(0,0);
+			clear();
+			print("barcode");
+			while(1);
+			break;
+					
+			case X_junction:
+			case Left_corner:
+			case T_junction:
+			case Straight_left_junction:
+			motorControl('R');
+						break;
+		
+			case Right_corner:
+			motorControl('R');
+			break;
+		
+			case Straight_right_junction:
+			case Straight:
+			motorControl('S');
+			break;
+		
+			case Line_end:
+			motorControl('T');
+			break;
+		}
+	}
+}
+
+int main()
+{
+	initialize();
+	parcour();
+
+}
