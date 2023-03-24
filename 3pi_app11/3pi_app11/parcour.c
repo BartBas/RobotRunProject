@@ -16,7 +16,7 @@ char richting;
 
 Junctions situatie = Straight;
 
-char parcour(char *route) {
+char parcours_search(char *route) {
 	while(1) {
 		situatie = lineType();
 		
@@ -72,4 +72,8 @@ char parcour(char *route) {
 		}
 	}
 	return 0;
+}
+
+void parcours() {
+	
 }
