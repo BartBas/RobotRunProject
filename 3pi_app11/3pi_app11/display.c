@@ -48,7 +48,32 @@ void updateDisplay(int orderPercent, int batteryPercent, robotStates currentStat
 	}
 }
 
-void errorDisplay(int error)
+void errorDisplay(errorStates error, int batteryPercent)
 {
+	clear();
+	lcd_goto_xy(0,0);
+	print("Bat:");
+	print_long(batteryPercent);
+	print("%");
 	
+	lcd_goto_xy(0,1);
+	
+	switch(error)
+	{
+		case slipped:
+		print("Slipped!");
+		break;
+		case emergency:
+		print("STOPPED");
+		break;
+		case object:
+		print("OBJECT");
+		break;
+		case batLow:
+		print("LOW-BAT");
+		break;
+		case NoConnection:
+		print("Con-Fail");
+		break;
+	}
 }
