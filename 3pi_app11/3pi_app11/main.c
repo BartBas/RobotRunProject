@@ -22,22 +22,23 @@ int main()
 	initialize();
 	updateDisplay(0, batteryPercentage(), mazeSolver);
 	parcoursSearch();
+	warehouse(orderPicking);
 	
-	while(1) 
-	{
-		if (read_battery_millivolts_3pi() < 0.6 * 5200) {
-			charge_3pi();
-		} else {
-			// if order
-			motorControl('S');
-			while (lineType() != Barcode){}
-			parcours();
-			warehouse(orderPicking);
-			parcours();
-			motorControl('S');
-			while (lineType() != Line_end){}
-		}
-	}
+	//while(1) 
+	//{
+		//if (read_battery_millivolts_3pi() < 0.6 * 5200) {
+			//charge_3pi();
+		//} else {
+			//// if order
+			//motorControl('S');
+			//while (lineType() != Barcode){}
+			//parcours();
+			//warehouse(orderPicking);
+			//parcours();
+			//motorControl('S');
+			//while (lineType() != Line_end){}
+		//}
+	//}
 	
 }
 
