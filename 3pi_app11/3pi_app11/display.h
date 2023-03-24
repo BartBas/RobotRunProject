@@ -28,6 +28,6 @@ typedef enum
 
 float batteryPercentage();
 void updateDisplay(int orderPercent, int batteryPercent, robotStates currentState);
-void errorDisplay(errorStates error);
+void errorDisplay(errorStates error, int batteryPercent);
 
 #endif //DISPLAY_H_

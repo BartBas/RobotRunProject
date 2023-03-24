@@ -81,11 +81,11 @@ void drive(int junctions)
 
 void waitForTurn()
 {
-	Junctions lijn;
-	delay(15);
-	while(lijn != Straight)
+	Junctions line;
+	delay(15);//Short delay so it won't accidentally think it found the line instantly
+	while(line != Straight)
 	{
-		lijn  = lineType();
+		line  = lineType();
 	}
 	motorControl('N');
 }
@@ -252,23 +252,23 @@ void warehouse(void)
     int orderX[] = {0,3,1,2,4};
     int orderY[] = {1,2,3,3,4};
 
-    int arrayGrootte = sizeof(orderX) / sizeof(orderX[0]);
-    bubbleSort(orderX, orderY, arrayGrootte);
+    int arraySize = sizeof(orderX) / sizeof(orderX[0]);
+    bubbleSort(orderX, orderY, arraySize);
 	
 	
 	 //motorControl('S');
 	//drive();
 	
-    for(int locaties = 0; locaties<arrayGrootte;locaties++)
+    for(int locations = 0; locations<arraySize;locations++)
     {
-		float completed = locaties;
-		float total = arrayGrootte;
+		float completed = locations;
+		float total = arraySize;
 		
 		
-        moveX(orderX[locaties], &robot);
-		robot.posX = orderX[locaties];
-        moveY(orderY[locaties], &robot);
-		robot.posY = orderY[locaties];
+        moveX(orderX[locations], &robot);
+		robot.posX = orderX[locations];
+        moveY(orderY[locations], &robot);
+		robot.posY = orderY[locations];
         delay(1000);//wait 1 second
 		
         updateDisplay((((completed+1)/total)*100),batteryPercentage(),logicsBot);
