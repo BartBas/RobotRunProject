@@ -34,7 +34,7 @@ void updateDisplay(int orderPercent, int batteryPercent, robotStates currentStat
 		print("M");//M for Manual
 		break;
 		case mazeSolver:
-		print("P");//P for Parcours
+		print("P");//P for Parcour
 		break;
 		case logicsBot:
 		print("O");//O for Order

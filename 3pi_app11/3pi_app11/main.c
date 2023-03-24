@@ -32,7 +32,7 @@ int main()
 			motorControl('S');
 			while (lineType() != Barcode){}
 			parcours();
-			warehouse();
+			warehouse(orderPicking);
 			parcours();
 			motorControl('S');
 			while (lineType() != Line_end){}

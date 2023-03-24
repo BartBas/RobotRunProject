@@ -22,7 +22,7 @@ typedef enum
 	charging
 }objective;
 
-void warehouse(void);
+void warehouse(objective objective);
 void moveY(int orderPos, piRobot *robot);
 void moveX(int orderPos, piRobot *robot);
 void turnRobot(char direction, piRobot *myRobot);
