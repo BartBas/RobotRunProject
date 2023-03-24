@@ -42,26 +42,17 @@ int main()
 }
 
 void charge_3pi() {
-	motorControl('S');
-	while (lineType() == Barcode){}
+	
+	while (lineType() != Barcode){motorControl('S');}
 	updateDisplay(0, batteryPercentage(), mazeSolver);
 	parcours();
-	motorControl('R');
-	motorControl('S');
-	motorControl('S');
-	motorControl('S');
-	motorControl('R');
-	while (lineType() != Line_end){}
+	warehouse(charging);
 	updateDisplay(0, batteryPercentage(), chargeMode);
 	// while robot full
-	motorControl('L');
-	motorControl('L');
-	motorControl('S');
-	motorControl('S');
-	motorControl('S');
-	motorControl('L');
-	while (lineType() != Barcode){}
+	warehouse(charging);
+	while (lineType() != Barcode){motorControl('S');}
 	updateDisplay(0, batteryPercentage(), mazeSolver);
 	parcours();
-	motorControl('S');
+	while (lineType() != Line_end){motorControl('S');}
+		motorControl('P');
 }

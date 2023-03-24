@@ -22,7 +22,7 @@ char parcours_search(char *route) {
 		
 		switch (situatie) {
 			case Barcode: // end of parcour
-				warehouse();
+				motorControl('P');
 				return 0;
 			
 			case X_junction:

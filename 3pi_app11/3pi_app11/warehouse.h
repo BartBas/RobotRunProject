@@ -16,6 +16,12 @@ typedef struct
 	char direction;
 }piRobot;
 
+typedef enum
+{
+	orderPicking,
+	charging
+}objective;
+
 void warehouse(void);
 void moveY(int orderPos, piRobot *robot);
 void moveX(int orderPos, piRobot *robot);

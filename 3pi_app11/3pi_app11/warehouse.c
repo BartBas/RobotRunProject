@@ -52,10 +52,8 @@ void drive(int junctions)
 			motorControl('S');
 			break;
 			
-			case Line_end:
-				//motorControl('N');
-				break;
 			
+			case Line_end:
 			case X_junction:
 			case Left_corner:
 			case T_junction:
@@ -240,7 +238,7 @@ void moveY(int orderPos, piRobot *robot)
 }
 
 
-void warehouse(void)
+void warehouse(objective objective)
 {
  piRobot robot;
  robot.direction = 'W';
@@ -258,22 +256,47 @@ void warehouse(void)
 	
 	 //motorControl('S');
 	//drive();
-	
-    for(int locations = 0; locations<arraySize;locations++)
-    {
-		float completed = locations;
-		float total = arraySize;
+	if(objective == orderPicking)
+	{
+		for(int locations = 0; locations<arraySize;locations++)
+		{
+			float completed = locations;
+			float total = arraySize;
 		
 		
-        moveX(orderX[locations], &robot);
-		robot.posX = orderX[locations];
-        moveY(orderY[locations], &robot);
-		robot.posY = orderY[locations];
-        delay(1000);//wait 1 second
+			moveX(orderX[locations], &robot);
+			robot.posX = orderX[locations];
+			moveY(orderY[locations], &robot);
+			robot.posY = orderY[locations];
+			delay(1000);//wait 1 second
 		
-        updateDisplay((((completed+1)/total)*100),batteryPercentage(),logicsBot);
-    }
-    moveY(0, &robot);
-    moveX(0, &robot);
+			updateDisplay((((completed+1)/total)*100),batteryPercentage(),logicsBot);
+		}
+			moveY(0, &robot);
+			moveX(0, &robot);
+	}
+	else
+	{
+		static int charged = 0;
+		if(charged == 0)
+		{
+			drive(1);
+			motorControl('R');
+			drive(3);
+			motorControl('R');
+			drive(1);
+			charged = 1;
+		}
+		else
+		{
+			motorControl('T');
+			drive(1);
+			motorControl('L');
+			drive(3);
+			motorControl('L');
+			
+		}
+		
+	}
     //goHome();
 }
