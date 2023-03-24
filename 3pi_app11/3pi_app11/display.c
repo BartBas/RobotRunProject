@@ -8,11 +8,11 @@
 #include "display.h"
 #include <pololu/3pi.h>
 
-int batteryPercentage()//Should this function be in main or in display.c or something else?
+float batteryPercentage()//Should this function be in main or in display.c or something else?
 {
 	
-	int milliVolts = read_battery_millivolts();
-	int batteryPercent = milliVolts/50;
+	float milliVolts = read_battery_millivolts();
+	float batteryPercent = 0.000000000632*((milliVolts)*(milliVolts)*(milliVolts));
 	return batteryPercent;
 }
 
@@ -20,7 +20,7 @@ void updateDisplay(int orderPercent, int batteryPercent, robotStates currentStat
 {
 	clear();
 	lcd_goto_xy(0,0);
-	print("Task:");
+	print("Job:");
 	print_long(orderPercent);
 	print("%");
 	
@@ -30,7 +30,7 @@ void updateDisplay(int orderPercent, int batteryPercent, robotStates currentStat
 	print("%");
 	switch(currentState)
 	{
-		case manualControl:
+		case manual:
 		print("M");//M for Manual
 		break;
 		case mazeSolver:

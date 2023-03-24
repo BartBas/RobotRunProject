@@ -32,6 +32,7 @@ void inch();
 void initialize();
 void display_readings(const unsigned int *calibrated_values);
 void load_custom_characters();
+void manualControl(char X);
 
 
 

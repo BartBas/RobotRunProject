@@ -9,7 +9,7 @@
 
 typedef enum
 {
-	manualControl,//M
+	manual,//M
 	mazeSolver,//L
 	logicsBot,//O
 	chargeMode,//C
@@ -17,7 +17,7 @@ typedef enum
 }robotStates;
 
 
-int batteryPercentage();
+float batteryPercentage();
 void updateDisplay(int orderPercent, int batteryPercent, robotStates currentState);
 void errorDisplay();
 

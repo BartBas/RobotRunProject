@@ -11,14 +11,14 @@
 
 typedef struct
 {
-	int posX ;
-	int posY ;
-	char direction ;
+	int posX;
+	int posY;
+	char direction;
 }piRobot;
 
 void warehouse(void);
-void moveY(int orderPos);
-void moveX(int orderPos);
+void moveY(int orderPos, piRobot *robot);
+void moveX(int orderPos, piRobot *robot);
 void turnRobot(char direction, piRobot *myRobot);
 void bubbleSort(int arr[], int orderY[], int n);
 void swap(int *a, int *b);

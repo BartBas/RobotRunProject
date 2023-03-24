@@ -13,26 +13,22 @@
 #include <pololu/3pi.h>
 #include <avr/pgmspace.h>
 
+const char welcome[] PROGMEM = ">g32>>c32";
 
 int main()
 {
+	clear();
 	pololu_3pi_init(2000);
+	play_from_program_space(welcome);
 	initialize();
+	
+	
+	
 	char parecour[20];
 	parcour(parecour);
 	print(parecour);
+	
+	
+	
+	
 }
-
-
-
-
-/* main voor testen (Joost)
-int main()
-{
-	pololu_3pi_init(2000);
-	initialize();
-	char parecour[20];
-	parcour(parecour);
-	print(parecour);
-}
-*/
