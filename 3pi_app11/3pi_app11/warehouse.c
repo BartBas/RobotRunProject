@@ -66,7 +66,7 @@ void drive(int junctions)
 				motorControl('S');
 				if(count == junctions)
 				{
-					motorControl('N');
+					motorControl('P');
 					driving = 0;
 				}
 				
