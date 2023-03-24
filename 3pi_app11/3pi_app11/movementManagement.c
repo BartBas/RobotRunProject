@@ -48,6 +48,13 @@ void inch(){
 	delay(200);
 	set_motors(0,0);
 }
+void println(int x){
+	clear();
+	lcd_goto_xy(0,0);
+	print_long(x);	
+	
+}
+
 
 char lineType(){																																	// function that returns the type of junction it detects
 	while(1){																																		// >= 500 = black line		<=500 = white
@@ -56,11 +63,15 @@ char lineType(){																																	// function that returns the ty
 		if (sensors[1] >=500 && sensors[3] >= 500){																									//Checks if its a X junction or a T junction
 			inch();
 			read_line(sensors,IR_EMITTERS_ON);
-			
-			if (sensors[2] >=500)
+	
+			if (sensors[2] >=500){
+				println(X_junction);
 				return X_junction;
-			else
+			}
+			else {
+				println(T_junction);
 				return T_junction;
+			}
 		}
 			
 			
@@ -68,10 +79,14 @@ char lineType(){																																	// function that returns the ty
 			inch();
 			read_line(sensors,IR_EMITTERS_ON);
 			
-			if (sensors[2] >= 500 || sensors[3] >=500)
+			if (sensors[2] >= 500 || sensors[3] >=500){
+				println(Straight_left_junction);
 				return Straight_left_junction;
-			else
+			}
+			else{
+				println(Left_corner);
 				return Left_corner;
+			}
 		}
 		
 		
@@ -79,14 +94,19 @@ char lineType(){																																	// function that returns the ty
 			inch();
 			read_line(sensors,IR_EMITTERS_ON);
 			
-			if (sensors[2] >= 500 || sensors[1] >=500)
+			if (sensors[2] >= 500 || sensors[1] >=500){
+				println(Straight_right_junction);
 				return Straight_right_junction;
-			else
+			}
+			else{
+				println(Straight_left_junction);
 				return Right_corner;
+			}
 		}
 		
 		
-		else if(sensors[2] <=200){																													// check if the line ends	
+		else if(sensors[2] <=200){
+			println(Line_end);																													// check if the line ends	
 			return Line_end;
 		}
 
@@ -99,10 +119,13 @@ char lineType(){																																	// function that returns the ty
 					read_line(sensors,IR_EMITTERS_ON);
 					motorControl('S');
 				}
+				println(Barcode);
 				return Barcode;
 			}
-			else
-				return Straight;																									// check if its straight without any corners
+			else{
+				println(Straight);
+				return Straight;
+			}																									// check if its straight without any corners
 			
 		}	
 	}
@@ -183,19 +206,22 @@ int speed = 0;
 		speed++;
 	}
 	
-	if(X == 'S'){
+	else if(X == 'S'){
 		set_motors(-speed,-speed);
-		speed++;
+		speed--;
 	}
 	
-	if(X == 'A'){
+	else if(X == 'A'){
 		set_motors(speed/2,speed);
-		speed++;
 	}
 	
-	if(X == 'D'){
+	else if(X == 'D'){
 		set_motors(speed,speed/2);
-		speed++;
 	}
+	
+	if(X == 'R'){
+		set_motors(255,-255);
+	}
+	
 	
 }
