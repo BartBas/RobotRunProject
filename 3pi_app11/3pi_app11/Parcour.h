@@ -9,9 +9,7 @@
 #ifndef PARCOUR_H_
 #define PARCOUR_H_
 
-char parcoursSearch();
-char parcours();
-
-
+int parcoursSearch();
+int parcours(char way);
 
 #endif /* PARCOUR_H_ */

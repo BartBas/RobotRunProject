@@ -20,40 +20,66 @@ int main()
 	pololu_3pi_init(2000);
 	play_from_program_space(welcome);
 	initialize();
-	updateDisplay(0, batteryPercentage(), mazeSolver);
-	parcoursSearch();
-	warehouse(orderPicking);
 	
-	//while(1) 
-	//{
-		//if (read_battery_millivolts_3pi() < 0.6 * 5200) {
-			//charge_3pi();
-		//} else {
-			//// if order
-			//motorControl('S');
-			//while (lineType() != Barcode){}
-			//parcours();
-			//warehouse(orderPicking);
-			//parcours();
-			//motorControl('S');
-			//while (lineType() != Line_end){}
-		//}
-	//}
+	while(1) 
+	{
+		updateDisplay(0, batteryPercentage(), homingMode);
+		if (read_battery_millivolts_3pi() < 0.6 * 5200) 
+		{
+			charge_3pi();
+		} else { //  if order
+			pickOrder();
+		}
+	}
 	
 }
 
-void charge_3pi() {
-	
-	while (lineType() != Barcode){motorControl('S');}
+int charge_3pi() 
+{
+	whileBarcode();
 	updateDisplay(0, batteryPercentage(), mazeSolver);
-	parcours();
-	warehouse(charging);
+	parcours('t');
 	updateDisplay(0, batteryPercentage(), chargeMode);
+	warehouse(charging);
 	// while robot full
 	warehouse(charging);
-	while (lineType() != Barcode){motorControl('S');}
+	whileBarcode();
 	updateDisplay(0, batteryPercentage(), mazeSolver);
-	parcours();
-	while (lineType() != Line_end){motorControl('S');}
-		motorControl('P');
+	parcours('b');
+	whileLineEnd();
+	return 0;
+}
+
+int pickOrder() 
+{
+	motorControl('S');
+	whileBarcode();
+	updateDisplay(0, batteryPercentage(), mazeSolver);
+	parcours('t');
+	updateDisplay(0, batteryPercentage(), orderPicking);
+	warehouse(orderPicking);
+	updateDisplay(0, batteryPercentage(), mazeSolver);
+	parcours('b');
+	motorControl('S');
+	whileLineEnd();
+	motorControl('P');
+	return 0;
+}
+
+int whileBarcode() 
+{
+	while (lineType() != Barcode)
+	{
+		motorControl('S');
+	}
+	return 0;
+}
+
+int whileLineEnd() 
+{
+	while (lineType() != Line_end)
+	{
+		motorControl('S');
+	}
+	return 0;
 }
