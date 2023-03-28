@@ -1,3 +1,6 @@
 
 3pi_app11/.vs/3pi_app11/v14/.atsuo
 3pi_app11/.vs/3pi_app11/v14/.atsuo
+3pi_app11/3pi_app11/Debug/3pi_app11.elf
+3pi_app11/3pi_app11/Debug/3pi_app11.map
+*.elf
