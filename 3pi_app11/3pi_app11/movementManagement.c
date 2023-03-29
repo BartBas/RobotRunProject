@@ -4,10 +4,19 @@
  * Created: 22/03/2023 10:49:26
  *  Author: joren
  */ 
+/*
+ * movementManagement.c
+ *
+ * Created: 22/03/2023 10:49:26
+ *  Author: joren
+ */ 
 
 unsigned int sensors[5]; // an array to hold sensor values
 unsigned int position;
-
+#define Refrence_value 400
+#define turn_value 60
+#define End_Line_Value 200
+	
 #include "movementManagement.h"
 
 #include <pololu/3pi.h>
@@ -21,7 +30,11 @@ void initialize()
 	
 	pololu_3pi_init(2000);
 	
-	while(!button_is_pressed(BUTTON_B)){}	
+	while(!button_is_pressed(BUTTON_B)){
+		clear();
+		lcd_goto_xy(0,0);
+		print_long(read_battery_millivolts());
+	}	
 	wait_for_button_release(BUTTON_B);
 	delay_ms(1000);
 
@@ -49,37 +62,27 @@ void inch(){
 	set_motors(0,0);
 }
 void println(int x){
-	clear();
+	/*clear();
 	lcd_goto_xy(0,0);
-	print_long(x);	
-	
+	print_long(x);	*/
 }
 
+void wait(){
+	motorControl('N');
+	
+	while(!button_is_pressed(BUTTON_B)){}
+	wait_for_button_release(BUTTON_B);
+}
 
 char lineType(){																																	// function that returns the type of junction it detects
 	while(1){																																		// >= 500 = black line		<=500 = white
-		read_line(sensors,IR_EMITTERS_ON);
-		
-		if (sensors[1] >=500 && sensors[3] >= 500){																									//Checks if its a X junction or a T junction
+		read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
+					
+		if (sensors[0] >=Refrence_value && sensors[1] >= Refrence_value && sensors[4] <= Refrence_value ){																							//Checks if its a left corner or a straight with left corner
 			inch();
-			read_line(sensors,IR_EMITTERS_ON);
-	
-			if (sensors[2] >=500){
-				println(X_junction);
-				return X_junction;
-			}
-			else {
-				println(T_junction);
-				return T_junction;
-			}
-		}
+			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 			
-			
-		else if (sensors[1] >=500 && sensors[0] >= 500){																							//Checks if its a left corner or a straight with left corner
-			inch();
-			read_line(sensors,IR_EMITTERS_ON);
-			
-			if (sensors[2] >= 500 || sensors[3] >=500){
+			if (sensors[2] >= Refrence_value || sensors[3] >=Refrence_value){
 				println(Straight_left_junction);
 				return Straight_left_junction;
 			}
@@ -90,11 +93,11 @@ char lineType(){																																	// function that returns the ty
 		}
 		
 		
-		else if (sensors[3] >=500 && sensors[4] >= 500){																							//Checks if its a right corner or a straight with right corner
+		else if (sensors[3] >=Refrence_value && sensors[4] >= Refrence_value && sensors[0] <= Refrence_value){																							//Checks if its a right corner or a straight with right corner
 			inch();
-			read_line(sensors,IR_EMITTERS_ON);
+			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 			
-			if (sensors[2] >= 500 || sensors[1] >=500){
+			if (sensors[2] >= Refrence_value || sensors[1] >=Refrence_value){
 				println(Straight_right_junction);
 				return Straight_right_junction;
 			}
@@ -104,21 +107,35 @@ char lineType(){																																	// function that returns the ty
 			}
 		}
 		
-		
-		else if(sensors[2] <=200){
-			println(Line_end);																													// check if the line ends	
-			return Line_end;
-		}
-
-		
-		else if (sensors[2] >=500){																													//Checks if the line is straight
-			if ((sensors[2] >=500 && sensors[3] <=500 && sensors[4] >=500) && (sensors[0] >=500 && sensors[1] <=500 && sensors[2] >=500))			//Checks the line for a "Barcode"
-			{
-				while(sensors[4] >= 400 || sensors[0] >=400)
+				else if (sensors[1] >=Refrence_value && sensors[3] >= Refrence_value){																									//Checks if its a X junction or a T junction
+					inch();
+					read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
+					
+					if (sensors[2] >=Refrence_value){
+						println(X_junction);
+						return X_junction;
+					}
+					else {
+						println(T_junction);
+						return T_junction;
+					}
+				}
+				
+				else if(sensors[2] <= End_Line_Value && sensors[1] <=End_Line_Value && sensors[3] <=End_Line_Value){
+					println(Line_end);																													// check if the line ends
+					return Line_end;
+				}
+		else{
+		//else if (sensors[2] >=Refrence_value){																													//Checks if the line is straight
+			if ((sensors[3] <=Refrence_value && sensors[4] >=Refrence_value && sensors[1] <=Refrence_value) || (sensors[0] >=Refrence_value && sensors[1] <=Refrence_value && sensors[3] <=Refrence_value)){			//Checks the line for a "Barcode"
+			//if((sensors[4] >=Refrence_value && sensors[0] >=Refrence_value) && (sensors[1] <=Refrence_value || sensors[3] <=Refrence_value)){
+			
+				while(sensors[4] >= Refrence_value || sensors[0] >=Refrence_value)
 				{
-					read_line(sensors,IR_EMITTERS_ON);
+					read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 					motorControl('S');
 				}
+				wait();
 				println(Barcode);
 				return Barcode;
 			}
@@ -127,63 +144,93 @@ char lineType(){																																	// function that returns the ty
 				return Straight;
 			}																									// check if its straight without any corners
 			
-		}	
+		}
+		
+	
 	}
 }
 
 
 void motorControl(char x){													// function that controlls the motor movement and the turns
-	read_line(sensors,IR_EMITTERS_ON);
+	unsigned int position = read_line(sensors,IR_EMITTERS_ON);
+	read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 	
 	if(x == 'N')															//Emergency Brake
 		set_motors(0,0);	
 	
 	
 	else if(x == 'L'){														//Turn Left
-		set_motors(-50,50);
+		set_motors(-turn_value,turn_value);
 		
-		while (sensors[2] >=500)
-			read_line(sensors,IR_EMITTERS_ON);
-		while (sensors[2] <=500)
-			read_line(sensors,IR_EMITTERS_ON);
+		while (sensors[2] >=Refrence_value)
+			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
+		while (sensors[2] <=Refrence_value)
+			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 	}
 	
 	
 	else if(x == 'R'){														//Turn Right
-		set_motors(50,-50);
+		set_motors(turn_value,-turn_value);
 		
-		while (sensors[2] >=500)
-			read_line(sensors,IR_EMITTERS_ON);
-		while (sensors[2] <=500)
-			read_line(sensors,IR_EMITTERS_ON);
+		while (sensors[2] >=Refrence_value)
+			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
+		while (sensors[2] <=Refrence_value)
+			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 	}
 		
 			
-	else if(x == 'S'){														//drive straight and adjusts the robot so it follows the line
-		set_motors(50,50);
+	else if(x == 'S'){												//drive straight and adjusts the robot so it follows the line
+		//set_motors(50,50);
 		
-		if (sensors[3] >= 500 && sensors[4] <= 300 )
-			set_motors(50,30);
-		if (sensors[1] >= 500 && sensors[0] <= 300 )
-			set_motors(30,50);
+// Get the position of the line.  Note that we *must* provide
+// the "sensors" argument to read_line_sensors_calibrated() here, even though we
+// are not interested in the individual sensor readings.
+int last_proportional;
+// The "proportional" term should be 0 when we are on the line.
+int proportional = ((int)position) - 2000;
+
+// Compute the derivative (change) and integral (sum) of the
+// position.
+int derivative = proportional - last_proportional;
+int integral = integral + proportional;
+
+// Remember the last position.
+ last_proportional = proportional;
+ 
+ 
+int power_difference = proportional/100 + integral/300 + derivative*0.10;						// derivative == stuur snelheid
+
+// Compute the actual motor settings.  We never set either motor
+// to a negative value.
+const int max = 70;
+if(power_difference > max)
+power_difference = max;
+if(power_difference < -max)
+power_difference = -max;
+
+if(power_difference < 0)
+set_motors(max+power_difference, max);
+else
+set_motors(max, max-power_difference);
+		
 	}
 	
 	
 	else if(x == 'B'){														//Reverse while following the line
 		set_motors(-50,-50);
 		
-		if (sensors[3] >=400)
+		if (sensors[3] >=Refrence_value)
 			set_motors(-50,-55);
-		if (sensors[1] >=400)
+		if (sensors[1] >=Refrence_value)
 			set_motors(-55,-50);
 	}
 	
 	
 	else if(x == 'T'){														// Turn around
-		set_motors(-75,75);
+		set_motors(-turn_value,turn_value);
 		
-		while (sensors[2] >=500)
-			read_line(sensors,IR_EMITTERS_ON);
+		while (sensors[2] <=Refrence_value)
+			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 	}
 	
 	
@@ -196,6 +243,8 @@ void motorControl(char x){													// function that controlls the motor move
 		
 		
 }
+
+
 
 
 void manualControl(char X){

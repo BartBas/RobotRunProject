@@ -27,7 +27,7 @@ typedef enum {					// enum for the corners and junctions
 
 
 void motorControl(char x);
-char direction();
+char lineType();
 void inch();
 void initialize();
 void display_readings(const unsigned int *calibrated_values);

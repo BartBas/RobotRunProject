@@ -15,67 +15,15 @@
 
 const char welcome[] PROGMEM = ">g32>>c32";
 
-int main()
-{
-	pololu_3pi_init(2000);
-	play_from_program_space(welcome);
-	initialize();
-	
-	while(1) 
-	{
-		updateDisplay(0, batteryPercentage(), homingMode);
-		if (read_battery_millivolts_3pi() < 0.6 * 5200) 
-		{
-			charge_3pi();
-		} else { //  if order
-			pickOrder();
-		}
-	}
-	
-}
-
-int charge_3pi() 
-{
-	whileBarcode();
-	updateDisplay(0, batteryPercentage(), mazeSolver);
-	parcours('t');
-	updateDisplay(0, batteryPercentage(), chargeMode);
-	warehouse(charging);
-	// while robot full
-	warehouse(charging);
-	whileBarcode();
-	updateDisplay(0, batteryPercentage(), mazeSolver);
-	parcours('b');
-	whileLineEnd();
-	return 0;
-}
-
-int pickOrder() 
-{
-	motorControl('S');
-	whileBarcode();
-	updateDisplay(0, batteryPercentage(), mazeSolver);
-	parcours('t');
-	updateDisplay(0, batteryPercentage(), orderPicking);
-	warehouse(orderPicking);
-	updateDisplay(0, batteryPercentage(), mazeSolver);
-	parcours('b');
-	motorControl('S');
-	whileLineEnd();
-	motorControl('P');
-	return 0;
-}
-
-int whileBarcode() 
+void whileBarcode()
 {
 	while (lineType() != Barcode)
 	{
 		motorControl('S');
 	}
-	return 0;
 }
 
-int whileLineEnd() 
+int whileLineEnd()
 {
 	while (lineType() != Line_end)
 	{
@@ -83,3 +31,68 @@ int whileLineEnd()
 	}
 	return 0;
 }
+int charge_3pi()
+{
+	whileBarcode();
+	updateDisplay(0, batteryPercentage(), mazeSolver);
+	parcours('T');
+	updateDisplay(0, batteryPercentage(), chargeMode);
+	warehouse(charging);
+	// while robot full
+	warehouse(charging);
+	whileBarcode();
+	updateDisplay(0, batteryPercentage(), mazeSolver);
+	parcours('B');
+	whileLineEnd();
+	return 0;
+}
+
+int pickOrder()
+{
+	
+	whileBarcode();
+	//updateDisplay(0, batteryPercentage(), mazeSolver);
+	parcours('T');
+	
+	
+	//updateDisplay(0, batteryPercentage(), orderPicking);
+	//warehouse(orderPicking);
+	//updateDisplay(0, batteryPercentage(), mazeSolver);
+	
+	
+	while (lineType() == Straight)
+	{
+		motorControl('S');
+	}
+	
+	motorControl('L');
+	
+	parcours('B');
+	motorControl('S');
+	whileLineEnd();
+	motorControl('P');
+	return 0;
+}
+
+int main()
+{
+	play_from_program_space(welcome);
+	initialize();
+	
+	/*while(1) 
+	{
+		updateDisplay(0, batteryPercentage(), homingMode);
+		if (read_battery_millivolts_3pi() < 0.6 * 5200) 
+		{
+			charge_3pi();
+		} 
+		else 
+		{ *///  if order
+			pickOrder();
+		//}
+	//}
+	
+}
+
+
+

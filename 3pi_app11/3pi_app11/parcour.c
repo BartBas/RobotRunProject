@@ -15,8 +15,9 @@
 
 Junctions situatie = Straight;
 
-char route[20] = "RSLR"; // "_"
+char route[20] = "_"; // hardcode SLR
 char routeBack[20];
+int routea = 1;
 
 int parcoursSearch() 
 {
@@ -37,33 +38,43 @@ int parcoursSearch()
 			case Straight_left_junction:
 				motorControl('L');
 				richting = 'L';
+				////print_character('L');
 				strncat(route, &richting, 1);
 				break;
 			
 			case Right_corner:
 				motorControl('R');
 				richting = 'R';
+				//print_character('R');
 				strncat(route, &richting, 1);
 				break;
 			
 			case Straight_right_junction:
 				richting = 'S';
+				//print_character('S');
 				strncat(route, &richting, 1);
 				break;
 				
 			case Line_end:
 				motorControl('T');
 				richting = 'T';
+				//print_character('T');
 				strncat(route, &richting, 1);
 				break;
 				
 			case Barcode: // end of parcour
 				motorControl('P');
+				//print_character('B');
 				return 0;
 		}
 		
+		clear();
+		lcd_goto_xy(0,0);
+		for (int i=0; i <= strlen(route);i++ ){
+		print_character(route[i]);
+		}
 		
-		char richting;
+		char richting;	
 		if (route[strlen(route)-2] == 'T') 
 		{
 			char char_1 = route[strlen(route)-3];
@@ -93,6 +104,7 @@ int parcoursSearch()
 			strncat(route, &richting, 1);
 		}
 	}
+	routea = 0;	
 	return 0;
 }
 
@@ -105,10 +117,10 @@ int parcoursRun(char way)
 		{
 			motorControl('S');
 		}
-		if (way == 't') {
+		if (way == 'T') {
 			motorControl(route[i]);
 		} 
-		else if (way == 'b') 
+		else if (way == 'B') 
 		{
 			richting = route[strlen(route)-i];
 			switch (richting)
@@ -128,8 +140,9 @@ int parcoursRun(char way)
 
 int parcours(char way) 
 {
-	if (route == "_") 
-	{
+	if (route[0] == '_'){
+	//if (routea == 1){
+		memset(route,0,sizeof route);
 		parcoursSearch();
 	} 
 	else 
