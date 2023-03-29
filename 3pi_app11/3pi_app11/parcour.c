@@ -1,4 +1,4 @@
-/*
+ /*
  * parcour.c
  *
  * Created: 22/03/2023 11:02:27
@@ -122,7 +122,7 @@ int parcoursRun(char way)
 		} 
 		else if (way == 'B') 
 		{
-			richting = route[strlen(route)-i];
+			richting = route[strlen(route)-i-1];
 			switch (richting)
 			{
 				case 'R':
@@ -141,7 +141,6 @@ int parcoursRun(char way)
 int parcours(char way) 
 {
 	if (route[0] == '_'){
-	//if (routea == 1){
 		memset(route,0,sizeof route);
 		parcoursSearch();
 	} 

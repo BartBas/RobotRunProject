@@ -63,10 +63,12 @@ int pickOrder()
 	while (lineType() == Straight)
 	{
 		motorControl('S');
-	}
-	
-	motorControl('L');
-	
+}
+motorControl('P');
+motorControl('R');
+motorControl('R');
+	whileBarcode();
+ 	
 	parcours('B');
 	motorControl('S');
 	whileLineEnd();
