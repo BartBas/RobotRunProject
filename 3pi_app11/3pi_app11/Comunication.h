@@ -29,10 +29,11 @@ typedef struct Communications {
 	char Orderarx[25];
 		
 	// CHECK FOR UPDATES/MSGS
-	char batterylvl;
-	char magprocess;
-	char locationx;
-	char locationy;
+	char EmergancyStop; // OUTPUT  0 for clear 1 for stop
+	char batterylvl;	// INPUT % of battery
+	char magprocess;	// INPUT % of order completion
+	char locationx;		// INPUT Location of robot x
+	char locationy;		// INPUT Location of robot y
 	void (*Update)(struct Communications *,int);
 	
 		
