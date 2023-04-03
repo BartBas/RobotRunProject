@@ -41,6 +41,7 @@ typedef struct Communications {
 
 } Communications;
 
+void Communications_INIT(struct Communications*);
 
 
 #endif /* COMUNICATION_H_ */
