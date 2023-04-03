@@ -1,15 +1,44 @@
 /*
- * IncFile1.h
+ * communications.h
  *
  * Created: 22/03/2023 11:11:04
- *  Author: bbels
+ *  Author: bbelsenaar
  */ 
 
 
 #ifndef COMUNICATION_H_
 #define COMUNICATION_H_
 
+typedef struct Communications {
 
+//PRIVATE	
+
+	void (*Close)(struct Communications *); 		// close handle
+	int (*Send)(struct Communications *); 			// send msg
+	int val;										// Lenght of array
+	char msgBuffer[26];								// Buffer for msg to be send
+	int SendSuccesfull;
+	int (*Recieve)(struct Communications *);
+	char Recieved[26];
+	int newmsg;
+
+//PUBLIC
+
+	// LOCATIONS
+	char Orderary[25];
+	char Orderarx[25];
+		
+	// CHECK FOR UPDATES/MSGS
+	char batterylvl;
+	char magprocess;
+	char locationx;
+	char locationy;
+	void (*Update)(struct Communications *,int);
+	
+		
+
+
+} Communications;
 
 
 
