@@ -125,8 +125,10 @@ void Update(Communications *self){
 					}
 				}
 				
-				if (self->locationx==-1 && self->locationy==-1){
+				if (self->locationx==255 && self->locationy==255){
 					filllocationarrays(self);
+					self->flag = 1;
+					play_from_program_space(welcomed);
 				}
 				}
 			}
@@ -176,7 +178,7 @@ void Communications_INIT(Communications * myCom){
 	myCom->magprocess	 = 20;
 	myCom->locationx	 = 4;
 	myCom->locationy	 = 5;
-	
+	myCom->flag				 =0;	
 	
 	fillarrays(myCom);
 }
