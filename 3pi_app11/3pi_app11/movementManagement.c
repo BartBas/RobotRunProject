@@ -131,7 +131,7 @@ char lineType(){																																	// function that returns the ty
 				}
 		else{
 		//else if (sensors[2] >=Refrence_value){																													//Checks if the line is straight
-			if ((sensors[3] <=Refrence_value && sensors[4] >=Refrence_value && sensors[1] <=Refrence_value) || (sensors[0] >=Refrence_value && sensors[1] <=Refrence_value && sensors[3] <=Refrence_value)){			//Checks the line for a "Barcode"
+			if (((sensors[1] <=Refrence_value || sensors[3] <=Refrence_value) && sensors[4] >=Refrence_value) || ((sensors[1] <=Refrence_value || sensors[3] <=Refrence_value) && sensors[0] >=Refrence_value)){			//Checks the line for a "Barcode"
 			//if((sensors[4] >=Refrence_value && sensors[0] >=Refrence_value) && (sensors[1] <=Refrence_value || sensors[3] <=Refrence_value)){
 			
 				while(sensors[4] >= Refrence_value || sensors[0] >=Refrence_value)
@@ -154,8 +154,8 @@ char lineType(){																																	// function that returns the ty
 	}
 }
 
-
 void motorControl(char x){													// function that controlls the motor movement and the turns
+	myComs->Update(myComs);
 	unsigned int position = read_line(sensors,IR_EMITTERS_ON);
 	read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 	

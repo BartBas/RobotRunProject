@@ -89,11 +89,12 @@ int main()
 				print_long(communications.locationy);
 				if (communications.flag==1)
 				{
+					communications.flag=0;
 					
 					play_from_program_space(welcome);
 					communications.locationx = 0;
 					communications.locationy = 0;
-					pickOrder(&communications);nbv6
+					pickOrder(&communications);
 					communications.locationx = -1;
 					communications.locationy = -1;
 				}

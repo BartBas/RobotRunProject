@@ -88,12 +88,8 @@ void drive(int junctions, piRobot *robot, Communications *myCom)
 					driving = 0;
 				}
 				myCom->Update(myCom);
-				break;
-			
-			
-			
+				break;	
 		}
-		
 	}
 }
 
@@ -276,6 +272,11 @@ for(int i=0;i<arraySize;i++)//Getting order positions from the wixel
 	orderX[i] = myCom->Orderarx[i];
 	orderY[i] = myCom->Orderary[i];
 }
+clear();
+lcd_goto_xy(0,0);
+print_long(orderX[1]);
+lcd_goto_xy(0,1);
+print_long(orderY[1]);
     bubbleSort(orderX, orderY, arraySize);//Sorts the order positions so that the lowest X position comes first
 	
 	if(objective == orderPicking)//If statement for when the robot just needs to quickly pass the warehouse to get to the charging station
@@ -295,7 +296,7 @@ for(int i=0;i<arraySize;i++)//Getting order positions from the wixel
 			myCom->batterylvl = batteryPercentage();
 			myCom->magprocess = (((completed+1)/total)*100);
 			myCom->Update(myCom);
-			updateDisplay((((completed+1)/total)*100),batteryPercentage(),logicsBot);
+			//updateDisplay((((completed+1)/total)*100),batteryPercentage(),logicsBot);
 		}
 			moveY(0, &robot, myCom);
 			moveX(0, &robot, myCom);

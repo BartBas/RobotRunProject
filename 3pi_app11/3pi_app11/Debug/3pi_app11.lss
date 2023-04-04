@@ -19,19 +19,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   7 .debug_aranges 000001c0  00000000  00000000  000155fc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_info   00003414  00000000  00000000  000157bc  2**0
+  8 .debug_info   00003429  00000000  00000000  000157bc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_abbrev 000011c6  00000000  00000000  00018bd0  2**0
+  9 .debug_abbrev 000011cd  00000000  00000000  00018be5  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_line   00001fa5  00000000  00000000  00019d96  2**0
+ 10 .debug_line   0000202d  00000000  00000000  00019db2  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_frame  00000548  00000000  00000000  0001bd3c  2**2
+ 11 .debug_frame  00000534  00000000  00000000  0001bde0  2**2
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_str    00000a04  00000000  00000000  0001c284  2**0
+ 12 .debug_str    00000a04  00000000  00000000  0001c314  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_loc    000015a5  00000000  00000000  0001cc88  2**0
+ 13 .debug_loc    00001571  00000000  00000000  0001cd18  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_ranges 000001c0  00000000  00000000  0001e22d  2**0
+ 14 .debug_ranges 000001c0  00000000  00000000  0001e289  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -63,15 +63,15 @@ Disassembly of section .text:
       5c:	0c 94 45 01 	jmp	0x28a	; 0x28a <__bad_interrupt>
       60:	0c 94 45 01 	jmp	0x28a	; 0x28a <__bad_interrupt>
       64:	0c 94 45 01 	jmp	0x28a	; 0x28a <__bad_interrupt>
-      68:	5c 07       	cpc	r21, r28
-      6a:	8a 07       	cpc	r24, r26
-      6c:	f5 07       	cpc	r31, r21
-      6e:	60 07       	cpc	r22, r16
-      70:	6f 07       	cpc	r22, r31
-      72:	7e 07       	cpc	r23, r30
-      74:	60 07       	cpc	r22, r16
-      76:	60 07       	cpc	r22, r16
-      78:	60 07       	cpc	r22, r16
+      68:	60 07       	cpc	r22, r16
+      6a:	8e 07       	cpc	r24, r30
+      6c:	f9 07       	cpc	r31, r25
+      6e:	64 07       	cpc	r22, r20
+      70:	73 07       	cpc	r23, r19
+      72:	82 07       	cpc	r24, r18
+      74:	64 07       	cpc	r22, r20
+      76:	64 07       	cpc	r22, r20
+      78:	64 07       	cpc	r22, r20
 
 0000007a <__trampolines_end>:
       7a:	21 20       	and	r2, r1
@@ -1294,8 +1294,8 @@ static inline unsigned int read_battery_millivolts(void)
 }
      812:	03 c0       	rjmp	.+6      	; 0x81a <whileBarcode+0x8>
      814:	83 e5       	ldi	r24, 0x53	; 83
-     816:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-     81a:	0e 94 28 06 	call	0xc50	; 0xc50 <lineType>
+     816:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+     81a:	0e 94 36 06 	call	0xc6c	; 0xc6c <lineType>
      81e:	82 30       	cpi	r24, 0x02	; 2
      820:	c9 f7       	brne	.-14     	; 0x814 <whileBarcode+0x2>
      822:	08 95       	ret
@@ -1303,8 +1303,8 @@ static inline unsigned int read_battery_millivolts(void)
 00000824 <whileLineEnd>:
      824:	03 c0       	rjmp	.+6      	; 0x82c <whileLineEnd+0x8>
      826:	83 e5       	ldi	r24, 0x53	; 83
-     828:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-     82c:	0e 94 28 06 	call	0xc50	; 0xc50 <lineType>
+     828:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+     82c:	0e 94 36 06 	call	0xc6c	; 0xc6c <lineType>
      830:	81 30       	cpi	r24, 0x01	; 1
      832:	c9 f7       	brne	.-14     	; 0x826 <whileLineEnd+0x2>
      834:	08 95       	ret
@@ -1321,20 +1321,20 @@ void pickOrder(Communications *communications)
 	parcours('T', communications);
      840:	be 01       	movw	r22, r28
      842:	84 e5       	ldi	r24, 0x54	; 84
-     844:	0e 94 48 08 	call	0x1090	; 0x1090 <parcours>
+     844:	0e 94 4c 08 	call	0x1098	; 0x1098 <parcours>
 	warehouse(orderPicking, communications); 	
      848:	be 01       	movw	r22, r28
      84a:	80 e0       	ldi	r24, 0x00	; 0
-     84c:	0e 94 68 0a 	call	0x14d0	; 0x14d0 <warehouse>
+     84c:	0e 94 6c 0a 	call	0x14d8	; 0x14d8 <warehouse>
 	parcours('B', communications);
      850:	be 01       	movw	r22, r28
      852:	82 e4       	ldi	r24, 0x42	; 66
-     854:	0e 94 48 08 	call	0x1090	; 0x1090 <parcours>
+     854:	0e 94 4c 08 	call	0x1098	; 0x1098 <parcours>
 	whileLineEnd();
      858:	0e 94 12 04 	call	0x824	; 0x824 <whileLineEnd>
 	motorControl('L');
      85c:	8c e4       	ldi	r24, 0x4C	; 76
-     85e:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
+     85e:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
 }
      862:	df 91       	pop	r29
      864:	cf 91       	pop	r28
@@ -1369,7 +1369,7 @@ int main()
 	initialize(&communications);
      88e:	ce 01       	movw	r24, r28
      890:	01 96       	adiw	r24, 0x01	; 1
-     892:	0e 94 9f 04 	call	0x93e	; 0x93e <initialize>
+     892:	0e 94 a2 04 	call	0x944	; 0x944 <initialize>
 	
 	while(1) 
 	{
@@ -1411,9 +1411,9 @@ int main()
      8cc:	8f ad       	ldd	r24, Y+63	; 0x3f
      8ce:	ad 97       	sbiw	r28, 0x2d	; 45
      8d0:	82 30       	cpi	r24, 0x02	; 2
-     8d2:	79 f1       	breq	.+94     	; 0x932 <__stack+0x33>
+     8d2:	91 f1       	breq	.+100    	; 0x938 <__stack+0x39>
      8d4:	83 30       	cpi	r24, 0x03	; 3
-     8d6:	81 f1       	breq	.+96     	; 0x938 <__stack+0x39>
+     8d6:	99 f1       	breq	.+102    	; 0x93e <__stack+0x3f>
      8d8:	81 11       	cpse	r24, r1
      8da:	dd cf       	rjmp	.-70     	; 0x896 <main+0x2e>
 				/*if (read_battery_millivolts_3pi() < 0.6 * 5200)
@@ -1444,2157 +1444,1871 @@ int main()
      902:	81 30       	cpi	r24, 0x01	; 1
      904:	41 f6       	brne	.-112    	; 0x896 <main+0x2e>
 				{
+					communications.flag=0;
+     906:	e2 96       	adiw	r28, 0x32	; 50
+     908:	1f ae       	std	Y+63, r1	; 0x3f
+     90a:	e2 97       	sbiw	r28, 0x32	; 50
 					
 					play_from_program_space(welcome);
-     906:	83 e4       	ldi	r24, 0x43	; 67
-     908:	92 e0       	ldi	r25, 0x02	; 2
-     90a:	0e 94 26 11 	call	0x224c	; 0x224c <play_from_program_space>
+     90c:	83 e4       	ldi	r24, 0x43	; 67
+     90e:	92 e0       	ldi	r25, 0x02	; 2
+     910:	0e 94 26 11 	call	0x224c	; 0x224c <play_from_program_space>
 					communications.locationx = 0;
-     90e:	e0 96       	adiw	r28, 0x30	; 48
-     910:	1f ae       	std	Y+63, r1	; 0x3f
-     912:	e0 97       	sbiw	r28, 0x30	; 48
-					communications.locationy = 0;
-     914:	e1 96       	adiw	r28, 0x31	; 49
+     914:	e0 96       	adiw	r28, 0x30	; 48
      916:	1f ae       	std	Y+63, r1	; 0x3f
-     918:	e1 97       	sbiw	r28, 0x31	; 49
+     918:	e0 97       	sbiw	r28, 0x30	; 48
+					communications.locationy = 0;
+     91a:	e1 96       	adiw	r28, 0x31	; 49
+     91c:	1f ae       	std	Y+63, r1	; 0x3f
+     91e:	e1 97       	sbiw	r28, 0x31	; 49
 					pickOrder(&communications);
-     91a:	ce 01       	movw	r24, r28
-     91c:	01 96       	adiw	r24, 0x01	; 1
-     91e:	0e 94 1b 04 	call	0x836	; 0x836 <pickOrder>
+     920:	ce 01       	movw	r24, r28
+     922:	01 96       	adiw	r24, 0x01	; 1
+     924:	0e 94 1b 04 	call	0x836	; 0x836 <pickOrder>
 					communications.locationx = -1;
-     922:	8f ef       	ldi	r24, 0xFF	; 255
-     924:	e0 96       	adiw	r28, 0x30	; 48
-     926:	8f af       	std	Y+63, r24	; 0x3f
-     928:	e0 97       	sbiw	r28, 0x30	; 48
-					communications.locationy = -1;
-     92a:	e1 96       	adiw	r28, 0x31	; 49
+     928:	8f ef       	ldi	r24, 0xFF	; 255
+     92a:	e0 96       	adiw	r28, 0x30	; 48
      92c:	8f af       	std	Y+63, r24	; 0x3f
-     92e:	e1 97       	sbiw	r28, 0x31	; 49
-     930:	b2 cf       	rjmp	.-156    	; 0x896 <main+0x2e>
+     92e:	e0 97       	sbiw	r28, 0x30	; 48
+					communications.locationy = -1;
+     930:	e1 96       	adiw	r28, 0x31	; 49
+     932:	8f af       	std	Y+63, r24	; 0x3f
+     934:	e1 97       	sbiw	r28, 0x31	; 49
+     936:	af cf       	rjmp	.-162    	; 0x896 <main+0x2e>
 				}
 				break;
 				delay(100);
 			case 2:
 				Spin();
-     932:	0e 94 3d 07 	call	0xe7a	; 0xe7a <Spin>
-				break;
-     936:	af cf       	rjmp	.-162    	; 0x896 <main+0x2e>
-			case 3:
-				manualControl();
-     938:	0e 94 f6 06 	call	0xdec	; 0xdec <manualControl>
+     938:	0e 94 41 07 	call	0xe82	; 0xe82 <Spin>
 				break;
      93c:	ac cf       	rjmp	.-168    	; 0x896 <main+0x2e>
+			case 3:
+				manualControl();
+     93e:	0e 94 fa 06 	call	0xdf4	; 0xdf4 <manualControl>
+				break;
+     942:	a9 cf       	rjmp	.-174    	; 0x896 <main+0x2e>
 
-0000093e <initialize>:
+00000944 <initialize>:
 void inch(){
 	set_motors(50,50);
 	delay(200);
 	set_motors(0,0);
 }
 void println(int x){
-     93e:	cf 93       	push	r28
-     940:	df 93       	push	r29
-     942:	90 93 09 02 	sts	0x0209, r25	; 0x800209 <myComs+0x1>
-     946:	80 93 08 02 	sts	0x0208, r24	; 0x800208 <myComs>
-     94a:	80 ed       	ldi	r24, 0xD0	; 208
-     94c:	97 e0       	ldi	r25, 0x07	; 7
-     94e:	0e 94 f7 15 	call	0x2bee	; 0x2bee <pololu_3pi_init>
-     952:	0d c0       	rjmp	.+26     	; 0x96e <initialize+0x30>
-     954:	0e 94 32 12 	call	0x2464	; 0x2464 <clear>
-     958:	60 e0       	ldi	r22, 0x00	; 0
-     95a:	80 e0       	ldi	r24, 0x00	; 0
-     95c:	0e 94 b9 12 	call	0x2572	; 0x2572 <lcd_goto_xy>
-     960:	0e 94 0d 0e 	call	0x1c1a	; 0x1c1a <read_battery_millivolts_3pi>
-     964:	bc 01       	movw	r22, r24
-     966:	80 e0       	ldi	r24, 0x00	; 0
-     968:	90 e0       	ldi	r25, 0x00	; 0
-     96a:	0e 94 96 12 	call	0x252c	; 0x252c <print_long>
-     96e:	80 e1       	ldi	r24, 0x10	; 16
-     970:	0e 94 b2 13 	call	0x2764	; 0x2764 <button_is_pressed>
-     974:	88 23       	and	r24, r24
-     976:	71 f3       	breq	.-36     	; 0x954 <initialize+0x16>
-     978:	80 e1       	ldi	r24, 0x10	; 16
-     97a:	0e 94 9e 13 	call	0x273c	; 0x273c <wait_for_button_release>
-     97e:	88 ee       	ldi	r24, 0xE8	; 232
-     980:	93 e0       	ldi	r25, 0x03	; 3
-     982:	0e 94 78 15 	call	0x2af0	; 0x2af0 <delay_ms>
-     986:	c0 e0       	ldi	r28, 0x00	; 0
-     988:	d0 e0       	ldi	r29, 0x00	; 0
-     98a:	19 c0       	rjmp	.+50     	; 0x9be <initialize+0x80>
-     98c:	ce 01       	movw	r24, r28
-     98e:	44 97       	sbiw	r24, 0x14	; 20
-     990:	88 97       	sbiw	r24, 0x28	; 40
-     992:	38 f0       	brcs	.+14     	; 0x9a2 <initialize+0x64>
-     994:	68 ed       	ldi	r22, 0xD8	; 216
-     996:	7f ef       	ldi	r23, 0xFF	; 255
-     998:	88 e2       	ldi	r24, 0x28	; 40
-     99a:	90 e0       	ldi	r25, 0x00	; 0
-     99c:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
-     9a0:	06 c0       	rjmp	.+12     	; 0x9ae <initialize+0x70>
-     9a2:	68 e2       	ldi	r22, 0x28	; 40
-     9a4:	70 e0       	ldi	r23, 0x00	; 0
-     9a6:	88 ed       	ldi	r24, 0xD8	; 216
-     9a8:	9f ef       	ldi	r25, 0xFF	; 255
-     9aa:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
-     9ae:	81 e0       	ldi	r24, 0x01	; 1
-     9b0:	0e 94 b4 15 	call	0x2b68	; 0x2b68 <calibrate_line_sensors>
-     9b4:	84 e1       	ldi	r24, 0x14	; 20
-     9b6:	90 e0       	ldi	r25, 0x00	; 0
-     9b8:	0e 94 78 15 	call	0x2af0	; 0x2af0 <delay_ms>
-     9bc:	21 96       	adiw	r28, 0x01	; 1
-     9be:	c0 35       	cpi	r28, 0x50	; 80
-     9c0:	d1 05       	cpc	r29, r1
-     9c2:	20 f3       	brcs	.-56     	; 0x98c <initialize+0x4e>
-     9c4:	60 e0       	ldi	r22, 0x00	; 0
-     9c6:	70 e0       	ldi	r23, 0x00	; 0
-     9c8:	80 e0       	ldi	r24, 0x00	; 0
-     9ca:	90 e0       	ldi	r25, 0x00	; 0
-     9cc:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
-     9d0:	80 e1       	ldi	r24, 0x10	; 16
-     9d2:	0e 94 b2 13 	call	0x2764	; 0x2764 <button_is_pressed>
-     9d6:	88 23       	and	r24, r24
-     9d8:	d9 f3       	breq	.-10     	; 0x9d0 <initialize+0x92>
-     9da:	80 e1       	ldi	r24, 0x10	; 16
-     9dc:	0e 94 9e 13 	call	0x273c	; 0x273c <wait_for_button_release>
-     9e0:	0e 94 32 12 	call	0x2464	; 0x2464 <clear>
-     9e4:	df 91       	pop	r29
-     9e6:	cf 91       	pop	r28
-     9e8:	08 95       	ret
+     944:	cf 93       	push	r28
+     946:	df 93       	push	r29
+     948:	90 93 09 02 	sts	0x0209, r25	; 0x800209 <myComs+0x1>
+     94c:	80 93 08 02 	sts	0x0208, r24	; 0x800208 <myComs>
+     950:	80 ed       	ldi	r24, 0xD0	; 208
+     952:	97 e0       	ldi	r25, 0x07	; 7
+     954:	0e 94 f7 15 	call	0x2bee	; 0x2bee <pololu_3pi_init>
+     958:	0d c0       	rjmp	.+26     	; 0x974 <initialize+0x30>
+     95a:	0e 94 32 12 	call	0x2464	; 0x2464 <clear>
+     95e:	60 e0       	ldi	r22, 0x00	; 0
+     960:	80 e0       	ldi	r24, 0x00	; 0
+     962:	0e 94 b9 12 	call	0x2572	; 0x2572 <lcd_goto_xy>
+     966:	0e 94 0d 0e 	call	0x1c1a	; 0x1c1a <read_battery_millivolts_3pi>
+     96a:	bc 01       	movw	r22, r24
+     96c:	80 e0       	ldi	r24, 0x00	; 0
+     96e:	90 e0       	ldi	r25, 0x00	; 0
+     970:	0e 94 96 12 	call	0x252c	; 0x252c <print_long>
+     974:	80 e1       	ldi	r24, 0x10	; 16
+     976:	0e 94 b2 13 	call	0x2764	; 0x2764 <button_is_pressed>
+     97a:	88 23       	and	r24, r24
+     97c:	71 f3       	breq	.-36     	; 0x95a <initialize+0x16>
+     97e:	80 e1       	ldi	r24, 0x10	; 16
+     980:	0e 94 9e 13 	call	0x273c	; 0x273c <wait_for_button_release>
+     984:	88 ee       	ldi	r24, 0xE8	; 232
+     986:	93 e0       	ldi	r25, 0x03	; 3
+     988:	0e 94 78 15 	call	0x2af0	; 0x2af0 <delay_ms>
+     98c:	c0 e0       	ldi	r28, 0x00	; 0
+     98e:	d0 e0       	ldi	r29, 0x00	; 0
+     990:	19 c0       	rjmp	.+50     	; 0x9c4 <initialize+0x80>
+     992:	ce 01       	movw	r24, r28
+     994:	44 97       	sbiw	r24, 0x14	; 20
+     996:	88 97       	sbiw	r24, 0x28	; 40
+     998:	38 f0       	brcs	.+14     	; 0x9a8 <initialize+0x64>
+     99a:	68 ed       	ldi	r22, 0xD8	; 216
+     99c:	7f ef       	ldi	r23, 0xFF	; 255
+     99e:	88 e2       	ldi	r24, 0x28	; 40
+     9a0:	90 e0       	ldi	r25, 0x00	; 0
+     9a2:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     9a6:	06 c0       	rjmp	.+12     	; 0x9b4 <initialize+0x70>
+     9a8:	68 e2       	ldi	r22, 0x28	; 40
+     9aa:	70 e0       	ldi	r23, 0x00	; 0
+     9ac:	88 ed       	ldi	r24, 0xD8	; 216
+     9ae:	9f ef       	ldi	r25, 0xFF	; 255
+     9b0:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     9b4:	81 e0       	ldi	r24, 0x01	; 1
+     9b6:	0e 94 b4 15 	call	0x2b68	; 0x2b68 <calibrate_line_sensors>
+     9ba:	84 e1       	ldi	r24, 0x14	; 20
+     9bc:	90 e0       	ldi	r25, 0x00	; 0
+     9be:	0e 94 78 15 	call	0x2af0	; 0x2af0 <delay_ms>
+     9c2:	21 96       	adiw	r28, 0x01	; 1
+     9c4:	c0 35       	cpi	r28, 0x50	; 80
+     9c6:	d1 05       	cpc	r29, r1
+     9c8:	20 f3       	brcs	.-56     	; 0x992 <initialize+0x4e>
+     9ca:	60 e0       	ldi	r22, 0x00	; 0
+     9cc:	70 e0       	ldi	r23, 0x00	; 0
+     9ce:	80 e0       	ldi	r24, 0x00	; 0
+     9d0:	90 e0       	ldi	r25, 0x00	; 0
+     9d2:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     9d6:	80 e1       	ldi	r24, 0x10	; 16
+     9d8:	0e 94 b2 13 	call	0x2764	; 0x2764 <button_is_pressed>
+     9dc:	88 23       	and	r24, r24
+     9de:	d9 f3       	breq	.-10     	; 0x9d6 <initialize+0x92>
+     9e0:	80 e1       	ldi	r24, 0x10	; 16
+     9e2:	0e 94 9e 13 	call	0x273c	; 0x273c <wait_for_button_release>
+     9e6:	0e 94 32 12 	call	0x2464	; 0x2464 <clear>
+     9ea:	df 91       	pop	r29
+     9ec:	cf 91       	pop	r28
+     9ee:	08 95       	ret
 
-000009ea <inch>:
-     9ea:	62 e3       	ldi	r22, 0x32	; 50
-     9ec:	70 e0       	ldi	r23, 0x00	; 0
-     9ee:	82 e3       	ldi	r24, 0x32	; 50
-     9f0:	90 e0       	ldi	r25, 0x00	; 0
-     9f2:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
-     9f6:	88 ec       	ldi	r24, 0xC8	; 200
-     9f8:	90 e0       	ldi	r25, 0x00	; 0
-     9fa:	0e 94 78 15 	call	0x2af0	; 0x2af0 <delay_ms>
-     9fe:	60 e0       	ldi	r22, 0x00	; 0
-     a00:	70 e0       	ldi	r23, 0x00	; 0
-     a02:	80 e0       	ldi	r24, 0x00	; 0
-     a04:	90 e0       	ldi	r25, 0x00	; 0
-     a06:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
-     a0a:	08 95       	ret
+000009f0 <inch>:
+     9f0:	62 e3       	ldi	r22, 0x32	; 50
+     9f2:	70 e0       	ldi	r23, 0x00	; 0
+     9f4:	82 e3       	ldi	r24, 0x32	; 50
+     9f6:	90 e0       	ldi	r25, 0x00	; 0
+     9f8:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     9fc:	88 ec       	ldi	r24, 0xC8	; 200
+     9fe:	90 e0       	ldi	r25, 0x00	; 0
+     a00:	0e 94 78 15 	call	0x2af0	; 0x2af0 <delay_ms>
+     a04:	60 e0       	ldi	r22, 0x00	; 0
+     a06:	70 e0       	ldi	r23, 0x00	; 0
+     a08:	80 e0       	ldi	r24, 0x00	; 0
+     a0a:	90 e0       	ldi	r25, 0x00	; 0
+     a0c:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     a10:	08 95       	ret
 
-00000a0c <wait>:
+00000a12 <wait>:
 	lcd_goto_xy(0,0);
 	print_long(x);	*/
 }
 
 void wait(){
 	set_motors(0,0);
-     a0c:	60 e0       	ldi	r22, 0x00	; 0
-     a0e:	70 e0       	ldi	r23, 0x00	; 0
-     a10:	80 e0       	ldi	r24, 0x00	; 0
-     a12:	90 e0       	ldi	r25, 0x00	; 0
-     a14:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     a12:	60 e0       	ldi	r22, 0x00	; 0
+     a14:	70 e0       	ldi	r23, 0x00	; 0
+     a16:	80 e0       	ldi	r24, 0x00	; 0
+     a18:	90 e0       	ldi	r25, 0x00	; 0
+     a1a:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
 	
 	while(!button_is_pressed(BUTTON_B)){}
-     a18:	80 e1       	ldi	r24, 0x10	; 16
-     a1a:	0e 94 b2 13 	call	0x2764	; 0x2764 <button_is_pressed>
-     a1e:	88 23       	and	r24, r24
-     a20:	d9 f3       	breq	.-10     	; 0xa18 <wait+0xc>
+     a1e:	80 e1       	ldi	r24, 0x10	; 16
+     a20:	0e 94 b2 13 	call	0x2764	; 0x2764 <button_is_pressed>
+     a24:	88 23       	and	r24, r24
+     a26:	d9 f3       	breq	.-10     	; 0xa1e <wait+0xc>
 	wait_for_button_release(BUTTON_B);
-     a22:	80 e1       	ldi	r24, 0x10	; 16
-     a24:	0e 94 9e 13 	call	0x273c	; 0x273c <wait_for_button_release>
-     a28:	08 95       	ret
+     a28:	80 e1       	ldi	r24, 0x10	; 16
+     a2a:	0e 94 9e 13 	call	0x273c	; 0x273c <wait_for_button_release>
+     a2e:	08 95       	ret
 
-00000a2a <motorControl>:
+00000a30 <motorControl>:
+		
 	
 	}
 }
 
-
 void motorControl(char x){													// function that controlls the motor movement and the turns
-     a2a:	cf 92       	push	r12
-     a2c:	df 92       	push	r13
-     a2e:	ef 92       	push	r14
-     a30:	ff 92       	push	r15
-     a32:	0f 93       	push	r16
-     a34:	1f 93       	push	r17
-     a36:	cf 93       	push	r28
-     a38:	df 93       	push	r29
-     a3a:	c8 2f       	mov	r28, r24
+     a30:	cf 92       	push	r12
+     a32:	df 92       	push	r13
+     a34:	ef 92       	push	r14
+     a36:	ff 92       	push	r15
+     a38:	0f 93       	push	r16
+     a3a:	1f 93       	push	r17
+     a3c:	cf 93       	push	r28
+     a3e:	df 93       	push	r29
+     a40:	c8 2f       	mov	r28, r24
+	myComs->Update(myComs);
+     a42:	80 91 08 02 	lds	r24, 0x0208	; 0x800208 <myComs>
+     a46:	90 91 09 02 	lds	r25, 0x0209	; 0x800209 <myComs+0x1>
+     a4a:	fc 01       	movw	r30, r24
+     a4c:	ef 58       	subi	r30, 0x8F	; 143
+     a4e:	ff 4f       	sbci	r31, 0xFF	; 255
+     a50:	01 90       	ld	r0, Z+
+     a52:	f0 81       	ld	r31, Z
+     a54:	e0 2d       	mov	r30, r0
+     a56:	09 95       	icall
 	unsigned int position = read_line(sensors,IR_EMITTERS_ON);
-     a3c:	61 e0       	ldi	r22, 0x01	; 1
-     a3e:	8d e0       	ldi	r24, 0x0D	; 13
-     a40:	92 e0       	ldi	r25, 0x02	; 2
-     a42:	0e 94 c1 15 	call	0x2b82	; 0x2b82 <read_line>
-     a46:	8c 01       	movw	r16, r24
+     a58:	61 e0       	ldi	r22, 0x01	; 1
+     a5a:	8d e0       	ldi	r24, 0x0D	; 13
+     a5c:	92 e0       	ldi	r25, 0x02	; 2
+     a5e:	0e 94 c1 15 	call	0x2b82	; 0x2b82 <read_line>
+     a62:	8c 01       	movw	r16, r24
 	read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-     a48:	61 e0       	ldi	r22, 0x01	; 1
-     a4a:	8d e0       	ldi	r24, 0x0D	; 13
-     a4c:	92 e0       	ldi	r25, 0x02	; 2
-     a4e:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
+     a64:	61 e0       	ldi	r22, 0x01	; 1
+     a66:	8d e0       	ldi	r24, 0x0D	; 13
+     a68:	92 e0       	ldi	r25, 0x02	; 2
+     a6a:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
 	
 	if(myComs->EmergencyStop == 1)															//Emergency Brake
-     a52:	e0 91 08 02 	lds	r30, 0x0208	; 0x800208 <myComs>
-     a56:	f0 91 09 02 	lds	r31, 0x0209	; 0x800209 <myComs+0x1>
-     a5a:	e5 59       	subi	r30, 0x95	; 149
-     a5c:	ff 4f       	sbci	r31, 0xFF	; 255
-     a5e:	80 81       	ld	r24, Z
-     a60:	81 30       	cpi	r24, 0x01	; 1
-     a62:	39 f4       	brne	.+14     	; 0xa72 <motorControl+0x48>
+     a6e:	e0 91 08 02 	lds	r30, 0x0208	; 0x800208 <myComs>
+     a72:	f0 91 09 02 	lds	r31, 0x0209	; 0x800209 <myComs+0x1>
+     a76:	e5 59       	subi	r30, 0x95	; 149
+     a78:	ff 4f       	sbci	r31, 0xFF	; 255
+     a7a:	80 81       	ld	r24, Z
+     a7c:	81 30       	cpi	r24, 0x01	; 1
+     a7e:	39 f4       	brne	.+14     	; 0xa8e <motorControl+0x5e>
 		set_motors(0,0);	
-     a64:	60 e0       	ldi	r22, 0x00	; 0
-     a66:	70 e0       	ldi	r23, 0x00	; 0
-     a68:	80 e0       	ldi	r24, 0x00	; 0
-     a6a:	90 e0       	ldi	r25, 0x00	; 0
-     a6c:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
-     a70:	e6 c0       	rjmp	.+460    	; 0xc3e <motorControl+0x214>
+     a80:	60 e0       	ldi	r22, 0x00	; 0
+     a82:	70 e0       	ldi	r23, 0x00	; 0
+     a84:	80 e0       	ldi	r24, 0x00	; 0
+     a86:	90 e0       	ldi	r25, 0x00	; 0
+     a88:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     a8c:	e6 c0       	rjmp	.+460    	; 0xc5a <motorControl+0x22a>
 	
 	
 	else if(x == 'L'){														//Turn Left
-     a72:	cc 34       	cpi	r28, 0x4C	; 76
-     a74:	39 f5       	brne	.+78     	; 0xac4 <motorControl+0x9a>
+     a8e:	cc 34       	cpi	r28, 0x4C	; 76
+     a90:	39 f5       	brne	.+78     	; 0xae0 <motorControl+0xb0>
 		set_motors(-turn_value,turn_value);
-     a76:	6c e3       	ldi	r22, 0x3C	; 60
-     a78:	70 e0       	ldi	r23, 0x00	; 0
-     a7a:	84 ec       	ldi	r24, 0xC4	; 196
-     a7c:	9f ef       	ldi	r25, 0xFF	; 255
-     a7e:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     a92:	6c e3       	ldi	r22, 0x3C	; 60
+     a94:	70 e0       	ldi	r23, 0x00	; 0
+     a96:	84 ec       	ldi	r24, 0xC4	; 196
+     a98:	9f ef       	ldi	r25, 0xFF	; 255
+     a9a:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
 		
 		while (sensors[2] >=Refrence_value)
-     a82:	05 c0       	rjmp	.+10     	; 0xa8e <motorControl+0x64>
+     a9e:	05 c0       	rjmp	.+10     	; 0xaaa <motorControl+0x7a>
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-     a84:	61 e0       	ldi	r22, 0x01	; 1
-     a86:	8d e0       	ldi	r24, 0x0D	; 13
-     a88:	92 e0       	ldi	r25, 0x02	; 2
-     a8a:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
+     aa0:	61 e0       	ldi	r22, 0x01	; 1
+     aa2:	8d e0       	ldi	r24, 0x0D	; 13
+     aa4:	92 e0       	ldi	r25, 0x02	; 2
+     aa6:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
 	
 	
 	else if(x == 'L'){														//Turn Left
 		set_motors(-turn_value,turn_value);
 		
 		while (sensors[2] >=Refrence_value)
-     a8e:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <sensors+0x4>
-     a92:	90 91 12 02 	lds	r25, 0x0212	; 0x800212 <sensors+0x5>
-     a96:	80 39       	cpi	r24, 0x90	; 144
-     a98:	91 40       	sbci	r25, 0x01	; 1
-     a9a:	a0 f7       	brcc	.-24     	; 0xa84 <motorControl+0x5a>
-     a9c:	05 c0       	rjmp	.+10     	; 0xaa8 <motorControl+0x7e>
+     aaa:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <sensors+0x4>
+     aae:	90 91 12 02 	lds	r25, 0x0212	; 0x800212 <sensors+0x5>
+     ab2:	80 39       	cpi	r24, 0x90	; 144
+     ab4:	91 40       	sbci	r25, 0x01	; 1
+     ab6:	a0 f7       	brcc	.-24     	; 0xaa0 <motorControl+0x70>
+     ab8:	05 c0       	rjmp	.+10     	; 0xac4 <motorControl+0x94>
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 		while (sensors[2] <=Refrence_value)
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-     a9e:	61 e0       	ldi	r22, 0x01	; 1
-     aa0:	8d e0       	ldi	r24, 0x0D	; 13
-     aa2:	92 e0       	ldi	r25, 0x02	; 2
-     aa4:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
+     aba:	61 e0       	ldi	r22, 0x01	; 1
+     abc:	8d e0       	ldi	r24, 0x0D	; 13
+     abe:	92 e0       	ldi	r25, 0x02	; 2
+     ac0:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
 	else if(x == 'L'){														//Turn Left
 		set_motors(-turn_value,turn_value);
 		
 		while (sensors[2] >=Refrence_value)
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 		while (sensors[2] <=Refrence_value)
-     aa8:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <sensors+0x4>
-     aac:	90 91 12 02 	lds	r25, 0x0212	; 0x800212 <sensors+0x5>
-     ab0:	81 39       	cpi	r24, 0x91	; 145
-     ab2:	91 40       	sbci	r25, 0x01	; 1
-     ab4:	a0 f3       	brcs	.-24     	; 0xa9e <motorControl+0x74>
+     ac4:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <sensors+0x4>
+     ac8:	90 91 12 02 	lds	r25, 0x0212	; 0x800212 <sensors+0x5>
+     acc:	81 39       	cpi	r24, 0x91	; 145
+     ace:	91 40       	sbci	r25, 0x01	; 1
+     ad0:	a0 f3       	brcs	.-24     	; 0xaba <motorControl+0x8a>
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 		set_motors(0,0);
-     ab6:	60 e0       	ldi	r22, 0x00	; 0
-     ab8:	70 e0       	ldi	r23, 0x00	; 0
-     aba:	80 e0       	ldi	r24, 0x00	; 0
-     abc:	90 e0       	ldi	r25, 0x00	; 0
-     abe:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
-     ac2:	bd c0       	rjmp	.+378    	; 0xc3e <motorControl+0x214>
+     ad2:	60 e0       	ldi	r22, 0x00	; 0
+     ad4:	70 e0       	ldi	r23, 0x00	; 0
+     ad6:	80 e0       	ldi	r24, 0x00	; 0
+     ad8:	90 e0       	ldi	r25, 0x00	; 0
+     ada:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     ade:	bd c0       	rjmp	.+378    	; 0xc5a <motorControl+0x22a>
 	}
 	
 	
 	else if(x == 'R'){														//Turn Right
-     ac4:	c2 35       	cpi	r28, 0x52	; 82
-     ac6:	39 f5       	brne	.+78     	; 0xb16 <motorControl+0xec>
+     ae0:	c2 35       	cpi	r28, 0x52	; 82
+     ae2:	39 f5       	brne	.+78     	; 0xb32 <motorControl+0x102>
 		set_motors(turn_value,-turn_value);
-     ac8:	64 ec       	ldi	r22, 0xC4	; 196
-     aca:	7f ef       	ldi	r23, 0xFF	; 255
-     acc:	8c e3       	ldi	r24, 0x3C	; 60
-     ace:	90 e0       	ldi	r25, 0x00	; 0
-     ad0:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     ae4:	64 ec       	ldi	r22, 0xC4	; 196
+     ae6:	7f ef       	ldi	r23, 0xFF	; 255
+     ae8:	8c e3       	ldi	r24, 0x3C	; 60
+     aea:	90 e0       	ldi	r25, 0x00	; 0
+     aec:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
 		
 		while (sensors[2] >=Refrence_value)
-     ad4:	05 c0       	rjmp	.+10     	; 0xae0 <motorControl+0xb6>
+     af0:	05 c0       	rjmp	.+10     	; 0xafc <motorControl+0xcc>
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-     ad6:	61 e0       	ldi	r22, 0x01	; 1
-     ad8:	8d e0       	ldi	r24, 0x0D	; 13
-     ada:	92 e0       	ldi	r25, 0x02	; 2
-     adc:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
+     af2:	61 e0       	ldi	r22, 0x01	; 1
+     af4:	8d e0       	ldi	r24, 0x0D	; 13
+     af6:	92 e0       	ldi	r25, 0x02	; 2
+     af8:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
 	
 	
 	else if(x == 'R'){														//Turn Right
 		set_motors(turn_value,-turn_value);
 		
 		while (sensors[2] >=Refrence_value)
-     ae0:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <sensors+0x4>
-     ae4:	90 91 12 02 	lds	r25, 0x0212	; 0x800212 <sensors+0x5>
-     ae8:	80 39       	cpi	r24, 0x90	; 144
-     aea:	91 40       	sbci	r25, 0x01	; 1
-     aec:	a0 f7       	brcc	.-24     	; 0xad6 <motorControl+0xac>
-     aee:	05 c0       	rjmp	.+10     	; 0xafa <motorControl+0xd0>
+     afc:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <sensors+0x4>
+     b00:	90 91 12 02 	lds	r25, 0x0212	; 0x800212 <sensors+0x5>
+     b04:	80 39       	cpi	r24, 0x90	; 144
+     b06:	91 40       	sbci	r25, 0x01	; 1
+     b08:	a0 f7       	brcc	.-24     	; 0xaf2 <motorControl+0xc2>
+     b0a:	05 c0       	rjmp	.+10     	; 0xb16 <motorControl+0xe6>
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 		while (sensors[2] <=Refrence_value)
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-     af0:	61 e0       	ldi	r22, 0x01	; 1
-     af2:	8d e0       	ldi	r24, 0x0D	; 13
-     af4:	92 e0       	ldi	r25, 0x02	; 2
-     af6:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
+     b0c:	61 e0       	ldi	r22, 0x01	; 1
+     b0e:	8d e0       	ldi	r24, 0x0D	; 13
+     b10:	92 e0       	ldi	r25, 0x02	; 2
+     b12:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
 	else if(x == 'R'){														//Turn Right
 		set_motors(turn_value,-turn_value);
 		
 		while (sensors[2] >=Refrence_value)
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 		while (sensors[2] <=Refrence_value)
-     afa:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <sensors+0x4>
-     afe:	90 91 12 02 	lds	r25, 0x0212	; 0x800212 <sensors+0x5>
-     b02:	81 39       	cpi	r24, 0x91	; 145
-     b04:	91 40       	sbci	r25, 0x01	; 1
-     b06:	a0 f3       	brcs	.-24     	; 0xaf0 <motorControl+0xc6>
+     b16:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <sensors+0x4>
+     b1a:	90 91 12 02 	lds	r25, 0x0212	; 0x800212 <sensors+0x5>
+     b1e:	81 39       	cpi	r24, 0x91	; 145
+     b20:	91 40       	sbci	r25, 0x01	; 1
+     b22:	a0 f3       	brcs	.-24     	; 0xb0c <motorControl+0xdc>
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 		set_motors(0,0);
-     b08:	60 e0       	ldi	r22, 0x00	; 0
-     b0a:	70 e0       	ldi	r23, 0x00	; 0
-     b0c:	80 e0       	ldi	r24, 0x00	; 0
-     b0e:	90 e0       	ldi	r25, 0x00	; 0
-     b10:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
-     b14:	94 c0       	rjmp	.+296    	; 0xc3e <motorControl+0x214>
+     b24:	60 e0       	ldi	r22, 0x00	; 0
+     b26:	70 e0       	ldi	r23, 0x00	; 0
+     b28:	80 e0       	ldi	r24, 0x00	; 0
+     b2a:	90 e0       	ldi	r25, 0x00	; 0
+     b2c:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     b30:	94 c0       	rjmp	.+296    	; 0xc5a <motorControl+0x22a>
 	}
 		
 			
 	else if(x == 'S'){												//drive straight and adjusts the robot so it follows the line
-     b16:	c3 35       	cpi	r28, 0x53	; 83
-     b18:	09 f0       	breq	.+2      	; 0xb1c <motorControl+0xf2>
-     b1a:	47 c0       	rjmp	.+142    	; 0xbaa <motorControl+0x180>
+     b32:	c3 35       	cpi	r28, 0x53	; 83
+     b34:	09 f0       	breq	.+2      	; 0xb38 <motorControl+0x108>
+     b36:	47 c0       	rjmp	.+142    	; 0xbc6 <motorControl+0x196>
 			int last_proportional;
 			int integral;
 		// are not interested in the individual sensor readings.
 		// The "proportional" term should be 0 when we are on the line.
 		int proportional = ((int)position) - 2000;
-     b1c:	00 5d       	subi	r16, 0xD0	; 208
-     b1e:	17 40       	sbci	r17, 0x07	; 7
+     b38:	00 5d       	subi	r16, 0xD0	; 208
+     b3a:	17 40       	sbci	r17, 0x07	; 7
 
 		// Remember the last position.
 		 last_proportional = proportional;
  
  
 		int power_difference = proportional/100 + integral/300 + derivative*0.10;						// derivative == stuur snelheid
-     b20:	c8 01       	movw	r24, r16
-     b22:	64 e6       	ldi	r22, 0x64	; 100
-     b24:	70 e0       	ldi	r23, 0x00	; 0
-     b26:	0e 94 27 1b 	call	0x364e	; 0x364e <__divmodhi4>
-     b2a:	eb 01       	movw	r28, r22
-     b2c:	c8 01       	movw	r24, r16
-     b2e:	6c e2       	ldi	r22, 0x2C	; 44
-     b30:	71 e0       	ldi	r23, 0x01	; 1
-     b32:	0e 94 27 1b 	call	0x364e	; 0x364e <__divmodhi4>
-     b36:	c6 0f       	add	r28, r22
-     b38:	d7 1f       	adc	r29, r23
-     b3a:	b8 01       	movw	r22, r16
-     b3c:	11 0f       	add	r17, r17
-     b3e:	88 0b       	sbc	r24, r24
-     b40:	99 0b       	sbc	r25, r25
-     b42:	0e 94 43 0c 	call	0x1886	; 0x1886 <__floatsisf>
-     b46:	2d ec       	ldi	r18, 0xCD	; 205
-     b48:	3c ec       	ldi	r19, 0xCC	; 204
-     b4a:	4c ec       	ldi	r20, 0xCC	; 204
-     b4c:	5d e3       	ldi	r21, 0x3D	; 61
-     b4e:	0e 94 cf 0c 	call	0x199e	; 0x199e <__mulsf3>
-     b52:	6b 01       	movw	r12, r22
-     b54:	7c 01       	movw	r14, r24
-     b56:	be 01       	movw	r22, r28
-     b58:	dd 0f       	add	r29, r29
+     b3c:	c8 01       	movw	r24, r16
+     b3e:	64 e6       	ldi	r22, 0x64	; 100
+     b40:	70 e0       	ldi	r23, 0x00	; 0
+     b42:	0e 94 27 1b 	call	0x364e	; 0x364e <__divmodhi4>
+     b46:	eb 01       	movw	r28, r22
+     b48:	c8 01       	movw	r24, r16
+     b4a:	6c e2       	ldi	r22, 0x2C	; 44
+     b4c:	71 e0       	ldi	r23, 0x01	; 1
+     b4e:	0e 94 27 1b 	call	0x364e	; 0x364e <__divmodhi4>
+     b52:	c6 0f       	add	r28, r22
+     b54:	d7 1f       	adc	r29, r23
+     b56:	b8 01       	movw	r22, r16
+     b58:	11 0f       	add	r17, r17
      b5a:	88 0b       	sbc	r24, r24
      b5c:	99 0b       	sbc	r25, r25
      b5e:	0e 94 43 0c 	call	0x1886	; 0x1886 <__floatsisf>
-     b62:	a7 01       	movw	r20, r14
-     b64:	96 01       	movw	r18, r12
-     b66:	0e 94 9f 0b 	call	0x173e	; 0x173e <__addsf3>
-     b6a:	0e 94 0b 0c 	call	0x1816	; 0x1816 <__fixsfsi>
-     b6e:	cb 01       	movw	r24, r22
+     b62:	2d ec       	ldi	r18, 0xCD	; 205
+     b64:	3c ec       	ldi	r19, 0xCC	; 204
+     b66:	4c ec       	ldi	r20, 0xCC	; 204
+     b68:	5d e3       	ldi	r21, 0x3D	; 61
+     b6a:	0e 94 cf 0c 	call	0x199e	; 0x199e <__mulsf3>
+     b6e:	6b 01       	movw	r12, r22
+     b70:	7c 01       	movw	r14, r24
+     b72:	be 01       	movw	r22, r28
+     b74:	dd 0f       	add	r29, r29
+     b76:	88 0b       	sbc	r24, r24
+     b78:	99 0b       	sbc	r25, r25
+     b7a:	0e 94 43 0c 	call	0x1886	; 0x1886 <__floatsisf>
+     b7e:	a7 01       	movw	r20, r14
+     b80:	96 01       	movw	r18, r12
+     b82:	0e 94 9f 0b 	call	0x173e	; 0x173e <__addsf3>
+     b86:	0e 94 0b 0c 	call	0x1816	; 0x1816 <__fixsfsi>
+     b8a:	cb 01       	movw	r24, r22
 
 		// Compute the actual motor settings.  We never set either motor
 		// to a negative value.
 		const int max = 70;
 		if(power_difference > max)
-     b70:	67 34       	cpi	r22, 0x47	; 71
-     b72:	71 05       	cpc	r23, r1
-     b74:	14 f0       	brlt	.+4      	; 0xb7a <motorControl+0x150>
+     b8c:	67 34       	cpi	r22, 0x47	; 71
+     b8e:	71 05       	cpc	r23, r1
+     b90:	14 f0       	brlt	.+4      	; 0xb96 <motorControl+0x166>
 			power_difference = max;
-     b76:	86 e4       	ldi	r24, 0x46	; 70
-     b78:	90 e0       	ldi	r25, 0x00	; 0
+     b92:	86 e4       	ldi	r24, 0x46	; 70
+     b94:	90 e0       	ldi	r25, 0x00	; 0
 		if(power_difference < -max)
-     b7a:	8a 3b       	cpi	r24, 0xBA	; 186
-     b7c:	2f ef       	ldi	r18, 0xFF	; 255
-     b7e:	92 07       	cpc	r25, r18
-     b80:	14 f4       	brge	.+4      	; 0xb86 <motorControl+0x15c>
+     b96:	8a 3b       	cpi	r24, 0xBA	; 186
+     b98:	2f ef       	ldi	r18, 0xFF	; 255
+     b9a:	92 07       	cpc	r25, r18
+     b9c:	14 f4       	brge	.+4      	; 0xba2 <motorControl+0x172>
 			power_difference = -max;
-     b82:	8a eb       	ldi	r24, 0xBA	; 186
-     b84:	9f ef       	ldi	r25, 0xFF	; 255
+     b9e:	8a eb       	ldi	r24, 0xBA	; 186
+     ba0:	9f ef       	ldi	r25, 0xFF	; 255
 
 		if(power_difference < 0)
-     b86:	99 23       	and	r25, r25
-     b88:	3c f4       	brge	.+14     	; 0xb98 <motorControl+0x16e>
+     ba2:	99 23       	and	r25, r25
+     ba4:	3c f4       	brge	.+14     	; 0xbb4 <motorControl+0x184>
 			set_motors(max+power_difference, max);
-     b8a:	66 e4       	ldi	r22, 0x46	; 70
-     b8c:	70 e0       	ldi	r23, 0x00	; 0
-     b8e:	8a 5b       	subi	r24, 0xBA	; 186
-     b90:	9f 4f       	sbci	r25, 0xFF	; 255
-     b92:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
-     b96:	53 c0       	rjmp	.+166    	; 0xc3e <motorControl+0x214>
+     ba6:	66 e4       	ldi	r22, 0x46	; 70
+     ba8:	70 e0       	ldi	r23, 0x00	; 0
+     baa:	8a 5b       	subi	r24, 0xBA	; 186
+     bac:	9f 4f       	sbci	r25, 0xFF	; 255
+     bae:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     bb2:	53 c0       	rjmp	.+166    	; 0xc5a <motorControl+0x22a>
 		else
 			set_motors(max, max-power_difference);
-     b98:	66 e4       	ldi	r22, 0x46	; 70
-     b9a:	70 e0       	ldi	r23, 0x00	; 0
-     b9c:	68 1b       	sub	r22, r24
-     b9e:	79 0b       	sbc	r23, r25
-     ba0:	86 e4       	ldi	r24, 0x46	; 70
-     ba2:	90 e0       	ldi	r25, 0x00	; 0
-     ba4:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
-     ba8:	4a c0       	rjmp	.+148    	; 0xc3e <motorControl+0x214>
+     bb4:	66 e4       	ldi	r22, 0x46	; 70
+     bb6:	70 e0       	ldi	r23, 0x00	; 0
+     bb8:	68 1b       	sub	r22, r24
+     bba:	79 0b       	sbc	r23, r25
+     bbc:	86 e4       	ldi	r24, 0x46	; 70
+     bbe:	90 e0       	ldi	r25, 0x00	; 0
+     bc0:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     bc4:	4a c0       	rjmp	.+148    	; 0xc5a <motorControl+0x22a>
 		
 	}
 	
 	
 	else if(x == 'B'){														//Reverse while following the line
-     baa:	c2 34       	cpi	r28, 0x42	; 66
-     bac:	09 f5       	brne	.+66     	; 0xbf0 <motorControl+0x1c6>
+     bc6:	c2 34       	cpi	r28, 0x42	; 66
+     bc8:	09 f5       	brne	.+66     	; 0xc0c <motorControl+0x1dc>
 		set_motors(-50,-50);
-     bae:	6e ec       	ldi	r22, 0xCE	; 206
-     bb0:	7f ef       	ldi	r23, 0xFF	; 255
-     bb2:	8e ec       	ldi	r24, 0xCE	; 206
-     bb4:	9f ef       	ldi	r25, 0xFF	; 255
-     bb6:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     bca:	6e ec       	ldi	r22, 0xCE	; 206
+     bcc:	7f ef       	ldi	r23, 0xFF	; 255
+     bce:	8e ec       	ldi	r24, 0xCE	; 206
+     bd0:	9f ef       	ldi	r25, 0xFF	; 255
+     bd2:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
 		
 		if (sensors[3] >=Refrence_value)
-     bba:	80 91 13 02 	lds	r24, 0x0213	; 0x800213 <sensors+0x6>
-     bbe:	90 91 14 02 	lds	r25, 0x0214	; 0x800214 <sensors+0x7>
-     bc2:	80 39       	cpi	r24, 0x90	; 144
-     bc4:	91 40       	sbci	r25, 0x01	; 1
-     bc6:	30 f0       	brcs	.+12     	; 0xbd4 <motorControl+0x1aa>
+     bd6:	80 91 13 02 	lds	r24, 0x0213	; 0x800213 <sensors+0x6>
+     bda:	90 91 14 02 	lds	r25, 0x0214	; 0x800214 <sensors+0x7>
+     bde:	80 39       	cpi	r24, 0x90	; 144
+     be0:	91 40       	sbci	r25, 0x01	; 1
+     be2:	30 f0       	brcs	.+12     	; 0xbf0 <motorControl+0x1c0>
 			set_motors(-50,-55);
-     bc8:	69 ec       	ldi	r22, 0xC9	; 201
-     bca:	7f ef       	ldi	r23, 0xFF	; 255
-     bcc:	8e ec       	ldi	r24, 0xCE	; 206
-     bce:	9f ef       	ldi	r25, 0xFF	; 255
-     bd0:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     be4:	69 ec       	ldi	r22, 0xC9	; 201
+     be6:	7f ef       	ldi	r23, 0xFF	; 255
+     be8:	8e ec       	ldi	r24, 0xCE	; 206
+     bea:	9f ef       	ldi	r25, 0xFF	; 255
+     bec:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
 		if (sensors[1] >=Refrence_value)
-     bd4:	80 91 0f 02 	lds	r24, 0x020F	; 0x80020f <sensors+0x2>
-     bd8:	90 91 10 02 	lds	r25, 0x0210	; 0x800210 <sensors+0x3>
-     bdc:	80 39       	cpi	r24, 0x90	; 144
-     bde:	91 40       	sbci	r25, 0x01	; 1
-     be0:	70 f1       	brcs	.+92     	; 0xc3e <motorControl+0x214>
+     bf0:	80 91 0f 02 	lds	r24, 0x020F	; 0x80020f <sensors+0x2>
+     bf4:	90 91 10 02 	lds	r25, 0x0210	; 0x800210 <sensors+0x3>
+     bf8:	80 39       	cpi	r24, 0x90	; 144
+     bfa:	91 40       	sbci	r25, 0x01	; 1
+     bfc:	70 f1       	brcs	.+92     	; 0xc5a <motorControl+0x22a>
 			set_motors(-55,-50);
-     be2:	6e ec       	ldi	r22, 0xCE	; 206
-     be4:	7f ef       	ldi	r23, 0xFF	; 255
-     be6:	89 ec       	ldi	r24, 0xC9	; 201
-     be8:	9f ef       	ldi	r25, 0xFF	; 255
-     bea:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
-     bee:	27 c0       	rjmp	.+78     	; 0xc3e <motorControl+0x214>
+     bfe:	6e ec       	ldi	r22, 0xCE	; 206
+     c00:	7f ef       	ldi	r23, 0xFF	; 255
+     c02:	89 ec       	ldi	r24, 0xC9	; 201
+     c04:	9f ef       	ldi	r25, 0xFF	; 255
+     c06:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     c0a:	27 c0       	rjmp	.+78     	; 0xc5a <motorControl+0x22a>
 	}
 	
 	
 	else if(x == 'T'){														// Turn around
-     bf0:	c4 35       	cpi	r28, 0x54	; 84
-     bf2:	a1 f4       	brne	.+40     	; 0xc1c <motorControl+0x1f2>
+     c0c:	c4 35       	cpi	r28, 0x54	; 84
+     c0e:	a1 f4       	brne	.+40     	; 0xc38 <motorControl+0x208>
 		set_motors(-turn_value,turn_value);
-     bf4:	6c e3       	ldi	r22, 0x3C	; 60
-     bf6:	70 e0       	ldi	r23, 0x00	; 0
-     bf8:	84 ec       	ldi	r24, 0xC4	; 196
-     bfa:	9f ef       	ldi	r25, 0xFF	; 255
-     bfc:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     c10:	6c e3       	ldi	r22, 0x3C	; 60
+     c12:	70 e0       	ldi	r23, 0x00	; 0
+     c14:	84 ec       	ldi	r24, 0xC4	; 196
+     c16:	9f ef       	ldi	r25, 0xFF	; 255
+     c18:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
 		
 		while (sensors[2] <=Refrence_value)
-     c00:	05 c0       	rjmp	.+10     	; 0xc0c <motorControl+0x1e2>
+     c1c:	05 c0       	rjmp	.+10     	; 0xc28 <motorControl+0x1f8>
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-     c02:	61 e0       	ldi	r22, 0x01	; 1
-     c04:	8d e0       	ldi	r24, 0x0D	; 13
-     c06:	92 e0       	ldi	r25, 0x02	; 2
-     c08:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
+     c1e:	61 e0       	ldi	r22, 0x01	; 1
+     c20:	8d e0       	ldi	r24, 0x0D	; 13
+     c22:	92 e0       	ldi	r25, 0x02	; 2
+     c24:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
 	
 	
 	else if(x == 'T'){														// Turn around
 		set_motors(-turn_value,turn_value);
 		
 		while (sensors[2] <=Refrence_value)
-     c0c:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <sensors+0x4>
-     c10:	90 91 12 02 	lds	r25, 0x0212	; 0x800212 <sensors+0x5>
-     c14:	81 39       	cpi	r24, 0x91	; 145
-     c16:	91 40       	sbci	r25, 0x01	; 1
-     c18:	a0 f3       	brcs	.-24     	; 0xc02 <motorControl+0x1d8>
-     c1a:	11 c0       	rjmp	.+34     	; 0xc3e <motorControl+0x214>
+     c28:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <sensors+0x4>
+     c2c:	90 91 12 02 	lds	r25, 0x0212	; 0x800212 <sensors+0x5>
+     c30:	81 39       	cpi	r24, 0x91	; 145
+     c32:	91 40       	sbci	r25, 0x01	; 1
+     c34:	a0 f3       	brcs	.-24     	; 0xc1e <motorControl+0x1ee>
+     c36:	11 c0       	rjmp	.+34     	; 0xc5a <motorControl+0x22a>
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 	}
 	
 	
 	else if(x == 'P')														//Robot stops on a slow pace
-     c1c:	c0 35       	cpi	r28, 0x50	; 80
-     c1e:	79 f4       	brne	.+30     	; 0xc3e <motorControl+0x214>
-     c20:	0a c0       	rjmp	.+20     	; 0xc36 <motorControl+0x20c>
+     c38:	c0 35       	cpi	r28, 0x50	; 80
+     c3a:	79 f4       	brne	.+30     	; 0xc5a <motorControl+0x22a>
+     c3c:	0a c0       	rjmp	.+20     	; 0xc52 <motorControl+0x222>
 		for( int i=50;i>=0;i-=2)
 		{
 			set_motors(i,i);
-     c22:	be 01       	movw	r22, r28
-     c24:	ce 01       	movw	r24, r28
-     c26:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     c3e:	be 01       	movw	r22, r28
+     c40:	ce 01       	movw	r24, r28
+     c42:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
 		    : "0" ( microseconds )
 		    );  
 }
 
 // These are alternative aliases:
 static inline void delay(unsigned int milliseconds) { delay_ms(milliseconds); }
-     c2a:	85 e0       	ldi	r24, 0x05	; 5
-     c2c:	90 e0       	ldi	r25, 0x00	; 0
-     c2e:	0e 94 78 15 	call	0x2af0	; 0x2af0 <delay_ms>
+     c46:	85 e0       	ldi	r24, 0x05	; 5
+     c48:	90 e0       	ldi	r25, 0x00	; 0
+     c4a:	0e 94 78 15 	call	0x2af0	; 0x2af0 <delay_ms>
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 	}
 	
 	
 	else if(x == 'P')														//Robot stops on a slow pace
 		for( int i=50;i>=0;i-=2)
-     c32:	22 97       	sbiw	r28, 0x02	; 2
-     c34:	02 c0       	rjmp	.+4      	; 0xc3a <motorControl+0x210>
-     c36:	c2 e3       	ldi	r28, 0x32	; 50
-     c38:	d0 e0       	ldi	r29, 0x00	; 0
-     c3a:	dd 23       	and	r29, r29
-     c3c:	94 f7       	brge	.-28     	; 0xc22 <motorControl+0x1f8>
+     c4e:	22 97       	sbiw	r28, 0x02	; 2
+     c50:	02 c0       	rjmp	.+4      	; 0xc56 <motorControl+0x226>
+     c52:	c2 e3       	ldi	r28, 0x32	; 50
+     c54:	d0 e0       	ldi	r29, 0x00	; 0
+     c56:	dd 23       	and	r29, r29
+     c58:	94 f7       	brge	.-28     	; 0xc3e <motorControl+0x20e>
 			set_motors(i,i);
 			delay(5);
 		}
 		
 		
 }
-     c3e:	df 91       	pop	r29
-     c40:	cf 91       	pop	r28
-     c42:	1f 91       	pop	r17
-     c44:	0f 91       	pop	r16
-     c46:	ff 90       	pop	r15
-     c48:	ef 90       	pop	r14
-     c4a:	df 90       	pop	r13
-     c4c:	cf 90       	pop	r12
-     c4e:	08 95       	ret
+     c5a:	df 91       	pop	r29
+     c5c:	cf 91       	pop	r28
+     c5e:	1f 91       	pop	r17
+     c60:	0f 91       	pop	r16
+     c62:	ff 90       	pop	r15
+     c64:	ef 90       	pop	r14
+     c66:	df 90       	pop	r13
+     c68:	cf 90       	pop	r12
+     c6a:	08 95       	ret
 
-00000c50 <lineType>:
+00000c6c <lineType>:
 	wait_for_button_release(BUTTON_B);
 }
 
 char lineType(){																																	// function that returns the type of junction it detects
 	while(1){																																		// >= 500 = black line		<=500 = white
 		read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-     c50:	61 e0       	ldi	r22, 0x01	; 1
-     c52:	8d e0       	ldi	r24, 0x0D	; 13
-     c54:	92 e0       	ldi	r25, 0x02	; 2
-     c56:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
+     c6c:	61 e0       	ldi	r22, 0x01	; 1
+     c6e:	8d e0       	ldi	r24, 0x0D	; 13
+     c70:	92 e0       	ldi	r25, 0x02	; 2
+     c72:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
 					
 		if (sensors[0] >=Refrence_value && sensors[1] >= Refrence_value && sensors[4] <= Refrence_value ){																							//Checks if its a left corner or a straight with left corner
-     c5a:	20 91 0d 02 	lds	r18, 0x020D	; 0x80020d <sensors>
-     c5e:	30 91 0e 02 	lds	r19, 0x020E	; 0x80020e <sensors+0x1>
-     c62:	20 39       	cpi	r18, 0x90	; 144
-     c64:	41 e0       	ldi	r20, 0x01	; 1
-     c66:	34 07       	cpc	r19, r20
-     c68:	38 f1       	brcs	.+78     	; 0xcb8 <lineType+0x68>
-     c6a:	80 91 0f 02 	lds	r24, 0x020F	; 0x80020f <sensors+0x2>
-     c6e:	90 91 10 02 	lds	r25, 0x0210	; 0x800210 <sensors+0x3>
-     c72:	80 39       	cpi	r24, 0x90	; 144
-     c74:	91 40       	sbci	r25, 0x01	; 1
-     c76:	00 f1       	brcs	.+64     	; 0xcb8 <lineType+0x68>
-     c78:	80 91 15 02 	lds	r24, 0x0215	; 0x800215 <sensors+0x8>
-     c7c:	90 91 16 02 	lds	r25, 0x0216	; 0x800216 <sensors+0x9>
-     c80:	81 39       	cpi	r24, 0x91	; 145
-     c82:	91 40       	sbci	r25, 0x01	; 1
-     c84:	c8 f4       	brcc	.+50     	; 0xcb8 <lineType+0x68>
+     c76:	40 91 0d 02 	lds	r20, 0x020D	; 0x80020d <sensors>
+     c7a:	50 91 0e 02 	lds	r21, 0x020E	; 0x80020e <sensors+0x1>
+     c7e:	40 39       	cpi	r20, 0x90	; 144
+     c80:	21 e0       	ldi	r18, 0x01	; 1
+     c82:	52 07       	cpc	r21, r18
+     c84:	38 f1       	brcs	.+78     	; 0xcd4 <lineType+0x68>
+     c86:	80 91 0f 02 	lds	r24, 0x020F	; 0x80020f <sensors+0x2>
+     c8a:	90 91 10 02 	lds	r25, 0x0210	; 0x800210 <sensors+0x3>
+     c8e:	80 39       	cpi	r24, 0x90	; 144
+     c90:	91 40       	sbci	r25, 0x01	; 1
+     c92:	00 f1       	brcs	.+64     	; 0xcd4 <lineType+0x68>
+     c94:	80 91 15 02 	lds	r24, 0x0215	; 0x800215 <sensors+0x8>
+     c98:	90 91 16 02 	lds	r25, 0x0216	; 0x800216 <sensors+0x9>
+     c9c:	81 39       	cpi	r24, 0x91	; 145
+     c9e:	91 40       	sbci	r25, 0x01	; 1
+     ca0:	c8 f4       	brcc	.+50     	; 0xcd4 <lineType+0x68>
 			inch();
-     c86:	0e 94 f5 04 	call	0x9ea	; 0x9ea <inch>
+     ca2:	0e 94 f8 04 	call	0x9f0	; 0x9f0 <inch>
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-     c8a:	61 e0       	ldi	r22, 0x01	; 1
-     c8c:	8d e0       	ldi	r24, 0x0D	; 13
-     c8e:	92 e0       	ldi	r25, 0x02	; 2
-     c90:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
+     ca6:	61 e0       	ldi	r22, 0x01	; 1
+     ca8:	8d e0       	ldi	r24, 0x0D	; 13
+     caa:	92 e0       	ldi	r25, 0x02	; 2
+     cac:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
 			
 			if (sensors[2] >= Refrence_value || sensors[3] >=Refrence_value){
-     c94:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <sensors+0x4>
-     c98:	90 91 12 02 	lds	r25, 0x0212	; 0x800212 <sensors+0x5>
-     c9c:	80 39       	cpi	r24, 0x90	; 144
-     c9e:	91 40       	sbci	r25, 0x01	; 1
-     ca0:	08 f0       	brcs	.+2      	; 0xca4 <lineType+0x54>
-     ca2:	94 c0       	rjmp	.+296    	; 0xdcc <lineType+0x17c>
-     ca4:	80 91 13 02 	lds	r24, 0x0213	; 0x800213 <sensors+0x6>
-     ca8:	90 91 14 02 	lds	r25, 0x0214	; 0x800214 <sensors+0x7>
-     cac:	80 39       	cpi	r24, 0x90	; 144
-     cae:	91 40       	sbci	r25, 0x01	; 1
-     cb0:	08 f4       	brcc	.+2      	; 0xcb4 <lineType+0x64>
-     cb2:	8e c0       	rjmp	.+284    	; 0xdd0 <lineType+0x180>
+     cb0:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <sensors+0x4>
+     cb4:	90 91 12 02 	lds	r25, 0x0212	; 0x800212 <sensors+0x5>
+     cb8:	80 39       	cpi	r24, 0x90	; 144
+     cba:	91 40       	sbci	r25, 0x01	; 1
+     cbc:	08 f0       	brcs	.+2      	; 0xcc0 <lineType+0x54>
+     cbe:	8c c0       	rjmp	.+280    	; 0xdd8 <lineType+0x16c>
+     cc0:	80 91 13 02 	lds	r24, 0x0213	; 0x800213 <sensors+0x6>
+     cc4:	90 91 14 02 	lds	r25, 0x0214	; 0x800214 <sensors+0x7>
+     cc8:	80 39       	cpi	r24, 0x90	; 144
+     cca:	91 40       	sbci	r25, 0x01	; 1
+     ccc:	08 f4       	brcc	.+2      	; 0xcd0 <lineType+0x64>
+     cce:	86 c0       	rjmp	.+268    	; 0xddc <lineType+0x170>
 				println(Straight_left_junction);
 				return Straight_left_junction;
-     cb4:	86 e0       	ldi	r24, 0x06	; 6
-     cb6:	08 95       	ret
+     cd0:	86 e0       	ldi	r24, 0x06	; 6
+     cd2:	08 95       	ret
 				return Left_corner;
 			}
 		}
 		
 		
 		else if (sensors[3] >=Refrence_value && sensors[4] >= Refrence_value && sensors[0] <= Refrence_value){																							//Checks if its a right corner or a straight with right corner
-     cb8:	80 91 13 02 	lds	r24, 0x0213	; 0x800213 <sensors+0x6>
-     cbc:	90 91 14 02 	lds	r25, 0x0214	; 0x800214 <sensors+0x7>
-     cc0:	80 39       	cpi	r24, 0x90	; 144
-     cc2:	61 e0       	ldi	r22, 0x01	; 1
-     cc4:	96 07       	cpc	r25, r22
-     cc6:	20 f1       	brcs	.+72     	; 0xd10 <lineType+0xc0>
-     cc8:	40 91 15 02 	lds	r20, 0x0215	; 0x800215 <sensors+0x8>
-     ccc:	50 91 16 02 	lds	r21, 0x0216	; 0x800216 <sensors+0x9>
-     cd0:	40 39       	cpi	r20, 0x90	; 144
-     cd2:	51 40       	sbci	r21, 0x01	; 1
-     cd4:	e8 f0       	brcs	.+58     	; 0xd10 <lineType+0xc0>
-     cd6:	21 39       	cpi	r18, 0x91	; 145
-     cd8:	41 e0       	ldi	r20, 0x01	; 1
-     cda:	34 07       	cpc	r19, r20
-     cdc:	c8 f4       	brcc	.+50     	; 0xd10 <lineType+0xc0>
+     cd4:	80 91 13 02 	lds	r24, 0x0213	; 0x800213 <sensors+0x6>
+     cd8:	90 91 14 02 	lds	r25, 0x0214	; 0x800214 <sensors+0x7>
+     cdc:	80 39       	cpi	r24, 0x90	; 144
+     cde:	61 e0       	ldi	r22, 0x01	; 1
+     ce0:	96 07       	cpc	r25, r22
+     ce2:	20 f1       	brcs	.+72     	; 0xd2c <lineType+0xc0>
+     ce4:	20 91 15 02 	lds	r18, 0x0215	; 0x800215 <sensors+0x8>
+     ce8:	30 91 16 02 	lds	r19, 0x0216	; 0x800216 <sensors+0x9>
+     cec:	20 39       	cpi	r18, 0x90	; 144
+     cee:	31 40       	sbci	r19, 0x01	; 1
+     cf0:	e8 f0       	brcs	.+58     	; 0xd2c <lineType+0xc0>
+     cf2:	41 39       	cpi	r20, 0x91	; 145
+     cf4:	21 e0       	ldi	r18, 0x01	; 1
+     cf6:	52 07       	cpc	r21, r18
+     cf8:	c8 f4       	brcc	.+50     	; 0xd2c <lineType+0xc0>
 			inch();
-     cde:	0e 94 f5 04 	call	0x9ea	; 0x9ea <inch>
+     cfa:	0e 94 f8 04 	call	0x9f0	; 0x9f0 <inch>
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-     ce2:	61 e0       	ldi	r22, 0x01	; 1
-     ce4:	8d e0       	ldi	r24, 0x0D	; 13
-     ce6:	92 e0       	ldi	r25, 0x02	; 2
-     ce8:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
+     cfe:	61 e0       	ldi	r22, 0x01	; 1
+     d00:	8d e0       	ldi	r24, 0x0D	; 13
+     d02:	92 e0       	ldi	r25, 0x02	; 2
+     d04:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
 			
 			if (sensors[2] >= Refrence_value || sensors[1] >=Refrence_value){
-     cec:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <sensors+0x4>
-     cf0:	90 91 12 02 	lds	r25, 0x0212	; 0x800212 <sensors+0x5>
-     cf4:	80 39       	cpi	r24, 0x90	; 144
-     cf6:	91 40       	sbci	r25, 0x01	; 1
-     cf8:	08 f0       	brcs	.+2      	; 0xcfc <lineType+0xac>
-     cfa:	6c c0       	rjmp	.+216    	; 0xdd4 <lineType+0x184>
-     cfc:	80 91 0f 02 	lds	r24, 0x020F	; 0x80020f <sensors+0x2>
-     d00:	90 91 10 02 	lds	r25, 0x0210	; 0x800210 <sensors+0x3>
-     d04:	80 39       	cpi	r24, 0x90	; 144
-     d06:	91 40       	sbci	r25, 0x01	; 1
-     d08:	08 f4       	brcc	.+2      	; 0xd0c <lineType+0xbc>
-     d0a:	66 c0       	rjmp	.+204    	; 0xdd8 <lineType+0x188>
+     d08:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <sensors+0x4>
+     d0c:	90 91 12 02 	lds	r25, 0x0212	; 0x800212 <sensors+0x5>
+     d10:	80 39       	cpi	r24, 0x90	; 144
+     d12:	91 40       	sbci	r25, 0x01	; 1
+     d14:	08 f0       	brcs	.+2      	; 0xd18 <lineType+0xac>
+     d16:	64 c0       	rjmp	.+200    	; 0xde0 <lineType+0x174>
+     d18:	80 91 0f 02 	lds	r24, 0x020F	; 0x80020f <sensors+0x2>
+     d1c:	90 91 10 02 	lds	r25, 0x0210	; 0x800210 <sensors+0x3>
+     d20:	80 39       	cpi	r24, 0x90	; 144
+     d22:	91 40       	sbci	r25, 0x01	; 1
+     d24:	08 f4       	brcc	.+2      	; 0xd28 <lineType+0xbc>
+     d26:	5e c0       	rjmp	.+188    	; 0xde4 <lineType+0x178>
 				println(Straight_right_junction);
 				return Straight_right_junction;
-     d0c:	85 e0       	ldi	r24, 0x05	; 5
-     d0e:	08 95       	ret
+     d28:	85 e0       	ldi	r24, 0x05	; 5
+     d2a:	08 95       	ret
 				println(Straight_left_junction);
 				return Right_corner;
 			}
 		}
 		
 				else if (sensors[1] >=Refrence_value && sensors[3] >= Refrence_value){																									//Checks if its a X junction or a T junction
-     d10:	40 91 0f 02 	lds	r20, 0x020F	; 0x80020f <sensors+0x2>
-     d14:	50 91 10 02 	lds	r21, 0x0210	; 0x800210 <sensors+0x3>
-     d18:	40 39       	cpi	r20, 0x90	; 144
-     d1a:	61 e0       	ldi	r22, 0x01	; 1
-     d1c:	56 07       	cpc	r21, r22
-     d1e:	a8 f0       	brcs	.+42     	; 0xd4a <lineType+0xfa>
-     d20:	80 39       	cpi	r24, 0x90	; 144
-     d22:	e1 e0       	ldi	r30, 0x01	; 1
-     d24:	9e 07       	cpc	r25, r30
-     d26:	88 f0       	brcs	.+34     	; 0xd4a <lineType+0xfa>
+     d2c:	20 91 0f 02 	lds	r18, 0x020F	; 0x80020f <sensors+0x2>
+     d30:	30 91 10 02 	lds	r19, 0x0210	; 0x800210 <sensors+0x3>
+     d34:	20 39       	cpi	r18, 0x90	; 144
+     d36:	61 e0       	ldi	r22, 0x01	; 1
+     d38:	36 07       	cpc	r19, r22
+     d3a:	a8 f0       	brcs	.+42     	; 0xd66 <lineType+0xfa>
+     d3c:	80 39       	cpi	r24, 0x90	; 144
+     d3e:	61 e0       	ldi	r22, 0x01	; 1
+     d40:	96 07       	cpc	r25, r22
+     d42:	88 f0       	brcs	.+34     	; 0xd66 <lineType+0xfa>
 					inch();
-     d28:	0e 94 f5 04 	call	0x9ea	; 0x9ea <inch>
+     d44:	0e 94 f8 04 	call	0x9f0	; 0x9f0 <inch>
 					read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-     d2c:	61 e0       	ldi	r22, 0x01	; 1
-     d2e:	8d e0       	ldi	r24, 0x0D	; 13
-     d30:	92 e0       	ldi	r25, 0x02	; 2
-     d32:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
+     d48:	61 e0       	ldi	r22, 0x01	; 1
+     d4a:	8d e0       	ldi	r24, 0x0D	; 13
+     d4c:	92 e0       	ldi	r25, 0x02	; 2
+     d4e:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
 					
 					if (sensors[2] >=Refrence_value){
-     d36:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <sensors+0x4>
-     d3a:	90 91 12 02 	lds	r25, 0x0212	; 0x800212 <sensors+0x5>
-     d3e:	80 39       	cpi	r24, 0x90	; 144
-     d40:	91 40       	sbci	r25, 0x01	; 1
-     d42:	08 f4       	brcc	.+2      	; 0xd46 <lineType+0xf6>
-     d44:	4b c0       	rjmp	.+150    	; 0xddc <lineType+0x18c>
+     d52:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <sensors+0x4>
+     d56:	90 91 12 02 	lds	r25, 0x0212	; 0x800212 <sensors+0x5>
+     d5a:	80 39       	cpi	r24, 0x90	; 144
+     d5c:	91 40       	sbci	r25, 0x01	; 1
+     d5e:	08 f4       	brcc	.+2      	; 0xd62 <lineType+0xf6>
+     d60:	43 c0       	rjmp	.+134    	; 0xde8 <lineType+0x17c>
 						println(X_junction);
 						return X_junction;
-     d46:	88 e0       	ldi	r24, 0x08	; 8
-     d48:	08 95       	ret
+     d62:	88 e0       	ldi	r24, 0x08	; 8
+     d64:	08 95       	ret
 						println(T_junction);
 						return T_junction;
 					}
 				}
 				
 				else if(sensors[2] <= End_Line_Value && sensors[1] <=End_Line_Value && sensors[3] <=End_Line_Value){
-     d4a:	60 91 11 02 	lds	r22, 0x0211	; 0x800211 <sensors+0x4>
-     d4e:	70 91 12 02 	lds	r23, 0x0212	; 0x800212 <sensors+0x5>
-     d52:	69 3c       	cpi	r22, 0xC9	; 201
-     d54:	71 05       	cpc	r23, r1
-     d56:	30 f4       	brcc	.+12     	; 0xd64 <lineType+0x114>
-     d58:	49 3c       	cpi	r20, 0xC9	; 201
-     d5a:	51 05       	cpc	r21, r1
-     d5c:	18 f4       	brcc	.+6      	; 0xd64 <lineType+0x114>
-     d5e:	89 3c       	cpi	r24, 0xC9	; 201
-     d60:	91 05       	cpc	r25, r1
-     d62:	f0 f1       	brcs	.+124    	; 0xde0 <lineType+0x190>
+     d66:	60 91 11 02 	lds	r22, 0x0211	; 0x800211 <sensors+0x4>
+     d6a:	70 91 12 02 	lds	r23, 0x0212	; 0x800212 <sensors+0x5>
+     d6e:	69 3c       	cpi	r22, 0xC9	; 201
+     d70:	71 05       	cpc	r23, r1
+     d72:	30 f4       	brcc	.+12     	; 0xd80 <lineType+0x114>
+     d74:	29 3c       	cpi	r18, 0xC9	; 201
+     d76:	31 05       	cpc	r19, r1
+     d78:	18 f4       	brcc	.+6      	; 0xd80 <lineType+0x114>
+     d7a:	89 3c       	cpi	r24, 0xC9	; 201
+     d7c:	91 05       	cpc	r25, r1
+     d7e:	b0 f1       	brcs	.+108    	; 0xdec <lineType+0x180>
 					println(Line_end);																													// check if the line ends
 					return Line_end;
 				}
 		else{
 		//else if (sensors[2] >=Refrence_value){																													//Checks if the line is straight
-			if ((sensors[3] <=Refrence_value && sensors[4] >=Refrence_value && sensors[1] <=Refrence_value) || (sensors[0] >=Refrence_value && sensors[1] <=Refrence_value && sensors[3] <=Refrence_value)){			//Checks the line for a "Barcode"
-     d64:	81 39       	cpi	r24, 0x91	; 145
-     d66:	61 e0       	ldi	r22, 0x01	; 1
-     d68:	96 07       	cpc	r25, r22
-     d6a:	58 f4       	brcc	.+22     	; 0xd82 <lineType+0x132>
-     d6c:	60 91 15 02 	lds	r22, 0x0215	; 0x800215 <sensors+0x8>
-     d70:	70 91 16 02 	lds	r23, 0x0216	; 0x800216 <sensors+0x9>
-     d74:	60 39       	cpi	r22, 0x90	; 144
-     d76:	71 40       	sbci	r23, 0x01	; 1
-     d78:	20 f0       	brcs	.+8      	; 0xd82 <lineType+0x132>
-     d7a:	41 39       	cpi	r20, 0x91	; 145
-     d7c:	61 e0       	ldi	r22, 0x01	; 1
-     d7e:	56 07       	cpc	r21, r22
-     d80:	98 f0       	brcs	.+38     	; 0xda8 <lineType+0x158>
-     d82:	20 39       	cpi	r18, 0x90	; 144
-     d84:	31 40       	sbci	r19, 0x01	; 1
-     d86:	70 f1       	brcs	.+92     	; 0xde4 <lineType+0x194>
-     d88:	41 39       	cpi	r20, 0x91	; 145
-     d8a:	51 40       	sbci	r21, 0x01	; 1
-     d8c:	68 f5       	brcc	.+90     	; 0xde8 <lineType+0x198>
-     d8e:	81 39       	cpi	r24, 0x91	; 145
-     d90:	91 40       	sbci	r25, 0x01	; 1
-     d92:	50 f0       	brcs	.+20     	; 0xda8 <lineType+0x158>
+			if (((sensors[1] <=Refrence_value || sensors[3] <=Refrence_value) && sensors[4] >=Refrence_value) || ((sensors[1] <=Refrence_value || sensors[3] <=Refrence_value) && sensors[0] >=Refrence_value)){			//Checks the line for a "Barcode"
+     d80:	21 39       	cpi	r18, 0x91	; 145
+     d82:	31 40       	sbci	r19, 0x01	; 1
+     d84:	18 f0       	brcs	.+6      	; 0xd8c <lineType+0x120>
+     d86:	81 39       	cpi	r24, 0x91	; 145
+     d88:	91 40       	sbci	r25, 0x01	; 1
+     d8a:	90 f5       	brcc	.+100    	; 0xdf0 <lineType+0x184>
+     d8c:	80 91 15 02 	lds	r24, 0x0215	; 0x800215 <sensors+0x8>
+     d90:	90 91 16 02 	lds	r25, 0x0216	; 0x800216 <sensors+0x9>
+     d94:	80 39       	cpi	r24, 0x90	; 144
+     d96:	91 40       	sbci	r25, 0x01	; 1
+     d98:	68 f4       	brcc	.+26     	; 0xdb4 <lineType+0x148>
+     d9a:	40 39       	cpi	r20, 0x90	; 144
+     d9c:	51 40       	sbci	r21, 0x01	; 1
+     d9e:	50 f4       	brcc	.+20     	; 0xdb4 <lineType+0x148>
 				println(Barcode);
 				return Barcode;
 			}
 			else{
 				println(Straight);
 				return Straight;
-     d94:	80 e0       	ldi	r24, 0x00	; 0
-     d96:	08 95       	ret
-			if ((sensors[3] <=Refrence_value && sensors[4] >=Refrence_value && sensors[1] <=Refrence_value) || (sensors[0] >=Refrence_value && sensors[1] <=Refrence_value && sensors[3] <=Refrence_value)){			//Checks the line for a "Barcode"
+     da0:	80 e0       	ldi	r24, 0x00	; 0
+     da2:	08 95       	ret
+			if (((sensors[1] <=Refrence_value || sensors[3] <=Refrence_value) && sensors[4] >=Refrence_value) || ((sensors[1] <=Refrence_value || sensors[3] <=Refrence_value) && sensors[0] >=Refrence_value)){			//Checks the line for a "Barcode"
 			//if((sensors[4] >=Refrence_value && sensors[0] >=Refrence_value) && (sensors[1] <=Refrence_value || sensors[3] <=Refrence_value)){
 			
 				while(sensors[4] >= Refrence_value || sensors[0] >=Refrence_value)
 				{
 					read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-     d98:	61 e0       	ldi	r22, 0x01	; 1
-     d9a:	8d e0       	ldi	r24, 0x0D	; 13
-     d9c:	92 e0       	ldi	r25, 0x02	; 2
-     d9e:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
+     da4:	61 e0       	ldi	r22, 0x01	; 1
+     da6:	8d e0       	ldi	r24, 0x0D	; 13
+     da8:	92 e0       	ldi	r25, 0x02	; 2
+     daa:	0e 94 ba 15 	call	0x2b74	; 0x2b74 <read_line_sensors_calibrated>
 					motorControl('S');
-     da2:	83 e5       	ldi	r24, 0x53	; 83
-     da4:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
+     dae:	83 e5       	ldi	r24, 0x53	; 83
+     db0:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
 		else{
 		//else if (sensors[2] >=Refrence_value){																													//Checks if the line is straight
-			if ((sensors[3] <=Refrence_value && sensors[4] >=Refrence_value && sensors[1] <=Refrence_value) || (sensors[0] >=Refrence_value && sensors[1] <=Refrence_value && sensors[3] <=Refrence_value)){			//Checks the line for a "Barcode"
+			if (((sensors[1] <=Refrence_value || sensors[3] <=Refrence_value) && sensors[4] >=Refrence_value) || ((sensors[1] <=Refrence_value || sensors[3] <=Refrence_value) && sensors[0] >=Refrence_value)){			//Checks the line for a "Barcode"
 			//if((sensors[4] >=Refrence_value && sensors[0] >=Refrence_value) && (sensors[1] <=Refrence_value || sensors[3] <=Refrence_value)){
 			
 				while(sensors[4] >= Refrence_value || sensors[0] >=Refrence_value)
-     da8:	80 91 15 02 	lds	r24, 0x0215	; 0x800215 <sensors+0x8>
-     dac:	90 91 16 02 	lds	r25, 0x0216	; 0x800216 <sensors+0x9>
-     db0:	80 39       	cpi	r24, 0x90	; 144
-     db2:	91 40       	sbci	r25, 0x01	; 1
-     db4:	88 f7       	brcc	.-30     	; 0xd98 <lineType+0x148>
-     db6:	80 91 0d 02 	lds	r24, 0x020D	; 0x80020d <sensors>
-     dba:	90 91 0e 02 	lds	r25, 0x020E	; 0x80020e <sensors+0x1>
-     dbe:	80 39       	cpi	r24, 0x90	; 144
-     dc0:	91 40       	sbci	r25, 0x01	; 1
-     dc2:	50 f7       	brcc	.-44     	; 0xd98 <lineType+0x148>
+     db4:	80 91 15 02 	lds	r24, 0x0215	; 0x800215 <sensors+0x8>
+     db8:	90 91 16 02 	lds	r25, 0x0216	; 0x800216 <sensors+0x9>
+     dbc:	80 39       	cpi	r24, 0x90	; 144
+     dbe:	91 40       	sbci	r25, 0x01	; 1
+     dc0:	88 f7       	brcc	.-30     	; 0xda4 <lineType+0x138>
+     dc2:	80 91 0d 02 	lds	r24, 0x020D	; 0x80020d <sensors>
+     dc6:	90 91 0e 02 	lds	r25, 0x020E	; 0x80020e <sensors+0x1>
+     dca:	80 39       	cpi	r24, 0x90	; 144
+     dcc:	91 40       	sbci	r25, 0x01	; 1
+     dce:	50 f7       	brcc	.-44     	; 0xda4 <lineType+0x138>
 				{
 					read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 					motorControl('S');
 				}
 				wait();
-     dc4:	0e 94 06 05 	call	0xa0c	; 0xa0c <wait>
+     dd0:	0e 94 09 05 	call	0xa12	; 0xa12 <wait>
 				println(Barcode);
 				return Barcode;
-     dc8:	82 e0       	ldi	r24, 0x02	; 2
-     dca:	08 95       	ret
+     dd4:	82 e0       	ldi	r24, 0x02	; 2
+     dd6:	08 95       	ret
 			inch();
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 			
 			if (sensors[2] >= Refrence_value || sensors[3] >=Refrence_value){
 				println(Straight_left_junction);
 				return Straight_left_junction;
-     dcc:	86 e0       	ldi	r24, 0x06	; 6
-     dce:	08 95       	ret
+     dd8:	86 e0       	ldi	r24, 0x06	; 6
+     dda:	08 95       	ret
 			}
 			else{
 				println(Left_corner);
 				return Left_corner;
-     dd0:	83 e0       	ldi	r24, 0x03	; 3
-     dd2:	08 95       	ret
+     ddc:	83 e0       	ldi	r24, 0x03	; 3
+     dde:	08 95       	ret
 			inch();
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 			
 			if (sensors[2] >= Refrence_value || sensors[1] >=Refrence_value){
 				println(Straight_right_junction);
 				return Straight_right_junction;
-     dd4:	85 e0       	ldi	r24, 0x05	; 5
-     dd6:	08 95       	ret
+     de0:	85 e0       	ldi	r24, 0x05	; 5
+     de2:	08 95       	ret
 			}
 			else{
 				println(Straight_left_junction);
 				return Right_corner;
-     dd8:	84 e0       	ldi	r24, 0x04	; 4
-     dda:	08 95       	ret
+     de4:	84 e0       	ldi	r24, 0x04	; 4
+     de6:	08 95       	ret
 						println(X_junction);
 						return X_junction;
 					}
 					else {
 						println(T_junction);
 						return T_junction;
-     ddc:	87 e0       	ldi	r24, 0x07	; 7
-     dde:	08 95       	ret
+     de8:	87 e0       	ldi	r24, 0x07	; 7
+     dea:	08 95       	ret
 					}
 				}
 				
 				else if(sensors[2] <= End_Line_Value && sensors[1] <=End_Line_Value && sensors[3] <=End_Line_Value){
 					println(Line_end);																													// check if the line ends
 					return Line_end;
-     de0:	81 e0       	ldi	r24, 0x01	; 1
-     de2:	08 95       	ret
+     dec:	81 e0       	ldi	r24, 0x01	; 1
+     dee:	08 95       	ret
 				println(Barcode);
 				return Barcode;
 			}
 			else{
 				println(Straight);
 				return Straight;
-     de4:	80 e0       	ldi	r24, 0x00	; 0
-     de6:	08 95       	ret
-     de8:	80 e0       	ldi	r24, 0x00	; 0
+     df0:	80 e0       	ldi	r24, 0x00	; 0
 			
 		}
 		
 	
 	}
 }
-     dea:	08 95       	ret
+     df2:	08 95       	ret
 
-00000dec <manualControl>:
+00000df4 <manualControl>:
 }
 
 
 
 
 void manualControl(){
-     dec:	cf 93       	push	r28
-     dee:	df 93       	push	r29
+     df4:	cf 93       	push	r28
+     df6:	df 93       	push	r29
 int speed = 0;
 
 	if(myComs->Direction[0] == 1){
-     df0:	e0 91 08 02 	lds	r30, 0x0208	; 0x800208 <myComs>
-     df4:	f0 91 09 02 	lds	r31, 0x0209	; 0x800209 <myComs+0x1>
-     df8:	85 a9       	ldd	r24, Z+53	; 0x35
-     dfa:	81 30       	cpi	r24, 0x01	; 1
-     dfc:	49 f4       	brne	.+18     	; 0xe10 <manualControl+0x24>
+     df8:	e0 91 08 02 	lds	r30, 0x0208	; 0x800208 <myComs>
+     dfc:	f0 91 09 02 	lds	r31, 0x0209	; 0x800209 <myComs+0x1>
+     e00:	85 a9       	ldd	r24, Z+53	; 0x35
+     e02:	81 30       	cpi	r24, 0x01	; 1
+     e04:	49 f4       	brne	.+18     	; 0xe18 <manualControl+0x24>
 		set_motors(speed,speed);
-     dfe:	60 e0       	ldi	r22, 0x00	; 0
-     e00:	70 e0       	ldi	r23, 0x00	; 0
-     e02:	80 e0       	ldi	r24, 0x00	; 0
-     e04:	90 e0       	ldi	r25, 0x00	; 0
-     e06:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     e06:	60 e0       	ldi	r22, 0x00	; 0
+     e08:	70 e0       	ldi	r23, 0x00	; 0
+     e0a:	80 e0       	ldi	r24, 0x00	; 0
+     e0c:	90 e0       	ldi	r25, 0x00	; 0
+     e0e:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
 		speed++;
-     e0a:	c1 e0       	ldi	r28, 0x01	; 1
-     e0c:	d0 e0       	ldi	r29, 0x00	; 0
-     e0e:	02 c0       	rjmp	.+4      	; 0xe14 <manualControl+0x28>
+     e12:	c1 e0       	ldi	r28, 0x01	; 1
+     e14:	d0 e0       	ldi	r29, 0x00	; 0
+     e16:	02 c0       	rjmp	.+4      	; 0xe1c <manualControl+0x28>
 
 
 
 
 void manualControl(){
 int speed = 0;
-     e10:	c0 e0       	ldi	r28, 0x00	; 0
-     e12:	d0 e0       	ldi	r29, 0x00	; 0
+     e18:	c0 e0       	ldi	r28, 0x00	; 0
+     e1a:	d0 e0       	ldi	r29, 0x00	; 0
 	if(myComs->Direction[0] == 1){
 		set_motors(speed,speed);
 		speed++;
 	}
 	
 	if(myComs->Direction[1] == 1){
-     e14:	e0 91 08 02 	lds	r30, 0x0208	; 0x800208 <myComs>
-     e18:	f0 91 09 02 	lds	r31, 0x0209	; 0x800209 <myComs+0x1>
-     e1c:	86 a9       	ldd	r24, Z+54	; 0x36
-     e1e:	81 30       	cpi	r24, 0x01	; 1
-     e20:	41 f4       	brne	.+16     	; 0xe32 <manualControl+0x46>
+     e1c:	e0 91 08 02 	lds	r30, 0x0208	; 0x800208 <myComs>
+     e20:	f0 91 09 02 	lds	r31, 0x0209	; 0x800209 <myComs+0x1>
+     e24:	86 a9       	ldd	r24, Z+54	; 0x36
+     e26:	81 30       	cpi	r24, 0x01	; 1
+     e28:	41 f4       	brne	.+16     	; 0xe3a <manualControl+0x46>
 		set_motors(-speed,-speed);
-     e22:	88 27       	eor	r24, r24
-     e24:	99 27       	eor	r25, r25
-     e26:	8c 1b       	sub	r24, r28
-     e28:	9d 0b       	sbc	r25, r29
-     e2a:	bc 01       	movw	r22, r24
-     e2c:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     e2a:	88 27       	eor	r24, r24
+     e2c:	99 27       	eor	r25, r25
+     e2e:	8c 1b       	sub	r24, r28
+     e30:	9d 0b       	sbc	r25, r29
+     e32:	bc 01       	movw	r22, r24
+     e34:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
 		speed--;
-     e30:	21 97       	sbiw	r28, 0x01	; 1
+     e38:	21 97       	sbiw	r28, 0x01	; 1
 	}
 	
 	if(myComs->Direction[2] == 1){
-     e32:	e0 91 08 02 	lds	r30, 0x0208	; 0x800208 <myComs>
-     e36:	f0 91 09 02 	lds	r31, 0x0209	; 0x800209 <myComs+0x1>
-     e3a:	87 a9       	ldd	r24, Z+55	; 0x37
-     e3c:	81 30       	cpi	r24, 0x01	; 1
-     e3e:	49 f4       	brne	.+18     	; 0xe52 <manualControl+0x66>
+     e3a:	e0 91 08 02 	lds	r30, 0x0208	; 0x800208 <myComs>
+     e3e:	f0 91 09 02 	lds	r31, 0x0209	; 0x800209 <myComs+0x1>
+     e42:	87 a9       	ldd	r24, Z+55	; 0x37
+     e44:	81 30       	cpi	r24, 0x01	; 1
+     e46:	49 f4       	brne	.+18     	; 0xe5a <manualControl+0x66>
 		set_motors(speed/2,speed);
-     e40:	ce 01       	movw	r24, r28
-     e42:	dd 23       	and	r29, r29
-     e44:	0c f4       	brge	.+2      	; 0xe48 <manualControl+0x5c>
-     e46:	01 96       	adiw	r24, 0x01	; 1
-     e48:	be 01       	movw	r22, r28
-     e4a:	95 95       	asr	r25
-     e4c:	87 95       	ror	r24
-     e4e:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     e48:	ce 01       	movw	r24, r28
+     e4a:	dd 23       	and	r29, r29
+     e4c:	0c f4       	brge	.+2      	; 0xe50 <manualControl+0x5c>
+     e4e:	01 96       	adiw	r24, 0x01	; 1
+     e50:	be 01       	movw	r22, r28
+     e52:	95 95       	asr	r25
+     e54:	87 95       	ror	r24
+     e56:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
 	}
 	
 	if(myComs->Direction[3] == 1){
-     e52:	e0 91 08 02 	lds	r30, 0x0208	; 0x800208 <myComs>
-     e56:	f0 91 09 02 	lds	r31, 0x0209	; 0x800209 <myComs+0x1>
-     e5a:	80 ad       	ldd	r24, Z+56	; 0x38
-     e5c:	81 30       	cpi	r24, 0x01	; 1
-     e5e:	51 f4       	brne	.+20     	; 0xe74 <manualControl+0x88>
+     e5a:	e0 91 08 02 	lds	r30, 0x0208	; 0x800208 <myComs>
+     e5e:	f0 91 09 02 	lds	r31, 0x0209	; 0x800209 <myComs+0x1>
+     e62:	80 ad       	ldd	r24, Z+56	; 0x38
+     e64:	81 30       	cpi	r24, 0x01	; 1
+     e66:	51 f4       	brne	.+20     	; 0xe7c <manualControl+0x88>
 		set_motors(speed,speed/2);
-     e60:	be 01       	movw	r22, r28
-     e62:	dd 23       	and	r29, r29
-     e64:	14 f4       	brge	.+4      	; 0xe6a <manualControl+0x7e>
-     e66:	6f 5f       	subi	r22, 0xFF	; 255
-     e68:	7f 4f       	sbci	r23, 0xFF	; 255
-     e6a:	75 95       	asr	r23
-     e6c:	67 95       	ror	r22
-     e6e:	ce 01       	movw	r24, r28
-     e70:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
+     e68:	be 01       	movw	r22, r28
+     e6a:	dd 23       	and	r29, r29
+     e6c:	14 f4       	brge	.+4      	; 0xe72 <manualControl+0x7e>
+     e6e:	6f 5f       	subi	r22, 0xFF	; 255
+     e70:	7f 4f       	sbci	r23, 0xFF	; 255
+     e72:	75 95       	asr	r23
+     e74:	67 95       	ror	r22
+     e76:	ce 01       	movw	r24, r28
+     e78:	0e 94 6f 13 	call	0x26de	; 0x26de <set_motors>
 	}
 }
-     e74:	df 91       	pop	r29
-     e76:	cf 91       	pop	r28
-     e78:	08 95       	ret
+     e7c:	df 91       	pop	r29
+     e7e:	cf 91       	pop	r28
+     e80:	08 95       	ret
 
-00000e7a <Spin>:
+00000e82 <Spin>:
 void Spin(){
 	
 	for(int i = 0;i>=255;i++){
 	set_motors(i,-i);	
 	}
 	while(myComs->EmergencyStop == 1){}
-     e7a:	e0 91 08 02 	lds	r30, 0x0208	; 0x800208 <myComs>
-     e7e:	f0 91 09 02 	lds	r31, 0x0209	; 0x800209 <myComs+0x1>
-     e82:	e5 59       	subi	r30, 0x95	; 149
-     e84:	ff 4f       	sbci	r31, 0xFF	; 255
-     e86:	80 81       	ld	r24, Z
-     e88:	81 30       	cpi	r24, 0x01	; 1
-     e8a:	b9 f3       	breq	.-18     	; 0xe7a <Spin>
+     e82:	e0 91 08 02 	lds	r30, 0x0208	; 0x800208 <myComs>
+     e86:	f0 91 09 02 	lds	r31, 0x0209	; 0x800209 <myComs+0x1>
+     e8a:	e5 59       	subi	r30, 0x95	; 149
+     e8c:	ff 4f       	sbci	r31, 0xFF	; 255
+     e8e:	80 81       	ld	r24, Z
+     e90:	81 30       	cpi	r24, 0x01	; 1
+     e92:	b9 f3       	breq	.-18     	; 0xe82 <Spin>
 	for(int i = 255;i<=0;i--){
 		set_motors(i,-i);
 	}
-     e8c:	08 95       	ret
+     e94:	08 95       	ret
 
-00000e8e <parcoursSearch>:
+00000e96 <parcoursSearch>:
 char route[20] = "_"; // hardcode SLR
 char routeBack[20];
 int routea = 1;
 
 int parcoursSearch(Communications *communications) 
 {
-     e8e:	0f 93       	push	r16
-     e90:	1f 93       	push	r17
-     e92:	cf 93       	push	r28
-     e94:	df 93       	push	r29
-     e96:	00 d0       	rcall	.+0      	; 0xe98 <parcoursSearch+0xa>
-     e98:	cd b7       	in	r28, 0x3d	; 61
-     e9a:	de b7       	in	r29, 0x3e	; 62
+     e96:	0f 93       	push	r16
+     e98:	1f 93       	push	r17
+     e9a:	cf 93       	push	r28
+     e9c:	df 93       	push	r29
+     e9e:	00 d0       	rcall	.+0      	; 0xea0 <parcoursSearch+0xa>
+     ea0:	cd b7       	in	r28, 0x3d	; 61
+     ea2:	de b7       	in	r29, 0x3e	; 62
 	char richting;
 	while(1) 
 	{
 		situatie = lineType();
-     e9c:	0e 94 28 06 	call	0xc50	; 0xc50 <lineType>
-     ea0:	80 93 01 02 	sts	0x0201, r24	; 0x800201 <situatie>
+     ea4:	0e 94 36 06 	call	0xc6c	; 0xc6c <lineType>
+     ea8:	80 93 01 02 	sts	0x0201, r24	; 0x800201 <situatie>
 		
 		switch (situatie) 
-     ea4:	90 e0       	ldi	r25, 0x00	; 0
-     ea6:	89 30       	cpi	r24, 0x09	; 9
-     ea8:	91 05       	cpc	r25, r1
-     eaa:	08 f0       	brcs	.+2      	; 0xeae <parcoursSearch+0x20>
-     eac:	41 c0       	rjmp	.+130    	; 0xf30 <parcoursSearch+0xa2>
-     eae:	fc 01       	movw	r30, r24
-     eb0:	ec 5c       	subi	r30, 0xCC	; 204
-     eb2:	ff 4f       	sbci	r31, 0xFF	; 255
-     eb4:	0c 94 7c 1b 	jmp	0x36f8	; 0x36f8 <__tablejump2__>
+     eac:	90 e0       	ldi	r25, 0x00	; 0
+     eae:	89 30       	cpi	r24, 0x09	; 9
+     eb0:	91 05       	cpc	r25, r1
+     eb2:	08 f0       	brcs	.+2      	; 0xeb6 <parcoursSearch+0x20>
+     eb4:	41 c0       	rjmp	.+130    	; 0xf38 <parcoursSearch+0xa2>
+     eb6:	fc 01       	movw	r30, r24
+     eb8:	ec 5c       	subi	r30, 0xCC	; 204
+     eba:	ff 4f       	sbci	r31, 0xFF	; 255
+     ebc:	0c 94 7c 1b 	jmp	0x36f8	; 0x36f8 <__tablejump2__>
 		{
 			case Straight:
 				motorControl('S');
-     eb8:	83 e5       	ldi	r24, 0x53	; 83
-     eba:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
+     ec0:	83 e5       	ldi	r24, 0x53	; 83
+     ec2:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
 				break;
-     ebe:	38 c0       	rjmp	.+112    	; 0xf30 <parcoursSearch+0xa2>
+     ec6:	38 c0       	rjmp	.+112    	; 0xf38 <parcoursSearch+0xa2>
 			
 			case X_junction:
 			case Left_corner:
 			case T_junction:
 			case Straight_left_junction:
 				motorControl('L');
-     ec0:	8c e4       	ldi	r24, 0x4C	; 76
-     ec2:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
+     ec8:	8c e4       	ldi	r24, 0x4C	; 76
+     eca:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
 				richting = 'L';
-     ec6:	8c e4       	ldi	r24, 0x4C	; 76
-     ec8:	89 83       	std	Y+1, r24	; 0x01
+     ece:	8c e4       	ldi	r24, 0x4C	; 76
+     ed0:	89 83       	std	Y+1, r24	; 0x01
 				////print_character('L');
 				strncat(route, &richting, 1);
-     eca:	41 e0       	ldi	r20, 0x01	; 1
-     ecc:	50 e0       	ldi	r21, 0x00	; 0
-     ece:	be 01       	movw	r22, r28
-     ed0:	6f 5f       	subi	r22, 0xFF	; 255
-     ed2:	7f 4f       	sbci	r23, 0xFF	; 255
-     ed4:	84 e1       	ldi	r24, 0x14	; 20
-     ed6:	91 e0       	ldi	r25, 0x01	; 1
-     ed8:	0e 94 fc 1c 	call	0x39f8	; 0x39f8 <strncat>
+     ed2:	41 e0       	ldi	r20, 0x01	; 1
+     ed4:	50 e0       	ldi	r21, 0x00	; 0
+     ed6:	be 01       	movw	r22, r28
+     ed8:	6f 5f       	subi	r22, 0xFF	; 255
+     eda:	7f 4f       	sbci	r23, 0xFF	; 255
+     edc:	84 e1       	ldi	r24, 0x14	; 20
+     ede:	91 e0       	ldi	r25, 0x01	; 1
+     ee0:	0e 94 fc 1c 	call	0x39f8	; 0x39f8 <strncat>
 				break;
-     edc:	29 c0       	rjmp	.+82     	; 0xf30 <parcoursSearch+0xa2>
+     ee4:	29 c0       	rjmp	.+82     	; 0xf38 <parcoursSearch+0xa2>
 			
 			case Right_corner:
 				motorControl('R');
-     ede:	82 e5       	ldi	r24, 0x52	; 82
-     ee0:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
+     ee6:	82 e5       	ldi	r24, 0x52	; 82
+     ee8:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
 				richting = 'R';
-     ee4:	82 e5       	ldi	r24, 0x52	; 82
-     ee6:	89 83       	std	Y+1, r24	; 0x01
+     eec:	82 e5       	ldi	r24, 0x52	; 82
+     eee:	89 83       	std	Y+1, r24	; 0x01
 				//print_character('R');
 				strncat(route, &richting, 1);
-     ee8:	41 e0       	ldi	r20, 0x01	; 1
-     eea:	50 e0       	ldi	r21, 0x00	; 0
-     eec:	be 01       	movw	r22, r28
-     eee:	6f 5f       	subi	r22, 0xFF	; 255
-     ef0:	7f 4f       	sbci	r23, 0xFF	; 255
-     ef2:	84 e1       	ldi	r24, 0x14	; 20
-     ef4:	91 e0       	ldi	r25, 0x01	; 1
-     ef6:	0e 94 fc 1c 	call	0x39f8	; 0x39f8 <strncat>
+     ef0:	41 e0       	ldi	r20, 0x01	; 1
+     ef2:	50 e0       	ldi	r21, 0x00	; 0
+     ef4:	be 01       	movw	r22, r28
+     ef6:	6f 5f       	subi	r22, 0xFF	; 255
+     ef8:	7f 4f       	sbci	r23, 0xFF	; 255
+     efa:	84 e1       	ldi	r24, 0x14	; 20
+     efc:	91 e0       	ldi	r25, 0x01	; 1
+     efe:	0e 94 fc 1c 	call	0x39f8	; 0x39f8 <strncat>
 				break;
-     efa:	1a c0       	rjmp	.+52     	; 0xf30 <parcoursSearch+0xa2>
+     f02:	1a c0       	rjmp	.+52     	; 0xf38 <parcoursSearch+0xa2>
 			
 			case Straight_right_junction:
 				richting = 'S';
-     efc:	83 e5       	ldi	r24, 0x53	; 83
-     efe:	89 83       	std	Y+1, r24	; 0x01
+     f04:	83 e5       	ldi	r24, 0x53	; 83
+     f06:	89 83       	std	Y+1, r24	; 0x01
 				//print_character('S');
 				strncat(route, &richting, 1);
-     f00:	41 e0       	ldi	r20, 0x01	; 1
-     f02:	50 e0       	ldi	r21, 0x00	; 0
-     f04:	be 01       	movw	r22, r28
-     f06:	6f 5f       	subi	r22, 0xFF	; 255
-     f08:	7f 4f       	sbci	r23, 0xFF	; 255
-     f0a:	84 e1       	ldi	r24, 0x14	; 20
-     f0c:	91 e0       	ldi	r25, 0x01	; 1
-     f0e:	0e 94 fc 1c 	call	0x39f8	; 0x39f8 <strncat>
+     f08:	41 e0       	ldi	r20, 0x01	; 1
+     f0a:	50 e0       	ldi	r21, 0x00	; 0
+     f0c:	be 01       	movw	r22, r28
+     f0e:	6f 5f       	subi	r22, 0xFF	; 255
+     f10:	7f 4f       	sbci	r23, 0xFF	; 255
+     f12:	84 e1       	ldi	r24, 0x14	; 20
+     f14:	91 e0       	ldi	r25, 0x01	; 1
+     f16:	0e 94 fc 1c 	call	0x39f8	; 0x39f8 <strncat>
 				break;
-     f12:	0e c0       	rjmp	.+28     	; 0xf30 <parcoursSearch+0xa2>
+     f1a:	0e c0       	rjmp	.+28     	; 0xf38 <parcoursSearch+0xa2>
 				
 			case Line_end:
 				motorControl('T');
-     f14:	84 e5       	ldi	r24, 0x54	; 84
-     f16:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
+     f1c:	84 e5       	ldi	r24, 0x54	; 84
+     f1e:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
 				richting = 'T';
-     f1a:	84 e5       	ldi	r24, 0x54	; 84
-     f1c:	89 83       	std	Y+1, r24	; 0x01
+     f22:	84 e5       	ldi	r24, 0x54	; 84
+     f24:	89 83       	std	Y+1, r24	; 0x01
 				//print_character('T');
 				strncat(route, &richting, 1);
-     f1e:	41 e0       	ldi	r20, 0x01	; 1
-     f20:	50 e0       	ldi	r21, 0x00	; 0
-     f22:	be 01       	movw	r22, r28
-     f24:	6f 5f       	subi	r22, 0xFF	; 255
-     f26:	7f 4f       	sbci	r23, 0xFF	; 255
-     f28:	84 e1       	ldi	r24, 0x14	; 20
-     f2a:	91 e0       	ldi	r25, 0x01	; 1
-     f2c:	0e 94 fc 1c 	call	0x39f8	; 0x39f8 <strncat>
+     f26:	41 e0       	ldi	r20, 0x01	; 1
+     f28:	50 e0       	ldi	r21, 0x00	; 0
+     f2a:	be 01       	movw	r22, r28
+     f2c:	6f 5f       	subi	r22, 0xFF	; 255
+     f2e:	7f 4f       	sbci	r23, 0xFF	; 255
+     f30:	84 e1       	ldi	r24, 0x14	; 20
+     f32:	91 e0       	ldi	r25, 0x01	; 1
+     f34:	0e 94 fc 1c 	call	0x39f8	; 0x39f8 <strncat>
 				motorControl('P');
 				//print_character('B');
 				return 0;
 		}
 		
 		clear();
-     f30:	0e 94 32 12 	call	0x2464	; 0x2464 <clear>
+     f38:	0e 94 32 12 	call	0x2464	; 0x2464 <clear>
 		lcd_goto_xy(0,0);
-     f34:	60 e0       	ldi	r22, 0x00	; 0
-     f36:	80 e0       	ldi	r24, 0x00	; 0
-     f38:	0e 94 b9 12 	call	0x2572	; 0x2572 <lcd_goto_xy>
+     f3c:	60 e0       	ldi	r22, 0x00	; 0
+     f3e:	80 e0       	ldi	r24, 0x00	; 0
+     f40:	0e 94 b9 12 	call	0x2572	; 0x2572 <lcd_goto_xy>
 		for (int i=0; i <= strlen(route);i++ ){
-     f3c:	00 e0       	ldi	r16, 0x00	; 0
-     f3e:	10 e0       	ldi	r17, 0x00	; 0
-     f40:	08 c0       	rjmp	.+16     	; 0xf52 <parcoursSearch+0xc4>
+     f44:	00 e0       	ldi	r16, 0x00	; 0
+     f46:	10 e0       	ldi	r17, 0x00	; 0
+     f48:	08 c0       	rjmp	.+16     	; 0xf5a <parcoursSearch+0xc4>
 		print_character(route[i]);
-     f42:	f8 01       	movw	r30, r16
-     f44:	ec 5e       	subi	r30, 0xEC	; 236
-     f46:	fe 4f       	sbci	r31, 0xFE	; 254
-     f48:	80 81       	ld	r24, Z
-     f4a:	0e 94 c2 11 	call	0x2384	; 0x2384 <print_character>
+     f4a:	f8 01       	movw	r30, r16
+     f4c:	ec 5e       	subi	r30, 0xEC	; 236
+     f4e:	fe 4f       	sbci	r31, 0xFE	; 254
+     f50:	80 81       	ld	r24, Z
+     f52:	0e 94 c2 11 	call	0x2384	; 0x2384 <print_character>
 				return 0;
 		}
 		
 		clear();
 		lcd_goto_xy(0,0);
 		for (int i=0; i <= strlen(route);i++ ){
-     f4e:	0f 5f       	subi	r16, 0xFF	; 255
-     f50:	1f 4f       	sbci	r17, 0xFF	; 255
-     f52:	e4 e1       	ldi	r30, 0x14	; 20
-     f54:	f1 e0       	ldi	r31, 0x01	; 1
-     f56:	01 90       	ld	r0, Z+
-     f58:	00 20       	and	r0, r0
-     f5a:	e9 f7       	brne	.-6      	; 0xf56 <parcoursSearch+0xc8>
-     f5c:	31 97       	sbiw	r30, 0x01	; 1
-     f5e:	e4 51       	subi	r30, 0x14	; 20
-     f60:	f1 40       	sbci	r31, 0x01	; 1
-     f62:	e0 17       	cp	r30, r16
-     f64:	f1 07       	cpc	r31, r17
-     f66:	68 f7       	brcc	.-38     	; 0xf42 <parcoursSearch+0xb4>
+     f56:	0f 5f       	subi	r16, 0xFF	; 255
+     f58:	1f 4f       	sbci	r17, 0xFF	; 255
+     f5a:	e4 e1       	ldi	r30, 0x14	; 20
+     f5c:	f1 e0       	ldi	r31, 0x01	; 1
+     f5e:	01 90       	ld	r0, Z+
+     f60:	00 20       	and	r0, r0
+     f62:	e9 f7       	brne	.-6      	; 0xf5e <parcoursSearch+0xc8>
+     f64:	31 97       	sbiw	r30, 0x01	; 1
+     f66:	e4 51       	subi	r30, 0x14	; 20
+     f68:	f1 40       	sbci	r31, 0x01	; 1
+     f6a:	e0 17       	cp	r30, r16
+     f6c:	f1 07       	cpc	r31, r17
+     f6e:	68 f7       	brcc	.-38     	; 0xf4a <parcoursSearch+0xb4>
 		print_character(route[i]);
 		}
 		
 		char richting;	
 		if (route[strlen(route)-2] == 'T') 
-     f68:	df 01       	movw	r26, r30
-     f6a:	ae 5e       	subi	r26, 0xEE	; 238
-     f6c:	be 4f       	sbci	r27, 0xFE	; 254
-     f6e:	8c 91       	ld	r24, X
-     f70:	84 35       	cpi	r24, 0x54	; 84
-     f72:	09 f0       	breq	.+2      	; 0xf76 <parcoursSearch+0xe8>
-     f74:	93 cf       	rjmp	.-218    	; 0xe9c <parcoursSearch+0xe>
+     f70:	df 01       	movw	r26, r30
+     f72:	ae 5e       	subi	r26, 0xEE	; 238
+     f74:	be 4f       	sbci	r27, 0xFE	; 254
+     f76:	8c 91       	ld	r24, X
+     f78:	84 35       	cpi	r24, 0x54	; 84
+     f7a:	09 f0       	breq	.+2      	; 0xf7e <parcoursSearch+0xe8>
+     f7c:	93 cf       	rjmp	.-218    	; 0xea4 <parcoursSearch+0xe>
 		{
 			char char_1 = route[strlen(route)-3];
-     f76:	df 01       	movw	r26, r30
-     f78:	af 5e       	subi	r26, 0xEF	; 239
-     f7a:	be 4f       	sbci	r27, 0xFE	; 254
-     f7c:	8c 91       	ld	r24, X
+     f7e:	df 01       	movw	r26, r30
+     f80:	af 5e       	subi	r26, 0xEF	; 239
+     f82:	be 4f       	sbci	r27, 0xFE	; 254
+     f84:	8c 91       	ld	r24, X
 			char char_2 = route[strlen(route)-1];
-     f7e:	ed 5e       	subi	r30, 0xED	; 237
-     f80:	fe 4f       	sbci	r31, 0xFE	; 254
-     f82:	90 81       	ld	r25, Z
+     f86:	ed 5e       	subi	r30, 0xED	; 237
+     f88:	fe 4f       	sbci	r31, 0xFE	; 254
+     f8a:	90 81       	ld	r25, Z
 
 			if (char_1 == 'L' && char_2 == 'L') 
-     f84:	8c 34       	cpi	r24, 0x4C	; 76
-     f86:	29 f4       	brne	.+10     	; 0xf92 <parcoursSearch+0x104>
-     f88:	9c 34       	cpi	r25, 0x4C	; 76
-     f8a:	19 f4       	brne	.+6      	; 0xf92 <parcoursSearch+0x104>
+     f8c:	8c 34       	cpi	r24, 0x4C	; 76
+     f8e:	29 f4       	brne	.+10     	; 0xf9a <parcoursSearch+0x104>
+     f90:	9c 34       	cpi	r25, 0x4C	; 76
+     f92:	19 f4       	brne	.+6      	; 0xf9a <parcoursSearch+0x104>
 			{
 				richting = 'S';
-     f8c:	83 e5       	ldi	r24, 0x53	; 83
-     f8e:	8a 83       	std	Y+2, r24	; 0x02
-     f90:	1b c0       	rjmp	.+54     	; 0xfc8 <parcoursSearch+0x13a>
+     f94:	83 e5       	ldi	r24, 0x53	; 83
+     f96:	8a 83       	std	Y+2, r24	; 0x02
+     f98:	1b c0       	rjmp	.+54     	; 0xfd0 <parcoursSearch+0x13a>
 			}
 			else if (char_1 == 'S' && char_2 == 'L')
-     f92:	83 35       	cpi	r24, 0x53	; 83
-     f94:	29 f4       	brne	.+10     	; 0xfa0 <parcoursSearch+0x112>
-     f96:	9c 34       	cpi	r25, 0x4C	; 76
-     f98:	19 f4       	brne	.+6      	; 0xfa0 <parcoursSearch+0x112>
+     f9a:	83 35       	cpi	r24, 0x53	; 83
+     f9c:	29 f4       	brne	.+10     	; 0xfa8 <parcoursSearch+0x112>
+     f9e:	9c 34       	cpi	r25, 0x4C	; 76
+     fa0:	19 f4       	brne	.+6      	; 0xfa8 <parcoursSearch+0x112>
 			{
 				richting = 'R';
-     f9a:	82 e5       	ldi	r24, 0x52	; 82
-     f9c:	8a 83       	std	Y+2, r24	; 0x02
-     f9e:	14 c0       	rjmp	.+40     	; 0xfc8 <parcoursSearch+0x13a>
+     fa2:	82 e5       	ldi	r24, 0x52	; 82
+     fa4:	8a 83       	std	Y+2, r24	; 0x02
+     fa6:	14 c0       	rjmp	.+40     	; 0xfd0 <parcoursSearch+0x13a>
 			}
 			else if (char_1 == 'R' && char_2 == 'L')
-     fa0:	82 35       	cpi	r24, 0x52	; 82
-     fa2:	29 f4       	brne	.+10     	; 0xfae <parcoursSearch+0x120>
-     fa4:	9c 34       	cpi	r25, 0x4C	; 76
-     fa6:	19 f4       	brne	.+6      	; 0xfae <parcoursSearch+0x120>
+     fa8:	82 35       	cpi	r24, 0x52	; 82
+     faa:	29 f4       	brne	.+10     	; 0xfb6 <parcoursSearch+0x120>
+     fac:	9c 34       	cpi	r25, 0x4C	; 76
+     fae:	19 f4       	brne	.+6      	; 0xfb6 <parcoursSearch+0x120>
 			{
 				richting = 'T';
-     fa8:	84 e5       	ldi	r24, 0x54	; 84
-     faa:	8a 83       	std	Y+2, r24	; 0x02
-     fac:	0d c0       	rjmp	.+26     	; 0xfc8 <parcoursSearch+0x13a>
+     fb0:	84 e5       	ldi	r24, 0x54	; 84
+     fb2:	8a 83       	std	Y+2, r24	; 0x02
+     fb4:	0d c0       	rjmp	.+26     	; 0xfd0 <parcoursSearch+0x13a>
 			}
 			else if (char_1 == 'L' && char_2 == 'R')
-     fae:	8c 34       	cpi	r24, 0x4C	; 76
-     fb0:	29 f4       	brne	.+10     	; 0xfbc <parcoursSearch+0x12e>
-     fb2:	92 35       	cpi	r25, 0x52	; 82
-     fb4:	19 f4       	brne	.+6      	; 0xfbc <parcoursSearch+0x12e>
+     fb6:	8c 34       	cpi	r24, 0x4C	; 76
+     fb8:	29 f4       	brne	.+10     	; 0xfc4 <parcoursSearch+0x12e>
+     fba:	92 35       	cpi	r25, 0x52	; 82
+     fbc:	19 f4       	brne	.+6      	; 0xfc4 <parcoursSearch+0x12e>
 			{
 				richting = 'T';
-     fb6:	84 e5       	ldi	r24, 0x54	; 84
-     fb8:	8a 83       	std	Y+2, r24	; 0x02
-     fba:	06 c0       	rjmp	.+12     	; 0xfc8 <parcoursSearch+0x13a>
+     fbe:	84 e5       	ldi	r24, 0x54	; 84
+     fc0:	8a 83       	std	Y+2, r24	; 0x02
+     fc2:	06 c0       	rjmp	.+12     	; 0xfd0 <parcoursSearch+0x13a>
 			}
 			else if (char_1 == 'L' && char_2 == 'S')
-     fbc:	8c 34       	cpi	r24, 0x4C	; 76
-     fbe:	21 f4       	brne	.+8      	; 0xfc8 <parcoursSearch+0x13a>
-     fc0:	93 35       	cpi	r25, 0x53	; 83
-     fc2:	11 f4       	brne	.+4      	; 0xfc8 <parcoursSearch+0x13a>
+     fc4:	8c 34       	cpi	r24, 0x4C	; 76
+     fc6:	21 f4       	brne	.+8      	; 0xfd0 <parcoursSearch+0x13a>
+     fc8:	93 35       	cpi	r25, 0x53	; 83
+     fca:	11 f4       	brne	.+4      	; 0xfd0 <parcoursSearch+0x13a>
 			{
 				richting = 'R';
-     fc4:	82 e5       	ldi	r24, 0x52	; 82
-     fc6:	8a 83       	std	Y+2, r24	; 0x02
+     fcc:	82 e5       	ldi	r24, 0x52	; 82
+     fce:	8a 83       	std	Y+2, r24	; 0x02
 			}
 			route[strlen(route)-3] = '\0';
-     fc8:	e4 e1       	ldi	r30, 0x14	; 20
-     fca:	f1 e0       	ldi	r31, 0x01	; 1
-     fcc:	01 90       	ld	r0, Z+
-     fce:	00 20       	and	r0, r0
-     fd0:	e9 f7       	brne	.-6      	; 0xfcc <parcoursSearch+0x13e>
-     fd2:	34 97       	sbiw	r30, 0x04	; 4
-     fd4:	10 82       	st	Z, r1
+     fd0:	e4 e1       	ldi	r30, 0x14	; 20
+     fd2:	f1 e0       	ldi	r31, 0x01	; 1
+     fd4:	01 90       	ld	r0, Z+
+     fd6:	00 20       	and	r0, r0
+     fd8:	e9 f7       	brne	.-6      	; 0xfd4 <parcoursSearch+0x13e>
+     fda:	34 97       	sbiw	r30, 0x04	; 4
+     fdc:	10 82       	st	Z, r1
 			strncat(route, &richting, 1);
-     fd6:	41 e0       	ldi	r20, 0x01	; 1
-     fd8:	50 e0       	ldi	r21, 0x00	; 0
-     fda:	be 01       	movw	r22, r28
-     fdc:	6e 5f       	subi	r22, 0xFE	; 254
-     fde:	7f 4f       	sbci	r23, 0xFF	; 255
-     fe0:	84 e1       	ldi	r24, 0x14	; 20
-     fe2:	91 e0       	ldi	r25, 0x01	; 1
-     fe4:	0e 94 fc 1c 	call	0x39f8	; 0x39f8 <strncat>
+     fde:	41 e0       	ldi	r20, 0x01	; 1
+     fe0:	50 e0       	ldi	r21, 0x00	; 0
+     fe2:	be 01       	movw	r22, r28
+     fe4:	6e 5f       	subi	r22, 0xFE	; 254
+     fe6:	7f 4f       	sbci	r23, 0xFF	; 255
+     fe8:	84 e1       	ldi	r24, 0x14	; 20
+     fea:	91 e0       	ldi	r25, 0x01	; 1
+     fec:	0e 94 fc 1c 	call	0x39f8	; 0x39f8 <strncat>
 		}
 	}
-     fe8:	59 cf       	rjmp	.-334    	; 0xe9c <parcoursSearch+0xe>
+     ff0:	59 cf       	rjmp	.-334    	; 0xea4 <parcoursSearch+0xe>
 				//print_character('T');
 				strncat(route, &richting, 1);
 				break;
 				
 			case Barcode: // end of parcour
 				motorControl('P');
-     fea:	80 e5       	ldi	r24, 0x50	; 80
-     fec:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
+     ff2:	80 e5       	ldi	r24, 0x50	; 80
+     ff4:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
 			strncat(route, &richting, 1);
 		}
 	}
 	routea = 0;	
 	return 0;
 }
-     ff0:	80 e0       	ldi	r24, 0x00	; 0
-     ff2:	90 e0       	ldi	r25, 0x00	; 0
-     ff4:	0f 90       	pop	r0
-     ff6:	0f 90       	pop	r0
-     ff8:	df 91       	pop	r29
-     ffa:	cf 91       	pop	r28
-     ffc:	1f 91       	pop	r17
-     ffe:	0f 91       	pop	r16
-    1000:	08 95       	ret
+     ff8:	80 e0       	ldi	r24, 0x00	; 0
+     ffa:	90 e0       	ldi	r25, 0x00	; 0
+     ffc:	0f 90       	pop	r0
+     ffe:	0f 90       	pop	r0
+    1000:	df 91       	pop	r29
+    1002:	cf 91       	pop	r28
+    1004:	1f 91       	pop	r17
+    1006:	0f 91       	pop	r16
+    1008:	08 95       	ret
 
-00001002 <parcoursRun>:
+0000100a <parcoursRun>:
 
 int parcoursRun(char way, Communications *communications) 
 {
-    1002:	ef 92       	push	r14
-    1004:	ff 92       	push	r15
-    1006:	1f 93       	push	r17
-    1008:	cf 93       	push	r28
-    100a:	df 93       	push	r29
-    100c:	18 2f       	mov	r17, r24
+    100a:	ef 92       	push	r14
+    100c:	ff 92       	push	r15
+    100e:	1f 93       	push	r17
+    1010:	cf 93       	push	r28
+    1012:	df 93       	push	r29
+    1014:	18 2f       	mov	r17, r24
 	char richting;
 	for (int i = 0; i < strlen(route); i++) 
-    100e:	c0 e0       	ldi	r28, 0x00	; 0
-    1010:	d0 e0       	ldi	r29, 0x00	; 0
-    1012:	2a c0       	rjmp	.+84     	; 0x1068 <parcoursRun+0x66>
+    1016:	c0 e0       	ldi	r28, 0x00	; 0
+    1018:	d0 e0       	ldi	r29, 0x00	; 0
+    101a:	2a c0       	rjmp	.+84     	; 0x1070 <parcoursRun+0x66>
 	{
 		while (lineType() == Straight)
 		{
 			motorControl('S');
-    1014:	83 e5       	ldi	r24, 0x53	; 83
-    1016:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
+    101c:	83 e5       	ldi	r24, 0x53	; 83
+    101e:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
 int parcoursRun(char way, Communications *communications) 
 {
 	char richting;
 	for (int i = 0; i < strlen(route); i++) 
 	{
 		while (lineType() == Straight)
-    101a:	0e 94 28 06 	call	0xc50	; 0xc50 <lineType>
-    101e:	88 23       	and	r24, r24
-    1020:	c9 f3       	breq	.-14     	; 0x1014 <parcoursRun+0x12>
+    1022:	0e 94 36 06 	call	0xc6c	; 0xc6c <lineType>
+    1026:	88 23       	and	r24, r24
+    1028:	c9 f3       	breq	.-14     	; 0x101c <parcoursRun+0x12>
 		{
 			motorControl('S');
 		}
 		if (way == 'T') {
-    1022:	14 35       	cpi	r17, 0x54	; 84
-    1024:	39 f4       	brne	.+14     	; 0x1034 <parcoursRun+0x32>
+    102a:	14 35       	cpi	r17, 0x54	; 84
+    102c:	39 f4       	brne	.+14     	; 0x103c <parcoursRun+0x32>
 			motorControl(route[i]);
-    1026:	fe 01       	movw	r30, r28
-    1028:	ec 5e       	subi	r30, 0xEC	; 236
-    102a:	fe 4f       	sbci	r31, 0xFE	; 254
-    102c:	80 81       	ld	r24, Z
-    102e:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-    1032:	19 c0       	rjmp	.+50     	; 0x1066 <parcoursRun+0x64>
+    102e:	fe 01       	movw	r30, r28
+    1030:	ec 5e       	subi	r30, 0xEC	; 236
+    1032:	fe 4f       	sbci	r31, 0xFE	; 254
+    1034:	80 81       	ld	r24, Z
+    1036:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    103a:	19 c0       	rjmp	.+50     	; 0x106e <parcoursRun+0x64>
 		} 
 		else if (way == 'B') 
-    1034:	12 34       	cpi	r17, 0x42	; 66
-    1036:	b9 f4       	brne	.+46     	; 0x1066 <parcoursRun+0x64>
+    103c:	12 34       	cpi	r17, 0x42	; 66
+    103e:	b9 f4       	brne	.+46     	; 0x106e <parcoursRun+0x64>
 		{
 			richting = route[strlen(route)-i-1];
-    1038:	e4 e1       	ldi	r30, 0x14	; 20
-    103a:	f1 e0       	ldi	r31, 0x01	; 1
-    103c:	01 90       	ld	r0, Z+
-    103e:	00 20       	and	r0, r0
-    1040:	e9 f7       	brne	.-6      	; 0x103c <parcoursRun+0x3a>
-    1042:	31 97       	sbiw	r30, 0x01	; 1
-    1044:	e4 51       	subi	r30, 0x14	; 20
-    1046:	f1 40       	sbci	r31, 0x01	; 1
-    1048:	ee 19       	sub	r30, r14
-    104a:	ff 09       	sbc	r31, r15
-    104c:	ed 5e       	subi	r30, 0xED	; 237
-    104e:	fe 4f       	sbci	r31, 0xFE	; 254
-    1050:	80 81       	ld	r24, Z
+    1040:	e4 e1       	ldi	r30, 0x14	; 20
+    1042:	f1 e0       	ldi	r31, 0x01	; 1
+    1044:	01 90       	ld	r0, Z+
+    1046:	00 20       	and	r0, r0
+    1048:	e9 f7       	brne	.-6      	; 0x1044 <parcoursRun+0x3a>
+    104a:	31 97       	sbiw	r30, 0x01	; 1
+    104c:	e4 51       	subi	r30, 0x14	; 20
+    104e:	f1 40       	sbci	r31, 0x01	; 1
+    1050:	ee 19       	sub	r30, r14
+    1052:	ff 09       	sbc	r31, r15
+    1054:	ed 5e       	subi	r30, 0xED	; 237
+    1056:	fe 4f       	sbci	r31, 0xFE	; 254
+    1058:	80 81       	ld	r24, Z
 			switch (richting)
-    1052:	8c 34       	cpi	r24, 0x4C	; 76
-    1054:	19 f0       	breq	.+6      	; 0x105c <parcoursRun+0x5a>
-    1056:	82 35       	cpi	r24, 0x52	; 82
-    1058:	19 f0       	breq	.+6      	; 0x1060 <parcoursRun+0x5e>
-    105a:	03 c0       	rjmp	.+6      	; 0x1062 <parcoursRun+0x60>
+    105a:	8c 34       	cpi	r24, 0x4C	; 76
+    105c:	19 f0       	breq	.+6      	; 0x1064 <parcoursRun+0x5a>
+    105e:	82 35       	cpi	r24, 0x52	; 82
+    1060:	19 f0       	breq	.+6      	; 0x1068 <parcoursRun+0x5e>
+    1062:	03 c0       	rjmp	.+6      	; 0x106a <parcoursRun+0x60>
 			{
 				case 'R':
 					richting = 'L';
 					break;
 				case 'L':
 					richting = 'R';
-    105c:	82 e5       	ldi	r24, 0x52	; 82
+    1064:	82 e5       	ldi	r24, 0x52	; 82
 					break;
-    105e:	01 c0       	rjmp	.+2      	; 0x1062 <parcoursRun+0x60>
+    1066:	01 c0       	rjmp	.+2      	; 0x106a <parcoursRun+0x60>
 		{
 			richting = route[strlen(route)-i-1];
 			switch (richting)
 			{
 				case 'R':
 					richting = 'L';
-    1060:	8c e4       	ldi	r24, 0x4C	; 76
+    1068:	8c e4       	ldi	r24, 0x4C	; 76
 					break;
 				case 'L':
 					richting = 'R';
 					break;
 			}
 			motorControl(richting);
-    1062:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
+    106a:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
 }
 
 int parcoursRun(char way, Communications *communications) 
 {
 	char richting;
 	for (int i = 0; i < strlen(route); i++) 
-    1066:	21 96       	adiw	r28, 0x01	; 1
-    1068:	e4 e1       	ldi	r30, 0x14	; 20
-    106a:	f1 e0       	ldi	r31, 0x01	; 1
-    106c:	01 90       	ld	r0, Z+
-    106e:	00 20       	and	r0, r0
-    1070:	e9 f7       	brne	.-6      	; 0x106c <parcoursRun+0x6a>
-    1072:	31 97       	sbiw	r30, 0x01	; 1
-    1074:	e4 51       	subi	r30, 0x14	; 20
-    1076:	f1 40       	sbci	r31, 0x01	; 1
-    1078:	7e 01       	movw	r14, r28
-    107a:	ce 17       	cp	r28, r30
-    107c:	df 07       	cpc	r29, r31
-    107e:	68 f2       	brcs	.-102    	; 0x101a <parcoursRun+0x18>
+    106e:	21 96       	adiw	r28, 0x01	; 1
+    1070:	e4 e1       	ldi	r30, 0x14	; 20
+    1072:	f1 e0       	ldi	r31, 0x01	; 1
+    1074:	01 90       	ld	r0, Z+
+    1076:	00 20       	and	r0, r0
+    1078:	e9 f7       	brne	.-6      	; 0x1074 <parcoursRun+0x6a>
+    107a:	31 97       	sbiw	r30, 0x01	; 1
+    107c:	e4 51       	subi	r30, 0x14	; 20
+    107e:	f1 40       	sbci	r31, 0x01	; 1
+    1080:	7e 01       	movw	r14, r28
+    1082:	ce 17       	cp	r28, r30
+    1084:	df 07       	cpc	r29, r31
+    1086:	68 f2       	brcs	.-102    	; 0x1022 <parcoursRun+0x18>
 			}
 			motorControl(richting);
 		}
 	}
 	return 0;
 }
-    1080:	80 e0       	ldi	r24, 0x00	; 0
-    1082:	90 e0       	ldi	r25, 0x00	; 0
-    1084:	df 91       	pop	r29
-    1086:	cf 91       	pop	r28
-    1088:	1f 91       	pop	r17
-    108a:	ff 90       	pop	r15
-    108c:	ef 90       	pop	r14
-    108e:	08 95       	ret
+    1088:	80 e0       	ldi	r24, 0x00	; 0
+    108a:	90 e0       	ldi	r25, 0x00	; 0
+    108c:	df 91       	pop	r29
+    108e:	cf 91       	pop	r28
+    1090:	1f 91       	pop	r17
+    1092:	ff 90       	pop	r15
+    1094:	ef 90       	pop	r14
+    1096:	08 95       	ret
 
-00001090 <parcours>:
+00001098 <parcours>:
 
 int parcours(char way, Communications *communications) 
 {
-    1090:	1f 93       	push	r17
-    1092:	cf 93       	push	r28
-    1094:	df 93       	push	r29
-    1096:	00 d0       	rcall	.+0      	; 0x1098 <parcours+0x8>
-    1098:	cd b7       	in	r28, 0x3d	; 61
-    109a:	de b7       	in	r29, 0x3e	; 62
-    109c:	18 2f       	mov	r17, r24
-    109e:	7a 83       	std	Y+2, r23	; 0x02
-    10a0:	69 83       	std	Y+1, r22	; 0x01
+    1098:	1f 93       	push	r17
+    109a:	cf 93       	push	r28
+    109c:	df 93       	push	r29
+    109e:	00 d0       	rcall	.+0      	; 0x10a0 <parcours+0x8>
+    10a0:	cd b7       	in	r28, 0x3d	; 61
+    10a2:	de b7       	in	r29, 0x3e	; 62
+    10a4:	18 2f       	mov	r17, r24
+    10a6:	7a 83       	std	Y+2, r23	; 0x02
+    10a8:	69 83       	std	Y+1, r22	; 0x01
 	updateDisplay(0, batteryPercentage(), mazeSolver);
-    10a2:	0e 94 8e 03 	call	0x71c	; 0x71c <batteryPercentage>
-    10a6:	0e 94 0b 0c 	call	0x1816	; 0x1816 <__fixsfsi>
-    10aa:	41 e0       	ldi	r20, 0x01	; 1
-    10ac:	80 e0       	ldi	r24, 0x00	; 0
-    10ae:	90 e0       	ldi	r25, 0x00	; 0
-    10b0:	0e 94 b0 03 	call	0x760	; 0x760 <updateDisplay>
+    10aa:	0e 94 8e 03 	call	0x71c	; 0x71c <batteryPercentage>
+    10ae:	0e 94 0b 0c 	call	0x1816	; 0x1816 <__fixsfsi>
+    10b2:	41 e0       	ldi	r20, 0x01	; 1
+    10b4:	80 e0       	ldi	r24, 0x00	; 0
+    10b6:	90 e0       	ldi	r25, 0x00	; 0
+    10b8:	0e 94 b0 03 	call	0x760	; 0x760 <updateDisplay>
 	if (route[0] == '_'){
-    10b4:	80 91 14 01 	lds	r24, 0x0114	; 0x800114 <route>
-    10b8:	8f 35       	cpi	r24, 0x5F	; 95
-    10ba:	61 f4       	brne	.+24     	; 0x10d4 <parcours+0x44>
+    10bc:	80 91 14 01 	lds	r24, 0x0114	; 0x800114 <route>
+    10c0:	8f 35       	cpi	r24, 0x5F	; 95
+    10c2:	61 f4       	brne	.+24     	; 0x10dc <parcours+0x44>
 		memset(route,0,sizeof route);
-    10bc:	84 e1       	ldi	r24, 0x14	; 20
-    10be:	e4 e1       	ldi	r30, 0x14	; 20
-    10c0:	f1 e0       	ldi	r31, 0x01	; 1
-    10c2:	df 01       	movw	r26, r30
-    10c4:	1d 92       	st	X+, r1
-    10c6:	8a 95       	dec	r24
-    10c8:	e9 f7       	brne	.-6      	; 0x10c4 <parcours+0x34>
+    10c4:	84 e1       	ldi	r24, 0x14	; 20
+    10c6:	e4 e1       	ldi	r30, 0x14	; 20
+    10c8:	f1 e0       	ldi	r31, 0x01	; 1
+    10ca:	df 01       	movw	r26, r30
+    10cc:	1d 92       	st	X+, r1
+    10ce:	8a 95       	dec	r24
+    10d0:	e9 f7       	brne	.-6      	; 0x10cc <parcours+0x34>
 		parcoursSearch(&communications);
-    10ca:	ce 01       	movw	r24, r28
-    10cc:	01 96       	adiw	r24, 0x01	; 1
-    10ce:	0e 94 47 07 	call	0xe8e	; 0xe8e <parcoursSearch>
-    10d2:	05 c0       	rjmp	.+10     	; 0x10de <parcours+0x4e>
+    10d2:	ce 01       	movw	r24, r28
+    10d4:	01 96       	adiw	r24, 0x01	; 1
+    10d6:	0e 94 4b 07 	call	0xe96	; 0xe96 <parcoursSearch>
+    10da:	05 c0       	rjmp	.+10     	; 0x10e6 <parcours+0x4e>
 	} 
 	else 
 	{
 		parcoursRun(way, communications);
-    10d4:	69 81       	ldd	r22, Y+1	; 0x01
-    10d6:	7a 81       	ldd	r23, Y+2	; 0x02
-    10d8:	81 2f       	mov	r24, r17
-    10da:	0e 94 01 08 	call	0x1002	; 0x1002 <parcoursRun>
+    10dc:	69 81       	ldd	r22, Y+1	; 0x01
+    10de:	7a 81       	ldd	r23, Y+2	; 0x02
+    10e0:	81 2f       	mov	r24, r17
+    10e2:	0e 94 05 08 	call	0x100a	; 0x100a <parcoursRun>
 	} 
 	return 0;
-    10de:	80 e0       	ldi	r24, 0x00	; 0
-    10e0:	90 e0       	ldi	r25, 0x00	; 0
-    10e2:	0f 90       	pop	r0
-    10e4:	0f 90       	pop	r0
-    10e6:	df 91       	pop	r29
-    10e8:	cf 91       	pop	r28
-    10ea:	1f 91       	pop	r17
-    10ec:	08 95       	ret
+    10e6:	80 e0       	ldi	r24, 0x00	; 0
+    10e8:	90 e0       	ldi	r25, 0x00	; 0
+    10ea:	0f 90       	pop	r0
+    10ec:	0f 90       	pop	r0
+    10ee:	df 91       	pop	r29
+    10f0:	cf 91       	pop	r28
+    10f2:	1f 91       	pop	r17
+    10f4:	08 95       	ret
 
-000010ee <swap>:
-#include <pololu/3pi.h>
-#include <avr/pgmspace.h>
-
-
-void swap(char *a, char *b) {
-    int temp = *a;
-    10ee:	fc 01       	movw	r30, r24
-    10f0:	20 81       	ld	r18, Z
-    *a = *b;
-    10f2:	fb 01       	movw	r30, r22
-    10f4:	30 81       	ld	r19, Z
+000010f6 <swap>:
     10f6:	fc 01       	movw	r30, r24
-    10f8:	30 83       	st	Z, r19
-    *b = temp;
+    10f8:	20 81       	ld	r18, Z
     10fa:	fb 01       	movw	r30, r22
-    10fc:	20 83       	st	Z, r18
-    10fe:	08 95       	ret
+    10fc:	30 81       	ld	r19, Z
+    10fe:	fc 01       	movw	r30, r24
+    1100:	30 83       	st	Z, r19
+    1102:	fb 01       	movw	r30, r22
+    1104:	20 83       	st	Z, r18
+    1106:	08 95       	ret
 
-00001100 <bubbleSort>:
-}
+00001108 <bubbleSort>:
+    1108:	8f 92       	push	r8
+    110a:	9f 92       	push	r9
+    110c:	af 92       	push	r10
+    110e:	bf 92       	push	r11
+    1110:	cf 92       	push	r12
+    1112:	df 92       	push	r13
+    1114:	ef 92       	push	r14
+    1116:	ff 92       	push	r15
+    1118:	0f 93       	push	r16
+    111a:	1f 93       	push	r17
+    111c:	cf 93       	push	r28
+    111e:	df 93       	push	r29
+    1120:	8c 01       	movw	r16, r24
+    1122:	5b 01       	movw	r10, r22
+    1124:	6a 01       	movw	r12, r20
+    1126:	e1 2c       	mov	r14, r1
+    1128:	f1 2c       	mov	r15, r1
+    112a:	28 c0       	rjmp	.+80     	; 0x117c <bubbleSort+0x74>
+    112c:	f8 01       	movw	r30, r16
+    112e:	ec 0f       	add	r30, r28
+    1130:	fd 1f       	adc	r31, r29
+    1132:	90 81       	ld	r25, Z
+    1134:	4e 01       	movw	r8, r28
+    1136:	8f ef       	ldi	r24, 0xFF	; 255
+    1138:	88 1a       	sub	r8, r24
+    113a:	98 0a       	sbc	r9, r24
+    113c:	d8 01       	movw	r26, r16
+    113e:	a8 0d       	add	r26, r8
+    1140:	b9 1d       	adc	r27, r9
+    1142:	8c 91       	ld	r24, X
+    1144:	89 17       	cp	r24, r25
+    1146:	60 f4       	brcc	.+24     	; 0x1160 <bubbleSort+0x58>
+    1148:	bd 01       	movw	r22, r26
+    114a:	cf 01       	movw	r24, r30
+    114c:	0e 94 7b 08 	call	0x10f6	; 0x10f6 <swap>
+    1150:	b5 01       	movw	r22, r10
+    1152:	68 0d       	add	r22, r8
+    1154:	79 1d       	adc	r23, r9
+    1156:	c5 01       	movw	r24, r10
+    1158:	8c 0f       	add	r24, r28
+    115a:	9d 1f       	adc	r25, r29
+    115c:	0e 94 7b 08 	call	0x10f6	; 0x10f6 <swap>
+    1160:	21 96       	adiw	r28, 0x01	; 1
+    1162:	02 c0       	rjmp	.+4      	; 0x1168 <bubbleSort+0x60>
+    1164:	c0 e0       	ldi	r28, 0x00	; 0
+    1166:	d0 e0       	ldi	r29, 0x00	; 0
+    1168:	c6 01       	movw	r24, r12
+    116a:	8e 19       	sub	r24, r14
+    116c:	9f 09       	sbc	r25, r15
+    116e:	01 97       	sbiw	r24, 0x01	; 1
+    1170:	c8 17       	cp	r28, r24
+    1172:	d9 07       	cpc	r29, r25
+    1174:	dc f2       	brlt	.-74     	; 0x112c <bubbleSort+0x24>
+    1176:	8f ef       	ldi	r24, 0xFF	; 255
+    1178:	e8 1a       	sub	r14, r24
+    117a:	f8 0a       	sbc	r15, r24
+    117c:	c6 01       	movw	r24, r12
+    117e:	01 97       	sbiw	r24, 0x01	; 1
+    1180:	e8 16       	cp	r14, r24
+    1182:	f9 06       	cpc	r15, r25
+    1184:	7c f3       	brlt	.-34     	; 0x1164 <bubbleSort+0x5c>
+    1186:	df 91       	pop	r29
+    1188:	cf 91       	pop	r28
+    118a:	1f 91       	pop	r17
+    118c:	0f 91       	pop	r16
+    118e:	ff 90       	pop	r15
+    1190:	ef 90       	pop	r14
+    1192:	df 90       	pop	r13
+    1194:	cf 90       	pop	r12
+    1196:	bf 90       	pop	r11
+    1198:	af 90       	pop	r10
+    119a:	9f 90       	pop	r9
+    119c:	8f 90       	pop	r8
+    119e:	08 95       	ret
 
-void bubbleSort(char arr[],char orderY[], int n) {
-    1100:	8f 92       	push	r8
-    1102:	9f 92       	push	r9
-    1104:	af 92       	push	r10
-    1106:	bf 92       	push	r11
-    1108:	cf 92       	push	r12
-    110a:	df 92       	push	r13
-    110c:	ef 92       	push	r14
-    110e:	ff 92       	push	r15
-    1110:	0f 93       	push	r16
-    1112:	1f 93       	push	r17
-    1114:	cf 93       	push	r28
-    1116:	df 93       	push	r29
-    1118:	8c 01       	movw	r16, r24
-    111a:	5b 01       	movw	r10, r22
-    111c:	6a 01       	movw	r12, r20
-    for (int i = 0; i < n - 1; i++) {
-    111e:	e1 2c       	mov	r14, r1
-    1120:	f1 2c       	mov	r15, r1
-    1122:	28 c0       	rjmp	.+80     	; 0x1174 <bubbleSort+0x74>
-        for (int j = 0; j < n - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-    1124:	f8 01       	movw	r30, r16
-    1126:	ec 0f       	add	r30, r28
-    1128:	fd 1f       	adc	r31, r29
-    112a:	90 81       	ld	r25, Z
-    112c:	4e 01       	movw	r8, r28
-    112e:	8f ef       	ldi	r24, 0xFF	; 255
-    1130:	88 1a       	sub	r8, r24
-    1132:	98 0a       	sbc	r9, r24
-    1134:	d8 01       	movw	r26, r16
-    1136:	a8 0d       	add	r26, r8
-    1138:	b9 1d       	adc	r27, r9
-    113a:	8c 91       	ld	r24, X
-    113c:	89 17       	cp	r24, r25
-    113e:	60 f4       	brcc	.+24     	; 0x1158 <bubbleSort+0x58>
-                swap(&arr[j], &arr[j + 1]);
-    1140:	bd 01       	movw	r22, r26
-    1142:	cf 01       	movw	r24, r30
-    1144:	0e 94 77 08 	call	0x10ee	; 0x10ee <swap>
-                swap(&orderY[j], &orderY[j + 1]);
-    1148:	b5 01       	movw	r22, r10
-    114a:	68 0d       	add	r22, r8
-    114c:	79 1d       	adc	r23, r9
-    114e:	c5 01       	movw	r24, r10
-    1150:	8c 0f       	add	r24, r28
-    1152:	9d 1f       	adc	r25, r29
-    1154:	0e 94 77 08 	call	0x10ee	; 0x10ee <swap>
-    *b = temp;
-}
-
-void bubbleSort(char arr[],char orderY[], int n) {
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
-    1158:	21 96       	adiw	r28, 0x01	; 1
-    115a:	02 c0       	rjmp	.+4      	; 0x1160 <bubbleSort+0x60>
-    115c:	c0 e0       	ldi	r28, 0x00	; 0
-    115e:	d0 e0       	ldi	r29, 0x00	; 0
-    1160:	c6 01       	movw	r24, r12
-    1162:	8e 19       	sub	r24, r14
-    1164:	9f 09       	sbc	r25, r15
-    1166:	01 97       	sbiw	r24, 0x01	; 1
-    1168:	c8 17       	cp	r28, r24
-    116a:	d9 07       	cpc	r29, r25
-    116c:	dc f2       	brlt	.-74     	; 0x1124 <bubbleSort+0x24>
-    *a = *b;
-    *b = temp;
-}
-
-void bubbleSort(char arr[],char orderY[], int n) {
-    for (int i = 0; i < n - 1; i++) {
-    116e:	8f ef       	ldi	r24, 0xFF	; 255
-    1170:	e8 1a       	sub	r14, r24
-    1172:	f8 0a       	sbc	r15, r24
-    1174:	c6 01       	movw	r24, r12
-    1176:	01 97       	sbiw	r24, 0x01	; 1
-    1178:	e8 16       	cp	r14, r24
-    117a:	f9 06       	cpc	r15, r25
-    117c:	7c f3       	brlt	.-34     	; 0x115c <bubbleSort+0x5c>
-                swap(&orderY[j], &orderY[j + 1]);
-				
-            }
-		}
-    }
-}
-    117e:	df 91       	pop	r29
-    1180:	cf 91       	pop	r28
-    1182:	1f 91       	pop	r17
-    1184:	0f 91       	pop	r16
-    1186:	ff 90       	pop	r15
-    1188:	ef 90       	pop	r14
-    118a:	df 90       	pop	r13
-    118c:	cf 90       	pop	r12
-    118e:	bf 90       	pop	r11
-    1190:	af 90       	pop	r10
-    1192:	9f 90       	pop	r9
-    1194:	8f 90       	pop	r8
-    1196:	08 95       	ret
-
-00001198 <drive>:
-
-
-
-void drive(int junctions, piRobot *robot, Communications *myCom)
-{
-    1198:	af 92       	push	r10
-    119a:	bf 92       	push	r11
-    119c:	cf 92       	push	r12
-    119e:	df 92       	push	r13
-    11a0:	ef 92       	push	r14
-    11a2:	ff 92       	push	r15
-    11a4:	0f 93       	push	r16
-    11a6:	1f 93       	push	r17
-    11a8:	cf 93       	push	r28
-    11aa:	df 93       	push	r29
-    11ac:	5c 01       	movw	r10, r24
-    11ae:	6b 01       	movw	r12, r22
-    11b0:	7a 01       	movw	r14, r20
-	Junctions situatie;
-	motorControl('S');
-    11b2:	83 e5       	ldi	r24, 0x53	; 83
-    11b4:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-	int driving = 1;
-	int count = 0;
-    11b8:	00 e0       	ldi	r16, 0x00	; 0
-    11ba:	10 e0       	ldi	r17, 0x00	; 0
-
-void drive(int junctions, piRobot *robot, Communications *myCom)
-{
-	Junctions situatie;
-	motorControl('S');
-	int driving = 1;
-    11bc:	c1 e0       	ldi	r28, 0x01	; 1
-    11be:	d0 e0       	ldi	r29, 0x00	; 0
-	int count = 0;
-	while(driving) {
-    11c0:	5a c0       	rjmp	.+180    	; 0x1276 <drive+0xde>
-		situatie = lineType();
-    11c2:	0e 94 28 06 	call	0xc50	; 0xc50 <lineType>
-		//clear();
-		switch (situatie) {
-    11c6:	81 30       	cpi	r24, 0x01	; 1
-    11c8:	51 f0       	breq	.+20     	; 0x11de <drive+0x46>
-    11ca:	28 f0       	brcs	.+10     	; 0x11d6 <drive+0x3e>
-    11cc:	83 50       	subi	r24, 0x03	; 3
-    11ce:	86 30       	cpi	r24, 0x06	; 6
-    11d0:	08 f0       	brcs	.+2      	; 0x11d4 <drive+0x3c>
-    11d2:	51 c0       	rjmp	.+162    	; 0x1276 <drive+0xde>
-    11d4:	04 c0       	rjmp	.+8      	; 0x11de <drive+0x46>
-			case Barcode: // end of parcour
-			//motorControl('N');
-			break;
-			
-			case Straight:
-			motorControl('S');
-    11d6:	83 e5       	ldi	r24, 0x53	; 83
-    11d8:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-			break;
-    11dc:	4c c0       	rjmp	.+152    	; 0x1276 <drive+0xde>
-			case Left_corner:
-			case T_junction:
-			case Straight_left_junction:
-			case Right_corner:
-			case Straight_right_junction:
-				count++;
-    11de:	0f 5f       	subi	r16, 0xFF	; 255
-    11e0:	1f 4f       	sbci	r17, 0xFF	; 255
-				switch(robot->direction)
-    11e2:	f6 01       	movw	r30, r12
-    11e4:	84 81       	ldd	r24, Z+4	; 0x04
-    11e6:	8e 34       	cpi	r24, 0x4E	; 78
-    11e8:	f1 f0       	breq	.+60     	; 0x1226 <drive+0x8e>
-    11ea:	18 f4       	brcc	.+6      	; 0x11f2 <drive+0x5a>
-    11ec:	85 34       	cpi	r24, 0x45	; 69
-    11ee:	81 f0       	breq	.+32     	; 0x1210 <drive+0x78>
-    11f0:	2f c0       	rjmp	.+94     	; 0x1250 <drive+0xb8>
-    11f2:	83 35       	cpi	r24, 0x53	; 83
-    11f4:	19 f1       	breq	.+70     	; 0x123c <drive+0xa4>
-    11f6:	87 35       	cpi	r24, 0x57	; 87
-    11f8:	59 f5       	brne	.+86     	; 0x1250 <drive+0xb8>
-				{
-					case 'W':
-					robot->posX++;
-    11fa:	f6 01       	movw	r30, r12
-    11fc:	80 81       	ld	r24, Z
-    11fe:	91 81       	ldd	r25, Z+1	; 0x01
-    1200:	01 96       	adiw	r24, 0x01	; 1
-    1202:	91 83       	std	Z+1, r25	; 0x01
-    1204:	80 83       	st	Z, r24
-					myCom->locationx = robot->posX;
-    1206:	f7 01       	movw	r30, r14
-    1208:	e2 59       	subi	r30, 0x92	; 146
-    120a:	ff 4f       	sbci	r31, 0xFF	; 255
+000011a0 <drive>:
+    11a0:	af 92       	push	r10
+    11a2:	bf 92       	push	r11
+    11a4:	cf 92       	push	r12
+    11a6:	df 92       	push	r13
+    11a8:	ef 92       	push	r14
+    11aa:	ff 92       	push	r15
+    11ac:	0f 93       	push	r16
+    11ae:	1f 93       	push	r17
+    11b0:	cf 93       	push	r28
+    11b2:	df 93       	push	r29
+    11b4:	5c 01       	movw	r10, r24
+    11b6:	6b 01       	movw	r12, r22
+    11b8:	7a 01       	movw	r14, r20
+    11ba:	83 e5       	ldi	r24, 0x53	; 83
+    11bc:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    11c0:	00 e0       	ldi	r16, 0x00	; 0
+    11c2:	10 e0       	ldi	r17, 0x00	; 0
+    11c4:	c1 e0       	ldi	r28, 0x01	; 1
+    11c6:	d0 e0       	ldi	r29, 0x00	; 0
+    11c8:	5a c0       	rjmp	.+180    	; 0x127e <drive+0xde>
+    11ca:	0e 94 36 06 	call	0xc6c	; 0xc6c <lineType>
+    11ce:	81 30       	cpi	r24, 0x01	; 1
+    11d0:	51 f0       	breq	.+20     	; 0x11e6 <drive+0x46>
+    11d2:	28 f0       	brcs	.+10     	; 0x11de <drive+0x3e>
+    11d4:	83 50       	subi	r24, 0x03	; 3
+    11d6:	86 30       	cpi	r24, 0x06	; 6
+    11d8:	08 f0       	brcs	.+2      	; 0x11dc <drive+0x3c>
+    11da:	51 c0       	rjmp	.+162    	; 0x127e <drive+0xde>
+    11dc:	04 c0       	rjmp	.+8      	; 0x11e6 <drive+0x46>
+    11de:	83 e5       	ldi	r24, 0x53	; 83
+    11e0:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    11e4:	4c c0       	rjmp	.+152    	; 0x127e <drive+0xde>
+    11e6:	0f 5f       	subi	r16, 0xFF	; 255
+    11e8:	1f 4f       	sbci	r17, 0xFF	; 255
+    11ea:	f6 01       	movw	r30, r12
+    11ec:	84 81       	ldd	r24, Z+4	; 0x04
+    11ee:	8e 34       	cpi	r24, 0x4E	; 78
+    11f0:	f1 f0       	breq	.+60     	; 0x122e <drive+0x8e>
+    11f2:	18 f4       	brcc	.+6      	; 0x11fa <drive+0x5a>
+    11f4:	85 34       	cpi	r24, 0x45	; 69
+    11f6:	81 f0       	breq	.+32     	; 0x1218 <drive+0x78>
+    11f8:	2f c0       	rjmp	.+94     	; 0x1258 <drive+0xb8>
+    11fa:	83 35       	cpi	r24, 0x53	; 83
+    11fc:	19 f1       	breq	.+70     	; 0x1244 <drive+0xa4>
+    11fe:	87 35       	cpi	r24, 0x57	; 87
+    1200:	59 f5       	brne	.+86     	; 0x1258 <drive+0xb8>
+    1202:	f6 01       	movw	r30, r12
+    1204:	80 81       	ld	r24, Z
+    1206:	91 81       	ldd	r25, Z+1	; 0x01
+    1208:	01 96       	adiw	r24, 0x01	; 1
+    120a:	91 83       	std	Z+1, r25	; 0x01
     120c:	80 83       	st	Z, r24
-					break;
-    120e:	20 c0       	rjmp	.+64     	; 0x1250 <drive+0xb8>
-					case 'E':
-					robot->posX--;
-    1210:	f6 01       	movw	r30, r12
-    1212:	80 81       	ld	r24, Z
-    1214:	91 81       	ldd	r25, Z+1	; 0x01
-    1216:	01 97       	sbiw	r24, 0x01	; 1
-    1218:	91 83       	std	Z+1, r25	; 0x01
-    121a:	80 83       	st	Z, r24
-					myCom->locationx = robot->posX;
-    121c:	f7 01       	movw	r30, r14
-    121e:	e2 59       	subi	r30, 0x92	; 146
-    1220:	ff 4f       	sbci	r31, 0xFF	; 255
+    120e:	f7 01       	movw	r30, r14
+    1210:	e2 59       	subi	r30, 0x92	; 146
+    1212:	ff 4f       	sbci	r31, 0xFF	; 255
+    1214:	80 83       	st	Z, r24
+    1216:	20 c0       	rjmp	.+64     	; 0x1258 <drive+0xb8>
+    1218:	f6 01       	movw	r30, r12
+    121a:	80 81       	ld	r24, Z
+    121c:	91 81       	ldd	r25, Z+1	; 0x01
+    121e:	01 97       	sbiw	r24, 0x01	; 1
+    1220:	91 83       	std	Z+1, r25	; 0x01
     1222:	80 83       	st	Z, r24
-					break;
-    1224:	15 c0       	rjmp	.+42     	; 0x1250 <drive+0xb8>
-					case 'N':
-					robot->posY++;
-    1226:	f6 01       	movw	r30, r12
-    1228:	82 81       	ldd	r24, Z+2	; 0x02
-    122a:	93 81       	ldd	r25, Z+3	; 0x03
-    122c:	01 96       	adiw	r24, 0x01	; 1
-    122e:	93 83       	std	Z+3, r25	; 0x03
-    1230:	82 83       	std	Z+2, r24	; 0x02
-					myCom->locationy = robot->posY;
-    1232:	f7 01       	movw	r30, r14
-    1234:	e1 59       	subi	r30, 0x91	; 145
-    1236:	ff 4f       	sbci	r31, 0xFF	; 255
-    1238:	80 83       	st	Z, r24
-					break;
-    123a:	0a c0       	rjmp	.+20     	; 0x1250 <drive+0xb8>
-					case 'S':
-					robot->posY--;
-    123c:	f6 01       	movw	r30, r12
-    123e:	82 81       	ldd	r24, Z+2	; 0x02
-    1240:	93 81       	ldd	r25, Z+3	; 0x03
-    1242:	01 97       	sbiw	r24, 0x01	; 1
-    1244:	93 83       	std	Z+3, r25	; 0x03
-    1246:	82 83       	std	Z+2, r24	; 0x02
-					myCom->locationy = robot->posY;
-    1248:	f7 01       	movw	r30, r14
-    124a:	e1 59       	subi	r30, 0x91	; 145
-    124c:	ff 4f       	sbci	r31, 0xFF	; 255
-    124e:	80 83       	st	Z, r24
-					break;
-				}
-				motorControl('S');
-    1250:	83 e5       	ldi	r24, 0x53	; 83
-    1252:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-				if(count == junctions)
-    1256:	0a 15       	cp	r16, r10
-    1258:	1b 05       	cpc	r17, r11
-    125a:	29 f4       	brne	.+10     	; 0x1266 <drive+0xce>
-				{
-					motorControl('P');
-    125c:	80 e5       	ldi	r24, 0x50	; 80
-    125e:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-					driving = 0;
-    1262:	c0 e0       	ldi	r28, 0x00	; 0
-    1264:	d0 e0       	ldi	r29, 0x00	; 0
-				}
-				myCom->Update(myCom);
-    1266:	f7 01       	movw	r30, r14
-    1268:	ef 58       	subi	r30, 0x8F	; 143
-    126a:	ff 4f       	sbci	r31, 0xFF	; 255
-    126c:	01 90       	ld	r0, Z+
-    126e:	f0 81       	ld	r31, Z
-    1270:	e0 2d       	mov	r30, r0
-    1272:	c7 01       	movw	r24, r14
-    1274:	09 95       	icall
-{
-	Junctions situatie;
-	motorControl('S');
-	int driving = 1;
-	int count = 0;
-	while(driving) {
-    1276:	20 97       	sbiw	r28, 0x00	; 0
-    1278:	09 f0       	breq	.+2      	; 0x127c <drive+0xe4>
-    127a:	a3 cf       	rjmp	.-186    	; 0x11c2 <drive+0x2a>
-			
-			
-		}
-		
-	}
-}
-    127c:	df 91       	pop	r29
-    127e:	cf 91       	pop	r28
-    1280:	1f 91       	pop	r17
-    1282:	0f 91       	pop	r16
-    1284:	ff 90       	pop	r15
-    1286:	ef 90       	pop	r14
-    1288:	df 90       	pop	r13
-    128a:	cf 90       	pop	r12
-    128c:	bf 90       	pop	r11
-    128e:	af 90       	pop	r10
-    1290:	08 95       	ret
+    1224:	f7 01       	movw	r30, r14
+    1226:	e2 59       	subi	r30, 0x92	; 146
+    1228:	ff 4f       	sbci	r31, 0xFF	; 255
+    122a:	80 83       	st	Z, r24
+    122c:	15 c0       	rjmp	.+42     	; 0x1258 <drive+0xb8>
+    122e:	f6 01       	movw	r30, r12
+    1230:	82 81       	ldd	r24, Z+2	; 0x02
+    1232:	93 81       	ldd	r25, Z+3	; 0x03
+    1234:	01 96       	adiw	r24, 0x01	; 1
+    1236:	93 83       	std	Z+3, r25	; 0x03
+    1238:	82 83       	std	Z+2, r24	; 0x02
+    123a:	f7 01       	movw	r30, r14
+    123c:	e1 59       	subi	r30, 0x91	; 145
+    123e:	ff 4f       	sbci	r31, 0xFF	; 255
+    1240:	80 83       	st	Z, r24
+    1242:	0a c0       	rjmp	.+20     	; 0x1258 <drive+0xb8>
+    1244:	f6 01       	movw	r30, r12
+    1246:	82 81       	ldd	r24, Z+2	; 0x02
+    1248:	93 81       	ldd	r25, Z+3	; 0x03
+    124a:	01 97       	sbiw	r24, 0x01	; 1
+    124c:	93 83       	std	Z+3, r25	; 0x03
+    124e:	82 83       	std	Z+2, r24	; 0x02
+    1250:	f7 01       	movw	r30, r14
+    1252:	e1 59       	subi	r30, 0x91	; 145
+    1254:	ff 4f       	sbci	r31, 0xFF	; 255
+    1256:	80 83       	st	Z, r24
+    1258:	83 e5       	ldi	r24, 0x53	; 83
+    125a:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    125e:	0a 15       	cp	r16, r10
+    1260:	1b 05       	cpc	r17, r11
+    1262:	29 f4       	brne	.+10     	; 0x126e <drive+0xce>
+    1264:	80 e5       	ldi	r24, 0x50	; 80
+    1266:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    126a:	c0 e0       	ldi	r28, 0x00	; 0
+    126c:	d0 e0       	ldi	r29, 0x00	; 0
+    126e:	f7 01       	movw	r30, r14
+    1270:	ef 58       	subi	r30, 0x8F	; 143
+    1272:	ff 4f       	sbci	r31, 0xFF	; 255
+    1274:	01 90       	ld	r0, Z+
+    1276:	f0 81       	ld	r31, Z
+    1278:	e0 2d       	mov	r30, r0
+    127a:	c7 01       	movw	r24, r14
+    127c:	09 95       	icall
+    127e:	20 97       	sbiw	r28, 0x00	; 0
+    1280:	09 f0       	breq	.+2      	; 0x1284 <drive+0xe4>
+    1282:	a3 cf       	rjmp	.-186    	; 0x11ca <drive+0x2a>
+    1284:	df 91       	pop	r29
+    1286:	cf 91       	pop	r28
+    1288:	1f 91       	pop	r17
+    128a:	0f 91       	pop	r16
+    128c:	ff 90       	pop	r15
+    128e:	ef 90       	pop	r14
+    1290:	df 90       	pop	r13
+    1292:	cf 90       	pop	r12
+    1294:	bf 90       	pop	r11
+    1296:	af 90       	pop	r10
+    1298:	08 95       	ret
 
-00001292 <waitForTurn>:
+0000129a <waitForTurn>:
+    129a:	cf 93       	push	r28
+    129c:	0e 94 36 06 	call	0xc6c	; 0xc6c <lineType>
+    12a0:	c8 2f       	mov	r28, r24
+    12a2:	8f e0       	ldi	r24, 0x0F	; 15
+    12a4:	90 e0       	ldi	r25, 0x00	; 0
+    12a6:	0e 94 78 15 	call	0x2af0	; 0x2af0 <delay_ms>
+    12aa:	03 c0       	rjmp	.+6      	; 0x12b2 <waitForTurn+0x18>
+    12ac:	0e 94 36 06 	call	0xc6c	; 0xc6c <lineType>
+    12b0:	c8 2f       	mov	r28, r24
+    12b2:	c1 11       	cpse	r28, r1
+    12b4:	fb cf       	rjmp	.-10     	; 0x12ac <waitForTurn+0x12>
+    12b6:	8e e4       	ldi	r24, 0x4E	; 78
+    12b8:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    12bc:	cf 91       	pop	r28
+    12be:	08 95       	ret
 
-void waitForTurn()
-{
-    1292:	cf 93       	push	r28
-	Junctions line;
-	line = lineType();
-    1294:	0e 94 28 06 	call	0xc50	; 0xc50 <lineType>
-    1298:	c8 2f       	mov	r28, r24
-    129a:	8f e0       	ldi	r24, 0x0F	; 15
-    129c:	90 e0       	ldi	r25, 0x00	; 0
-    129e:	0e 94 78 15 	call	0x2af0	; 0x2af0 <delay_ms>
-    12a2:	03 c0       	rjmp	.+6      	; 0x12aa <waitForTurn+0x18>
-	delay(15);//Short delay so it won't accidentally think it found the line instantly
-	while(line != Straight)
-	{
-		line  = lineType();
-    12a4:	0e 94 28 06 	call	0xc50	; 0xc50 <lineType>
-    12a8:	c8 2f       	mov	r28, r24
-void waitForTurn()
-{
-	Junctions line;
-	line = lineType();
-	delay(15);//Short delay so it won't accidentally think it found the line instantly
-	while(line != Straight)
-    12aa:	c1 11       	cpse	r28, r1
-    12ac:	fb cf       	rjmp	.-10     	; 0x12a4 <waitForTurn+0x12>
-	{
-		line  = lineType();
-	}
-	motorControl('N');
-    12ae:	8e e4       	ldi	r24, 0x4E	; 78
-    12b0:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-}
-    12b4:	cf 91       	pop	r28
-    12b6:	08 95       	ret
+000012c0 <turnRobot>:
+    12c0:	ef 92       	push	r14
+    12c2:	ff 92       	push	r15
+    12c4:	0f 93       	push	r16
+    12c6:	1f 93       	push	r17
+    12c8:	cf 93       	push	r28
+    12ca:	c8 2f       	mov	r28, r24
+    12cc:	8b 01       	movw	r16, r22
+    12ce:	ee 24       	eor	r14, r14
+    12d0:	e3 94       	inc	r14
+    12d2:	f1 2c       	mov	r15, r1
+    12d4:	9a c0       	rjmp	.+308    	; 0x140a <turnRobot+0x14a>
+    12d6:	f8 01       	movw	r30, r16
+    12d8:	84 81       	ldd	r24, Z+4	; 0x04
+    12da:	8e 34       	cpi	r24, 0x4E	; 78
+    12dc:	59 f0       	breq	.+22     	; 0x12f4 <turnRobot+0x34>
+    12de:	18 f4       	brcc	.+6      	; 0x12e6 <turnRobot+0x26>
+    12e0:	85 34       	cpi	r24, 0x45	; 69
+    12e2:	51 f1       	breq	.+84     	; 0x1338 <turnRobot+0x78>
+    12e4:	8c c0       	rjmp	.+280    	; 0x13fe <turnRobot+0x13e>
+    12e6:	83 35       	cpi	r24, 0x53	; 83
+    12e8:	09 f4       	brne	.+2      	; 0x12ec <turnRobot+0x2c>
+    12ea:	48 c0       	rjmp	.+144    	; 0x137c <turnRobot+0xbc>
+    12ec:	87 35       	cpi	r24, 0x57	; 87
+    12ee:	09 f4       	brne	.+2      	; 0x12f2 <turnRobot+0x32>
+    12f0:	66 c0       	rjmp	.+204    	; 0x13be <turnRobot+0xfe>
+    12f2:	85 c0       	rjmp	.+266    	; 0x13fe <turnRobot+0x13e>
+    12f4:	c5 34       	cpi	r28, 0x45	; 69
+    12f6:	49 f4       	brne	.+18     	; 0x130a <turnRobot+0x4a>
+    12f8:	82 e5       	ldi	r24, 0x52	; 82
+    12fa:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    12fe:	0e 94 4d 09 	call	0x129a	; 0x129a <waitForTurn>
+    1302:	85 e4       	ldi	r24, 0x45	; 69
+    1304:	f8 01       	movw	r30, r16
+    1306:	84 83       	std	Z+4, r24	; 0x04
+    1308:	7a c0       	rjmp	.+244    	; 0x13fe <turnRobot+0x13e>
+    130a:	c7 35       	cpi	r28, 0x57	; 87
+    130c:	49 f4       	brne	.+18     	; 0x1320 <turnRobot+0x60>
+    130e:	8c e4       	ldi	r24, 0x4C	; 76
+    1310:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    1314:	0e 94 4d 09 	call	0x129a	; 0x129a <waitForTurn>
+    1318:	87 e5       	ldi	r24, 0x57	; 87
+    131a:	f8 01       	movw	r30, r16
+    131c:	84 83       	std	Z+4, r24	; 0x04
+    131e:	6f c0       	rjmp	.+222    	; 0x13fe <turnRobot+0x13e>
+    1320:	c3 35       	cpi	r28, 0x53	; 83
+    1322:	09 f0       	breq	.+2      	; 0x1326 <turnRobot+0x66>
+    1324:	6c c0       	rjmp	.+216    	; 0x13fe <turnRobot+0x13e>
+    1326:	84 e5       	ldi	r24, 0x54	; 84
+    1328:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    132c:	0e 94 4d 09 	call	0x129a	; 0x129a <waitForTurn>
+    1330:	83 e5       	ldi	r24, 0x53	; 83
+    1332:	f8 01       	movw	r30, r16
+    1334:	84 83       	std	Z+4, r24	; 0x04
+    1336:	63 c0       	rjmp	.+198    	; 0x13fe <turnRobot+0x13e>
+    1338:	c3 35       	cpi	r28, 0x53	; 83
+    133a:	49 f4       	brne	.+18     	; 0x134e <turnRobot+0x8e>
+    133c:	82 e5       	ldi	r24, 0x52	; 82
+    133e:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    1342:	0e 94 4d 09 	call	0x129a	; 0x129a <waitForTurn>
+    1346:	83 e5       	ldi	r24, 0x53	; 83
+    1348:	f8 01       	movw	r30, r16
+    134a:	84 83       	std	Z+4, r24	; 0x04
+    134c:	58 c0       	rjmp	.+176    	; 0x13fe <turnRobot+0x13e>
+    134e:	c7 35       	cpi	r28, 0x57	; 87
+    1350:	49 f4       	brne	.+18     	; 0x1364 <turnRobot+0xa4>
+    1352:	8c e4       	ldi	r24, 0x4C	; 76
+    1354:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    1358:	0e 94 4d 09 	call	0x129a	; 0x129a <waitForTurn>
+    135c:	87 e5       	ldi	r24, 0x57	; 87
+    135e:	f8 01       	movw	r30, r16
+    1360:	84 83       	std	Z+4, r24	; 0x04
+    1362:	4d c0       	rjmp	.+154    	; 0x13fe <turnRobot+0x13e>
+    1364:	c3 35       	cpi	r28, 0x53	; 83
+    1366:	09 f0       	breq	.+2      	; 0x136a <turnRobot+0xaa>
+    1368:	4a c0       	rjmp	.+148    	; 0x13fe <turnRobot+0x13e>
+    136a:	84 e5       	ldi	r24, 0x54	; 84
+    136c:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    1370:	0e 94 4d 09 	call	0x129a	; 0x129a <waitForTurn>
+    1374:	83 e5       	ldi	r24, 0x53	; 83
+    1376:	f8 01       	movw	r30, r16
+    1378:	84 83       	std	Z+4, r24	; 0x04
+    137a:	41 c0       	rjmp	.+130    	; 0x13fe <turnRobot+0x13e>
+    137c:	c7 35       	cpi	r28, 0x57	; 87
+    137e:	49 f4       	brne	.+18     	; 0x1392 <turnRobot+0xd2>
+    1380:	82 e5       	ldi	r24, 0x52	; 82
+    1382:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    1386:	0e 94 4d 09 	call	0x129a	; 0x129a <waitForTurn>
+    138a:	87 e5       	ldi	r24, 0x57	; 87
+    138c:	f8 01       	movw	r30, r16
+    138e:	84 83       	std	Z+4, r24	; 0x04
+    1390:	36 c0       	rjmp	.+108    	; 0x13fe <turnRobot+0x13e>
+    1392:	c5 34       	cpi	r28, 0x45	; 69
+    1394:	49 f4       	brne	.+18     	; 0x13a8 <turnRobot+0xe8>
+    1396:	8c e4       	ldi	r24, 0x4C	; 76
+    1398:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    139c:	0e 94 4d 09 	call	0x129a	; 0x129a <waitForTurn>
+    13a0:	85 e4       	ldi	r24, 0x45	; 69
+    13a2:	f8 01       	movw	r30, r16
+    13a4:	84 83       	std	Z+4, r24	; 0x04
+    13a6:	2b c0       	rjmp	.+86     	; 0x13fe <turnRobot+0x13e>
+    13a8:	ce 34       	cpi	r28, 0x4E	; 78
+    13aa:	49 f5       	brne	.+82     	; 0x13fe <turnRobot+0x13e>
+    13ac:	84 e5       	ldi	r24, 0x54	; 84
+    13ae:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    13b2:	0e 94 4d 09 	call	0x129a	; 0x129a <waitForTurn>
+    13b6:	8e e4       	ldi	r24, 0x4E	; 78
+    13b8:	f8 01       	movw	r30, r16
+    13ba:	84 83       	std	Z+4, r24	; 0x04
+    13bc:	20 c0       	rjmp	.+64     	; 0x13fe <turnRobot+0x13e>
+    13be:	ce 34       	cpi	r28, 0x4E	; 78
+    13c0:	49 f4       	brne	.+18     	; 0x13d4 <turnRobot+0x114>
+    13c2:	82 e5       	ldi	r24, 0x52	; 82
+    13c4:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    13c8:	0e 94 4d 09 	call	0x129a	; 0x129a <waitForTurn>
+    13cc:	8e e4       	ldi	r24, 0x4E	; 78
+    13ce:	f8 01       	movw	r30, r16
+    13d0:	84 83       	std	Z+4, r24	; 0x04
+    13d2:	15 c0       	rjmp	.+42     	; 0x13fe <turnRobot+0x13e>
+    13d4:	c3 35       	cpi	r28, 0x53	; 83
+    13d6:	49 f4       	brne	.+18     	; 0x13ea <turnRobot+0x12a>
+    13d8:	8c e4       	ldi	r24, 0x4C	; 76
+    13da:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    13de:	0e 94 4d 09 	call	0x129a	; 0x129a <waitForTurn>
+    13e2:	83 e5       	ldi	r24, 0x53	; 83
+    13e4:	f8 01       	movw	r30, r16
+    13e6:	84 83       	std	Z+4, r24	; 0x04
+    13e8:	0a c0       	rjmp	.+20     	; 0x13fe <turnRobot+0x13e>
+    13ea:	c5 34       	cpi	r28, 0x45	; 69
+    13ec:	41 f4       	brne	.+16     	; 0x13fe <turnRobot+0x13e>
+    13ee:	84 e5       	ldi	r24, 0x54	; 84
+    13f0:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    13f4:	0e 94 4d 09 	call	0x129a	; 0x129a <waitForTurn>
+    13f8:	85 e4       	ldi	r24, 0x45	; 69
+    13fa:	f8 01       	movw	r30, r16
+    13fc:	84 83       	std	Z+4, r24	; 0x04
+    13fe:	f8 01       	movw	r30, r16
+    1400:	84 81       	ldd	r24, Z+4	; 0x04
+    1402:	c8 13       	cpse	r28, r24
+    1404:	02 c0       	rjmp	.+4      	; 0x140a <turnRobot+0x14a>
+    1406:	e1 2c       	mov	r14, r1
+    1408:	f1 2c       	mov	r15, r1
+    140a:	f1 e0       	ldi	r31, 0x01	; 1
+    140c:	ef 16       	cp	r14, r31
+    140e:	f1 04       	cpc	r15, r1
+    1410:	09 f4       	brne	.+2      	; 0x1414 <turnRobot+0x154>
+    1412:	61 cf       	rjmp	.-318    	; 0x12d6 <turnRobot+0x16>
+    1414:	cf 91       	pop	r28
+    1416:	1f 91       	pop	r17
+    1418:	0f 91       	pop	r16
+    141a:	ff 90       	pop	r15
+    141c:	ef 90       	pop	r14
+    141e:	08 95       	ret
 
-000012b8 <turnRobot>:
+00001420 <moveX>:
+    1420:	ef 92       	push	r14
+    1422:	ff 92       	push	r15
+    1424:	0f 93       	push	r16
+    1426:	1f 93       	push	r17
+    1428:	cf 93       	push	r28
+    142a:	df 93       	push	r29
+    142c:	fb 01       	movw	r30, r22
+    142e:	20 81       	ld	r18, Z
+    1430:	31 81       	ldd	r19, Z+1	; 0x01
+    1432:	28 17       	cp	r18, r24
+    1434:	39 07       	cpc	r19, r25
+    1436:	d9 f0       	breq	.+54     	; 0x146e <moveX+0x4e>
+    1438:	7a 01       	movw	r14, r20
+    143a:	eb 01       	movw	r28, r22
+    143c:	8c 01       	movw	r16, r24
+    143e:	28 17       	cp	r18, r24
+    1440:	39 07       	cpc	r19, r25
+    1442:	54 f4       	brge	.+20     	; 0x1458 <moveX+0x38>
+    1444:	87 e5       	ldi	r24, 0x57	; 87
+    1446:	0e 94 60 09 	call	0x12c0	; 0x12c0 <turnRobot>
+    144a:	88 81       	ld	r24, Y
+    144c:	99 81       	ldd	r25, Y+1	; 0x01
+    144e:	98 01       	movw	r18, r16
+    1450:	28 1b       	sub	r18, r24
+    1452:	39 0b       	sbc	r19, r25
+    1454:	c9 01       	movw	r24, r18
+    1456:	07 c0       	rjmp	.+14     	; 0x1466 <moveX+0x46>
+    1458:	85 e4       	ldi	r24, 0x45	; 69
+    145a:	0e 94 60 09 	call	0x12c0	; 0x12c0 <turnRobot>
+    145e:	88 81       	ld	r24, Y
+    1460:	99 81       	ldd	r25, Y+1	; 0x01
+    1462:	80 1b       	sub	r24, r16
+    1464:	91 0b       	sbc	r25, r17
+    1466:	a7 01       	movw	r20, r14
+    1468:	be 01       	movw	r22, r28
+    146a:	0e 94 d0 08 	call	0x11a0	; 0x11a0 <drive>
+    146e:	df 91       	pop	r29
+    1470:	cf 91       	pop	r28
+    1472:	1f 91       	pop	r17
+    1474:	0f 91       	pop	r16
+    1476:	ff 90       	pop	r15
+    1478:	ef 90       	pop	r14
+    147a:	08 95       	ret
 
-void turnRobot(char direction, piRobot *myRobot)
-{
-    12b8:	ef 92       	push	r14
-    12ba:	ff 92       	push	r15
-    12bc:	0f 93       	push	r16
-    12be:	1f 93       	push	r17
-    12c0:	cf 93       	push	r28
-    12c2:	c8 2f       	mov	r28, r24
-    12c4:	8b 01       	movw	r16, r22
-    int changing = 1;
-    12c6:	ee 24       	eor	r14, r14
-    12c8:	e3 94       	inc	r14
-    12ca:	f1 2c       	mov	r15, r1
+0000147c <moveY>:
+    147c:	ef 92       	push	r14
+    147e:	ff 92       	push	r15
+    1480:	0f 93       	push	r16
+    1482:	1f 93       	push	r17
+    1484:	cf 93       	push	r28
+    1486:	df 93       	push	r29
+    1488:	fb 01       	movw	r30, r22
+    148a:	22 81       	ldd	r18, Z+2	; 0x02
+    148c:	33 81       	ldd	r19, Z+3	; 0x03
+    148e:	28 17       	cp	r18, r24
+    1490:	39 07       	cpc	r19, r25
+    1492:	d9 f0       	breq	.+54     	; 0x14ca <moveY+0x4e>
+    1494:	7a 01       	movw	r14, r20
+    1496:	eb 01       	movw	r28, r22
+    1498:	8c 01       	movw	r16, r24
+    149a:	28 17       	cp	r18, r24
+    149c:	39 07       	cpc	r19, r25
+    149e:	54 f4       	brge	.+20     	; 0x14b4 <moveY+0x38>
+    14a0:	8e e4       	ldi	r24, 0x4E	; 78
+    14a2:	0e 94 60 09 	call	0x12c0	; 0x12c0 <turnRobot>
+    14a6:	8a 81       	ldd	r24, Y+2	; 0x02
+    14a8:	9b 81       	ldd	r25, Y+3	; 0x03
+    14aa:	98 01       	movw	r18, r16
+    14ac:	28 1b       	sub	r18, r24
+    14ae:	39 0b       	sbc	r19, r25
+    14b0:	c9 01       	movw	r24, r18
+    14b2:	07 c0       	rjmp	.+14     	; 0x14c2 <moveY+0x46>
+    14b4:	83 e5       	ldi	r24, 0x53	; 83
+    14b6:	0e 94 60 09 	call	0x12c0	; 0x12c0 <turnRobot>
+    14ba:	8a 81       	ldd	r24, Y+2	; 0x02
+    14bc:	9b 81       	ldd	r25, Y+3	; 0x03
+    14be:	80 1b       	sub	r24, r16
+    14c0:	91 0b       	sbc	r25, r17
+    14c2:	a7 01       	movw	r20, r14
+    14c4:	be 01       	movw	r22, r28
+    14c6:	0e 94 d0 08 	call	0x11a0	; 0x11a0 <drive>
+    14ca:	df 91       	pop	r29
+    14cc:	cf 91       	pop	r28
+    14ce:	1f 91       	pop	r17
+    14d0:	0f 91       	pop	r16
+    14d2:	ff 90       	pop	r15
+    14d4:	ef 90       	pop	r14
+    14d6:	08 95       	ret
 
-    while(changing==1)
-    12cc:	9a c0       	rjmp	.+308    	; 0x1402 <turnRobot+0x14a>
-    {
-		
-        switch(myRobot->direction)
-    12ce:	f8 01       	movw	r30, r16
-    12d0:	84 81       	ldd	r24, Z+4	; 0x04
-    12d2:	8e 34       	cpi	r24, 0x4E	; 78
-    12d4:	59 f0       	breq	.+22     	; 0x12ec <turnRobot+0x34>
-    12d6:	18 f4       	brcc	.+6      	; 0x12de <turnRobot+0x26>
-    12d8:	85 34       	cpi	r24, 0x45	; 69
-    12da:	51 f1       	breq	.+84     	; 0x1330 <turnRobot+0x78>
-    12dc:	8c c0       	rjmp	.+280    	; 0x13f6 <turnRobot+0x13e>
-    12de:	83 35       	cpi	r24, 0x53	; 83
-    12e0:	09 f4       	brne	.+2      	; 0x12e4 <turnRobot+0x2c>
-    12e2:	48 c0       	rjmp	.+144    	; 0x1374 <turnRobot+0xbc>
-    12e4:	87 35       	cpi	r24, 0x57	; 87
-    12e6:	09 f4       	brne	.+2      	; 0x12ea <turnRobot+0x32>
-    12e8:	66 c0       	rjmp	.+204    	; 0x13b6 <turnRobot+0xfe>
-    12ea:	85 c0       	rjmp	.+266    	; 0x13f6 <turnRobot+0x13e>
-        {
-            case 'N':
-                if(direction == 'E')
-    12ec:	c5 34       	cpi	r28, 0x45	; 69
-    12ee:	49 f4       	brne	.+18     	; 0x1302 <turnRobot+0x4a>
-                {
-                    motorControl('R');
-    12f0:	82 e5       	ldi	r24, 0x52	; 82
-    12f2:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-					waitForTurn();
-    12f6:	0e 94 49 09 	call	0x1292	; 0x1292 <waitForTurn>
-                    myRobot->direction = 'E';
-    12fa:	85 e4       	ldi	r24, 0x45	; 69
-    12fc:	f8 01       	movw	r30, r16
-    12fe:	84 83       	std	Z+4, r24	; 0x04
-    1300:	7a c0       	rjmp	.+244    	; 0x13f6 <turnRobot+0x13e>
-                }
-                else if(direction == 'W')
-    1302:	c7 35       	cpi	r28, 0x57	; 87
-    1304:	49 f4       	brne	.+18     	; 0x1318 <turnRobot+0x60>
-                {
-                    motorControl('L');
-    1306:	8c e4       	ldi	r24, 0x4C	; 76
-    1308:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-					waitForTurn();
-    130c:	0e 94 49 09 	call	0x1292	; 0x1292 <waitForTurn>
-                    myRobot->direction = 'W';
-    1310:	87 e5       	ldi	r24, 0x57	; 87
-    1312:	f8 01       	movw	r30, r16
-    1314:	84 83       	std	Z+4, r24	; 0x04
-    1316:	6f c0       	rjmp	.+222    	; 0x13f6 <turnRobot+0x13e>
-                }
-                else if(direction == 'S')
-    1318:	c3 35       	cpi	r28, 0x53	; 83
-    131a:	09 f0       	breq	.+2      	; 0x131e <turnRobot+0x66>
-    131c:	6c c0       	rjmp	.+216    	; 0x13f6 <turnRobot+0x13e>
-                {
-                    motorControl('T');
-    131e:	84 e5       	ldi	r24, 0x54	; 84
-    1320:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-					waitForTurn();
-    1324:	0e 94 49 09 	call	0x1292	; 0x1292 <waitForTurn>
-                    myRobot->direction = 'S';
-    1328:	83 e5       	ldi	r24, 0x53	; 83
-    132a:	f8 01       	movw	r30, r16
-    132c:	84 83       	std	Z+4, r24	; 0x04
-    132e:	63 c0       	rjmp	.+198    	; 0x13f6 <turnRobot+0x13e>
-                }
-                break;
-            case 'E':
-                if(direction == 'S')
-    1330:	c3 35       	cpi	r28, 0x53	; 83
-    1332:	49 f4       	brne	.+18     	; 0x1346 <turnRobot+0x8e>
-                {
-                    motorControl('R');
-    1334:	82 e5       	ldi	r24, 0x52	; 82
-    1336:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-					waitForTurn();
-    133a:	0e 94 49 09 	call	0x1292	; 0x1292 <waitForTurn>
-                    myRobot->direction = 'S';
-    133e:	83 e5       	ldi	r24, 0x53	; 83
-    1340:	f8 01       	movw	r30, r16
-    1342:	84 83       	std	Z+4, r24	; 0x04
-    1344:	58 c0       	rjmp	.+176    	; 0x13f6 <turnRobot+0x13e>
-                }
-                else if(direction == 'W')
-    1346:	c7 35       	cpi	r28, 0x57	; 87
-    1348:	49 f4       	brne	.+18     	; 0x135c <turnRobot+0xa4>
-                {
-                    motorControl('L');
-    134a:	8c e4       	ldi	r24, 0x4C	; 76
-    134c:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-					waitForTurn();
-    1350:	0e 94 49 09 	call	0x1292	; 0x1292 <waitForTurn>
-                    myRobot->direction = 'W';
-    1354:	87 e5       	ldi	r24, 0x57	; 87
-    1356:	f8 01       	movw	r30, r16
-    1358:	84 83       	std	Z+4, r24	; 0x04
-    135a:	4d c0       	rjmp	.+154    	; 0x13f6 <turnRobot+0x13e>
-                }
-                else if(direction == 'S')
-    135c:	c3 35       	cpi	r28, 0x53	; 83
-    135e:	09 f0       	breq	.+2      	; 0x1362 <turnRobot+0xaa>
-    1360:	4a c0       	rjmp	.+148    	; 0x13f6 <turnRobot+0x13e>
-                {
-                    motorControl('T');
-    1362:	84 e5       	ldi	r24, 0x54	; 84
-    1364:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-					waitForTurn();
-    1368:	0e 94 49 09 	call	0x1292	; 0x1292 <waitForTurn>
-                    myRobot->direction = 'S';
-    136c:	83 e5       	ldi	r24, 0x53	; 83
-    136e:	f8 01       	movw	r30, r16
-    1370:	84 83       	std	Z+4, r24	; 0x04
-    1372:	41 c0       	rjmp	.+130    	; 0x13f6 <turnRobot+0x13e>
-                }
-                break;
-            case 'S':
-                if(direction == 'W')
-    1374:	c7 35       	cpi	r28, 0x57	; 87
-    1376:	49 f4       	brne	.+18     	; 0x138a <turnRobot+0xd2>
-                {
-                    motorControl('R');
-    1378:	82 e5       	ldi	r24, 0x52	; 82
-    137a:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-					waitForTurn();
-    137e:	0e 94 49 09 	call	0x1292	; 0x1292 <waitForTurn>
-                    myRobot->direction = 'W';
-    1382:	87 e5       	ldi	r24, 0x57	; 87
-    1384:	f8 01       	movw	r30, r16
-    1386:	84 83       	std	Z+4, r24	; 0x04
-    1388:	36 c0       	rjmp	.+108    	; 0x13f6 <turnRobot+0x13e>
-                }
-                else if(direction == 'E')
-    138a:	c5 34       	cpi	r28, 0x45	; 69
-    138c:	49 f4       	brne	.+18     	; 0x13a0 <turnRobot+0xe8>
-                {
-                    motorControl('L');
-    138e:	8c e4       	ldi	r24, 0x4C	; 76
-    1390:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-					waitForTurn();
-    1394:	0e 94 49 09 	call	0x1292	; 0x1292 <waitForTurn>
-                    myRobot->direction = 'E';
-    1398:	85 e4       	ldi	r24, 0x45	; 69
-    139a:	f8 01       	movw	r30, r16
-    139c:	84 83       	std	Z+4, r24	; 0x04
-    139e:	2b c0       	rjmp	.+86     	; 0x13f6 <turnRobot+0x13e>
-                }
-                else if(direction == 'N')
-    13a0:	ce 34       	cpi	r28, 0x4E	; 78
-    13a2:	49 f5       	brne	.+82     	; 0x13f6 <turnRobot+0x13e>
-                {
-                    motorControl('T');
-    13a4:	84 e5       	ldi	r24, 0x54	; 84
-    13a6:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-					waitForTurn();
-    13aa:	0e 94 49 09 	call	0x1292	; 0x1292 <waitForTurn>
-                    myRobot->direction = 'N';
-    13ae:	8e e4       	ldi	r24, 0x4E	; 78
-    13b0:	f8 01       	movw	r30, r16
-    13b2:	84 83       	std	Z+4, r24	; 0x04
-    13b4:	20 c0       	rjmp	.+64     	; 0x13f6 <turnRobot+0x13e>
-                }
-                break;
-            case 'W':
-                if(direction == 'N')
-    13b6:	ce 34       	cpi	r28, 0x4E	; 78
-    13b8:	49 f4       	brne	.+18     	; 0x13cc <turnRobot+0x114>
-                {
-					
-                    motorControl('R');
-    13ba:	82 e5       	ldi	r24, 0x52	; 82
-    13bc:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-					waitForTurn();
-    13c0:	0e 94 49 09 	call	0x1292	; 0x1292 <waitForTurn>
-                    myRobot->direction = 'N';
-    13c4:	8e e4       	ldi	r24, 0x4E	; 78
-    13c6:	f8 01       	movw	r30, r16
-    13c8:	84 83       	std	Z+4, r24	; 0x04
-    13ca:	15 c0       	rjmp	.+42     	; 0x13f6 <turnRobot+0x13e>
-                }
-                else if(direction == 'S')
-    13cc:	c3 35       	cpi	r28, 0x53	; 83
-    13ce:	49 f4       	brne	.+18     	; 0x13e2 <turnRobot+0x12a>
-                {
-                    motorControl('L');
-    13d0:	8c e4       	ldi	r24, 0x4C	; 76
-    13d2:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-					waitForTurn();
-    13d6:	0e 94 49 09 	call	0x1292	; 0x1292 <waitForTurn>
-                    myRobot->direction = 'S';
-    13da:	83 e5       	ldi	r24, 0x53	; 83
-    13dc:	f8 01       	movw	r30, r16
-    13de:	84 83       	std	Z+4, r24	; 0x04
-    13e0:	0a c0       	rjmp	.+20     	; 0x13f6 <turnRobot+0x13e>
-                }
-                else if(direction == 'E')
-    13e2:	c5 34       	cpi	r28, 0x45	; 69
-    13e4:	41 f4       	brne	.+16     	; 0x13f6 <turnRobot+0x13e>
-                {
-                    motorControl('T');
-    13e6:	84 e5       	ldi	r24, 0x54	; 84
-    13e8:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-					waitForTurn();
-    13ec:	0e 94 49 09 	call	0x1292	; 0x1292 <waitForTurn>
-                    myRobot->direction = 'E';
-    13f0:	85 e4       	ldi	r24, 0x45	; 69
-    13f2:	f8 01       	movw	r30, r16
-    13f4:	84 83       	std	Z+4, r24	; 0x04
-                }
-                break;
-		}
-		
-				if(myRobot->direction == direction)
-    13f6:	f8 01       	movw	r30, r16
-    13f8:	84 81       	ldd	r24, Z+4	; 0x04
-    13fa:	c8 13       	cpse	r28, r24
-    13fc:	02 c0       	rjmp	.+4      	; 0x1402 <turnRobot+0x14a>
-				{
-					changing = 0;
-    13fe:	e1 2c       	mov	r14, r1
-    1400:	f1 2c       	mov	r15, r1
-
-void turnRobot(char direction, piRobot *myRobot)
-{
-    int changing = 1;
-
-    while(changing==1)
-    1402:	f1 e0       	ldi	r31, 0x01	; 1
-    1404:	ef 16       	cp	r14, r31
-    1406:	f1 04       	cpc	r15, r1
-    1408:	09 f4       	brne	.+2      	; 0x140c <turnRobot+0x154>
-    140a:	61 cf       	rjmp	.-318    	; 0x12ce <turnRobot+0x16>
-				{
-					changing = 0;
-				}
-		
-    }
-}
-    140c:	cf 91       	pop	r28
-    140e:	1f 91       	pop	r17
-    1410:	0f 91       	pop	r16
-    1412:	ff 90       	pop	r15
-    1414:	ef 90       	pop	r14
-    1416:	08 95       	ret
-
-00001418 <moveX>:
-
-
-void moveX(int orderPos, piRobot *robot, Communications *myCom)
-{
-    1418:	ef 92       	push	r14
-    141a:	ff 92       	push	r15
-    141c:	0f 93       	push	r16
-    141e:	1f 93       	push	r17
-    1420:	cf 93       	push	r28
-    1422:	df 93       	push	r29
-	
-    int junctions;
-	
-	
-    if(robot->posX != orderPos)
-    1424:	fb 01       	movw	r30, r22
-    1426:	20 81       	ld	r18, Z
-    1428:	31 81       	ldd	r19, Z+1	; 0x01
-    142a:	28 17       	cp	r18, r24
-    142c:	39 07       	cpc	r19, r25
-    142e:	d9 f0       	breq	.+54     	; 0x1466 <moveX+0x4e>
-    1430:	7a 01       	movw	r14, r20
-    1432:	eb 01       	movw	r28, r22
-    1434:	8c 01       	movw	r16, r24
-    {
-		
-        if(robot->posX < orderPos)
-    1436:	28 17       	cp	r18, r24
-    1438:	39 07       	cpc	r19, r25
-    143a:	54 f4       	brge	.+20     	; 0x1450 <moveX+0x38>
-        {
-            turnRobot('W', robot);
-    143c:	87 e5       	ldi	r24, 0x57	; 87
-    143e:	0e 94 5c 09 	call	0x12b8	; 0x12b8 <turnRobot>
-            junctions = orderPos-robot->posX;
-    1442:	88 81       	ld	r24, Y
-    1444:	99 81       	ldd	r25, Y+1	; 0x01
-    1446:	98 01       	movw	r18, r16
-    1448:	28 1b       	sub	r18, r24
-    144a:	39 0b       	sbc	r19, r25
-    144c:	c9 01       	movw	r24, r18
-    144e:	07 c0       	rjmp	.+14     	; 0x145e <moveX+0x46>
-        }
-        else{
-            turnRobot('E', robot);
-    1450:	85 e4       	ldi	r24, 0x45	; 69
-    1452:	0e 94 5c 09 	call	0x12b8	; 0x12b8 <turnRobot>
-            junctions = robot->posX - orderPos;
-    1456:	88 81       	ld	r24, Y
-    1458:	99 81       	ldd	r25, Y+1	; 0x01
-    145a:	80 1b       	sub	r24, r16
-    145c:	91 0b       	sbc	r25, r17
-        }
-		drive(junctions, robot, myCom);
-    145e:	a7 01       	movw	r20, r14
-    1460:	be 01       	movw	r22, r28
-    1462:	0e 94 cc 08 	call	0x1198	; 0x1198 <drive>
-        
-		
-        
-
-    }
-}
-    1466:	df 91       	pop	r29
-    1468:	cf 91       	pop	r28
-    146a:	1f 91       	pop	r17
-    146c:	0f 91       	pop	r16
-    146e:	ff 90       	pop	r15
-    1470:	ef 90       	pop	r14
-    1472:	08 95       	ret
-
-00001474 <moveY>:
-
-void moveY(int orderPos, piRobot *robot, Communications *myCom)
-{
-    1474:	ef 92       	push	r14
-    1476:	ff 92       	push	r15
-    1478:	0f 93       	push	r16
-    147a:	1f 93       	push	r17
-    147c:	cf 93       	push	r28
-    147e:	df 93       	push	r29
-
-    int junctions;
-    if(robot->posY != orderPos)
-    1480:	fb 01       	movw	r30, r22
-    1482:	22 81       	ldd	r18, Z+2	; 0x02
-    1484:	33 81       	ldd	r19, Z+3	; 0x03
-    1486:	28 17       	cp	r18, r24
-    1488:	39 07       	cpc	r19, r25
-    148a:	d9 f0       	breq	.+54     	; 0x14c2 <moveY+0x4e>
-    148c:	7a 01       	movw	r14, r20
-    148e:	eb 01       	movw	r28, r22
-    1490:	8c 01       	movw	r16, r24
-    {
-        if(robot->posY < orderPos)
-    1492:	28 17       	cp	r18, r24
-    1494:	39 07       	cpc	r19, r25
-    1496:	54 f4       	brge	.+20     	; 0x14ac <moveY+0x38>
-        {
-            turnRobot('N', robot);
-    1498:	8e e4       	ldi	r24, 0x4E	; 78
-    149a:	0e 94 5c 09 	call	0x12b8	; 0x12b8 <turnRobot>
-            junctions = orderPos-robot->posY;
-    149e:	8a 81       	ldd	r24, Y+2	; 0x02
-    14a0:	9b 81       	ldd	r25, Y+3	; 0x03
-    14a2:	98 01       	movw	r18, r16
-    14a4:	28 1b       	sub	r18, r24
-    14a6:	39 0b       	sbc	r19, r25
-    14a8:	c9 01       	movw	r24, r18
-    14aa:	07 c0       	rjmp	.+14     	; 0x14ba <moveY+0x46>
-        }
-        else{
-            turnRobot('S', robot);
-    14ac:	83 e5       	ldi	r24, 0x53	; 83
-    14ae:	0e 94 5c 09 	call	0x12b8	; 0x12b8 <turnRobot>
-            junctions = robot->posY - orderPos;
-    14b2:	8a 81       	ldd	r24, Y+2	; 0x02
-    14b4:	9b 81       	ldd	r25, Y+3	; 0x03
-    14b6:	80 1b       	sub	r24, r16
-    14b8:	91 0b       	sbc	r25, r17
-        }
-
-            drive(junctions, robot, myCom);
-    14ba:	a7 01       	movw	r20, r14
-    14bc:	be 01       	movw	r22, r28
-    14be:	0e 94 cc 08 	call	0x1198	; 0x1198 <drive>
-        
-
-    }
-}
-    14c2:	df 91       	pop	r29
-    14c4:	cf 91       	pop	r28
-    14c6:	1f 91       	pop	r17
-    14c8:	0f 91       	pop	r16
-    14ca:	ff 90       	pop	r15
-    14cc:	ef 90       	pop	r14
-    14ce:	08 95       	ret
-
-000014d0 <warehouse>:
-
-
-void warehouse(objective objective, Communications *myCom)
-{
-    14d0:	4f 92       	push	r4
-    14d2:	5f 92       	push	r5
-    14d4:	6f 92       	push	r6
-    14d6:	7f 92       	push	r7
+000014d8 <warehouse>:
     14d8:	8f 92       	push	r8
     14da:	9f 92       	push	r9
     14dc:	af 92       	push	r10
@@ -3617,29 +3331,17 @@ void warehouse(objective objective, Communications *myCom)
     14fe:	cd bf       	out	0x3d, r28	; 61
     1500:	f8 2e       	mov	r15, r24
     1502:	8b 01       	movw	r16, r22
- piRobot robot;
- robot.direction = 'W';
     1504:	87 e5       	ldi	r24, 0x57	; 87
     1506:	8d 83       	std	Y+5, r24	; 0x05
- robot.posX = -1;
     1508:	8f ef       	ldi	r24, 0xFF	; 255
     150a:	9f ef       	ldi	r25, 0xFF	; 255
     150c:	9a 83       	std	Y+2, r25	; 0x02
     150e:	89 83       	std	Y+1, r24	; 0x01
- robot.posY = 0;
     1510:	1c 82       	std	Y+4, r1	; 0x04
     1512:	1b 82       	std	Y+3, r1	; 0x03
- 
- char orderX[25];
- char orderY[25];
-
-int arraySize = sizeof(myCom->Orderarx) / sizeof(myCom->Orderary);
-for(int i=0;i<arraySize;i++)//Getting order positions from the wixel
     1514:	80 e0       	ldi	r24, 0x00	; 0
     1516:	90 e0       	ldi	r25, 0x00	; 0
-    1518:	18 c0       	rjmp	.+48     	; 0x154a <warehouse+0x7a>
-{
-	orderX[i] = myCom->Orderarx[i];
+    1518:	18 c0       	rjmp	.+48     	; 0x154a <warehouse+0x72>
     151a:	d8 01       	movw	r26, r16
     151c:	a8 0f       	add	r26, r24
     151e:	b9 1f       	adc	r27, r25
@@ -3654,7 +3356,6 @@ for(int i=0;i<arraySize;i++)//Getting order positions from the wixel
     1530:	e8 0f       	add	r30, r24
     1532:	f9 1f       	adc	r31, r25
     1534:	20 83       	st	Z, r18
-	orderY[i] = myCom->Orderary[i];
     1536:	d9 96       	adiw	r26, 0x39	; 57
     1538:	2c 91       	ld	r18, X
     153a:	ef e1       	ldi	r30, 0x1F	; 31
@@ -3664,293 +3365,224 @@ for(int i=0;i<arraySize;i++)//Getting order positions from the wixel
     1542:	e8 0f       	add	r30, r24
     1544:	f9 1f       	adc	r31, r25
     1546:	20 83       	st	Z, r18
- 
- char orderX[25];
- char orderY[25];
-
-int arraySize = sizeof(myCom->Orderarx) / sizeof(myCom->Orderary);
-for(int i=0;i<arraySize;i++)//Getting order positions from the wixel
     1548:	01 96       	adiw	r24, 0x01	; 1
     154a:	18 16       	cp	r1, r24
     154c:	19 06       	cpc	r1, r25
-    154e:	2c f7       	brge	.-54     	; 0x151a <warehouse+0x4a>
-{
-	orderX[i] = myCom->Orderarx[i];
-	orderY[i] = myCom->Orderary[i];
-}
-    bubbleSort(orderX, orderY, arraySize);//Sorts the order positions so that the lowest X position comes first
-    1550:	41 e0       	ldi	r20, 0x01	; 1
-    1552:	50 e0       	ldi	r21, 0x00	; 0
-    1554:	be 01       	movw	r22, r28
-    1556:	61 5e       	subi	r22, 0xE1	; 225
-    1558:	7f 4f       	sbci	r23, 0xFF	; 255
-    155a:	ce 01       	movw	r24, r28
-    155c:	06 96       	adiw	r24, 0x06	; 6
-    155e:	0e 94 80 08 	call	0x1100	; 0x1100 <bubbleSort>
-	
-	if(objective == orderPicking)//If statement for when the robot just needs to quickly pass the warehouse to get to the charging station
-    1562:	ff 20       	and	r15, r15
-    1564:	09 f4       	brne	.+2      	; 0x1568 <warehouse+0x98>
-    1566:	78 c0       	rjmp	.+240    	; 0x1658 <warehouse+0x188>
-    1568:	8e c0       	rjmp	.+284    	; 0x1686 <warehouse+0x1b6>
-	{
-		for(int locations = 0; locations<arraySize;locations++)
-		{
-			float completed = locations;
-    156a:	b7 01       	movw	r22, r14
-    156c:	0f 2c       	mov	r0, r15
-    156e:	00 0c       	add	r0, r0
-    1570:	88 0b       	sbc	r24, r24
-    1572:	99 0b       	sbc	r25, r25
-    1574:	0e 94 43 0c 	call	0x1886	; 0x1886 <__floatsisf>
-    1578:	4b 01       	movw	r8, r22
-    157a:	5c 01       	movw	r10, r24
-			float total = arraySize;
-		
-		
-			moveX(orderX[locations], &robot, myCom);
-    157c:	0f 2e       	mov	r0, r31
-    157e:	f6 e0       	ldi	r31, 0x06	; 6
-    1580:	cf 2e       	mov	r12, r31
-    1582:	d1 2c       	mov	r13, r1
-    1584:	f0 2d       	mov	r31, r0
-    1586:	cc 0e       	add	r12, r28
-    1588:	dd 1e       	adc	r13, r29
-    158a:	ce 0c       	add	r12, r14
-    158c:	df 1c       	adc	r13, r15
-    158e:	f6 01       	movw	r30, r12
-    1590:	80 81       	ld	r24, Z
-    1592:	a8 01       	movw	r20, r16
-    1594:	be 01       	movw	r22, r28
-    1596:	6f 5f       	subi	r22, 0xFF	; 255
-    1598:	7f 4f       	sbci	r23, 0xFF	; 255
-    159a:	90 e0       	ldi	r25, 0x00	; 0
-    159c:	0e 94 0c 0a 	call	0x1418	; 0x1418 <moveX>
-			robot.posX = orderX[locations];
-    15a0:	f6 01       	movw	r30, r12
-    15a2:	80 81       	ld	r24, Z
-    15a4:	90 e0       	ldi	r25, 0x00	; 0
-    15a6:	9a 83       	std	Y+2, r25	; 0x02
-    15a8:	89 83       	std	Y+1, r24	; 0x01
-			moveY(orderY[locations], &robot, myCom);
-    15aa:	0f 2e       	mov	r0, r31
-    15ac:	ff e1       	ldi	r31, 0x1F	; 31
-    15ae:	cf 2e       	mov	r12, r31
-    15b0:	d1 2c       	mov	r13, r1
-    15b2:	f0 2d       	mov	r31, r0
-    15b4:	cc 0e       	add	r12, r28
-    15b6:	dd 1e       	adc	r13, r29
-    15b8:	ce 0c       	add	r12, r14
-    15ba:	df 1c       	adc	r13, r15
-    15bc:	f6 01       	movw	r30, r12
-    15be:	80 81       	ld	r24, Z
-    15c0:	a8 01       	movw	r20, r16
-    15c2:	be 01       	movw	r22, r28
-    15c4:	6f 5f       	subi	r22, 0xFF	; 255
-    15c6:	7f 4f       	sbci	r23, 0xFF	; 255
-    15c8:	90 e0       	ldi	r25, 0x00	; 0
-    15ca:	0e 94 3a 0a 	call	0x1474	; 0x1474 <moveY>
-			robot.posY = orderY[locations];
-    15ce:	f6 01       	movw	r30, r12
-    15d0:	80 81       	ld	r24, Z
-    15d2:	90 e0       	ldi	r25, 0x00	; 0
-    15d4:	9c 83       	std	Y+4, r25	; 0x04
-    15d6:	8b 83       	std	Y+3, r24	; 0x03
-    15d8:	88 ee       	ldi	r24, 0xE8	; 232
-    15da:	93 e0       	ldi	r25, 0x03	; 3
-    15dc:	0e 94 78 15 	call	0x2af0	; 0x2af0 <delay_ms>
-			delay(1000);//wait 1 second
-			
-			myCom->batterylvl = batteryPercentage();
-    15e0:	0e 94 8e 03 	call	0x71c	; 0x71c <batteryPercentage>
-    15e4:	68 01       	movw	r12, r16
-    15e6:	fc e6       	ldi	r31, 0x6C	; 108
-    15e8:	cf 0e       	add	r12, r31
-    15ea:	d1 1c       	adc	r13, r1
-    15ec:	0e 94 12 0c 	call	0x1824	; 0x1824 <__fixunssfsi>
-    15f0:	f6 01       	movw	r30, r12
-    15f2:	60 83       	st	Z, r22
-			myCom->magprocess = (((completed+1)/total)*100);
-    15f4:	20 e0       	ldi	r18, 0x00	; 0
-    15f6:	30 e0       	ldi	r19, 0x00	; 0
-    15f8:	40 e8       	ldi	r20, 0x80	; 128
-    15fa:	5f e3       	ldi	r21, 0x3F	; 63
-    15fc:	c5 01       	movw	r24, r10
-    15fe:	b4 01       	movw	r22, r8
-    1600:	0e 94 9f 0b 	call	0x173e	; 0x173e <__addsf3>
-    1604:	20 e0       	ldi	r18, 0x00	; 0
-    1606:	30 e0       	ldi	r19, 0x00	; 0
-    1608:	48 ec       	ldi	r20, 0xC8	; 200
-    160a:	52 e4       	ldi	r21, 0x42	; 66
-    160c:	0e 94 cf 0c 	call	0x199e	; 0x199e <__mulsf3>
-    1610:	4b 01       	movw	r8, r22
-    1612:	5c 01       	movw	r10, r24
-    1614:	68 01       	movw	r12, r16
-    1616:	fd e6       	ldi	r31, 0x6D	; 109
-    1618:	cf 0e       	add	r12, r31
-    161a:	d1 1c       	adc	r13, r1
-    161c:	0e 94 12 0c 	call	0x1824	; 0x1824 <__fixunssfsi>
-    1620:	f6 01       	movw	r30, r12
-    1622:	60 83       	st	Z, r22
-			myCom->Update(myCom);
-    1624:	34 96       	adiw	r30, 0x04	; 4
-    1626:	01 90       	ld	r0, Z+
-    1628:	f0 81       	ld	r31, Z
-    162a:	e0 2d       	mov	r30, r0
-    162c:	c8 01       	movw	r24, r16
-    162e:	09 95       	icall
-			updateDisplay((((completed+1)/total)*100),batteryPercentage(),logicsBot);
-    1630:	0e 94 8e 03 	call	0x71c	; 0x71c <batteryPercentage>
-    1634:	0e 94 0b 0c 	call	0x1816	; 0x1816 <__fixsfsi>
-    1638:	2b 01       	movw	r4, r22
-    163a:	3c 01       	movw	r6, r24
-    163c:	c5 01       	movw	r24, r10
-    163e:	b4 01       	movw	r22, r8
-    1640:	0e 94 0b 0c 	call	0x1816	; 0x1816 <__fixsfsi>
-    1644:	dc 01       	movw	r26, r24
-    1646:	cb 01       	movw	r24, r22
-    1648:	42 e0       	ldi	r20, 0x02	; 2
-    164a:	b2 01       	movw	r22, r4
-    164c:	0e 94 b0 03 	call	0x760	; 0x760 <updateDisplay>
-}
-    bubbleSort(orderX, orderY, arraySize);//Sorts the order positions so that the lowest X position comes first
-	
-	if(objective == orderPicking)//If statement for when the robot just needs to quickly pass the warehouse to get to the charging station
-	{
-		for(int locations = 0; locations<arraySize;locations++)
-    1650:	ff ef       	ldi	r31, 0xFF	; 255
-    1652:	ef 1a       	sub	r14, r31
-    1654:	ff 0a       	sbc	r15, r31
-    1656:	02 c0       	rjmp	.+4      	; 0x165c <warehouse+0x18c>
-    1658:	e1 2c       	mov	r14, r1
-    165a:	f1 2c       	mov	r15, r1
-    165c:	1e 14       	cp	r1, r14
-    165e:	1f 04       	cpc	r1, r15
-    1660:	0c f0       	brlt	.+2      	; 0x1664 <warehouse+0x194>
-    1662:	83 cf       	rjmp	.-250    	; 0x156a <warehouse+0x9a>
-			myCom->batterylvl = batteryPercentage();
-			myCom->magprocess = (((completed+1)/total)*100);
-			myCom->Update(myCom);
-			updateDisplay((((completed+1)/total)*100),batteryPercentage(),logicsBot);
-		}
-			moveY(0, &robot, myCom);
-    1664:	a8 01       	movw	r20, r16
-    1666:	be 01       	movw	r22, r28
-    1668:	6f 5f       	subi	r22, 0xFF	; 255
-    166a:	7f 4f       	sbci	r23, 0xFF	; 255
-    166c:	80 e0       	ldi	r24, 0x00	; 0
-    166e:	90 e0       	ldi	r25, 0x00	; 0
-    1670:	0e 94 3a 0a 	call	0x1474	; 0x1474 <moveY>
-			moveX(0, &robot, myCom);
-    1674:	a8 01       	movw	r20, r16
-    1676:	be 01       	movw	r22, r28
-    1678:	6f 5f       	subi	r22, 0xFF	; 255
-    167a:	7f 4f       	sbci	r23, 0xFF	; 255
-    167c:	80 e0       	ldi	r24, 0x00	; 0
-    167e:	90 e0       	ldi	r25, 0x00	; 0
-    1680:	0e 94 0c 0a 	call	0x1418	; 0x1418 <moveX>
-    1684:	44 c0       	rjmp	.+136    	; 0x170e <warehouse+0x23e>
-	}
-	else
-	{
-		static int charged = 0;
-		if(charged == 0)
-    1686:	80 91 02 02 	lds	r24, 0x0202	; 0x800202 <charged.2340>
-    168a:	90 91 03 02 	lds	r25, 0x0203	; 0x800203 <charged.2340+0x1>
-    168e:	89 2b       	or	r24, r25
-    1690:	29 f5       	brne	.+74     	; 0x16dc <warehouse+0x20c>
-		{
-			drive(1, &robot, myCom);
-    1692:	a8 01       	movw	r20, r16
-    1694:	be 01       	movw	r22, r28
-    1696:	6f 5f       	subi	r22, 0xFF	; 255
-    1698:	7f 4f       	sbci	r23, 0xFF	; 255
-    169a:	81 e0       	ldi	r24, 0x01	; 1
-    169c:	90 e0       	ldi	r25, 0x00	; 0
-    169e:	0e 94 cc 08 	call	0x1198	; 0x1198 <drive>
-			motorControl('R');
-    16a2:	82 e5       	ldi	r24, 0x52	; 82
-    16a4:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-			drive(3, &robot, myCom);
-    16a8:	a8 01       	movw	r20, r16
-    16aa:	be 01       	movw	r22, r28
-    16ac:	6f 5f       	subi	r22, 0xFF	; 255
-    16ae:	7f 4f       	sbci	r23, 0xFF	; 255
-    16b0:	83 e0       	ldi	r24, 0x03	; 3
-    16b2:	90 e0       	ldi	r25, 0x00	; 0
-    16b4:	0e 94 cc 08 	call	0x1198	; 0x1198 <drive>
-			motorControl('R');
-    16b8:	82 e5       	ldi	r24, 0x52	; 82
-    16ba:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-			drive(1, &robot, myCom);
-    16be:	a8 01       	movw	r20, r16
-    16c0:	be 01       	movw	r22, r28
-    16c2:	6f 5f       	subi	r22, 0xFF	; 255
-    16c4:	7f 4f       	sbci	r23, 0xFF	; 255
-    16c6:	81 e0       	ldi	r24, 0x01	; 1
-    16c8:	90 e0       	ldi	r25, 0x00	; 0
-    16ca:	0e 94 cc 08 	call	0x1198	; 0x1198 <drive>
-			charged = 1;
+    154e:	2c f7       	brge	.-54     	; 0x151a <warehouse+0x42>
+    1550:	0e 94 32 12 	call	0x2464	; 0x2464 <clear>
+    1554:	60 e0       	ldi	r22, 0x00	; 0
+    1556:	80 e0       	ldi	r24, 0x00	; 0
+    1558:	0e 94 b9 12 	call	0x2572	; 0x2572 <lcd_goto_xy>
+    155c:	6f 81       	ldd	r22, Y+7	; 0x07
+    155e:	70 e0       	ldi	r23, 0x00	; 0
+    1560:	80 e0       	ldi	r24, 0x00	; 0
+    1562:	90 e0       	ldi	r25, 0x00	; 0
+    1564:	0e 94 96 12 	call	0x252c	; 0x252c <print_long>
+    1568:	61 e0       	ldi	r22, 0x01	; 1
+    156a:	80 e0       	ldi	r24, 0x00	; 0
+    156c:	0e 94 b9 12 	call	0x2572	; 0x2572 <lcd_goto_xy>
+    1570:	68 a1       	ldd	r22, Y+32	; 0x20
+    1572:	70 e0       	ldi	r23, 0x00	; 0
+    1574:	80 e0       	ldi	r24, 0x00	; 0
+    1576:	90 e0       	ldi	r25, 0x00	; 0
+    1578:	0e 94 96 12 	call	0x252c	; 0x252c <print_long>
+    157c:	41 e0       	ldi	r20, 0x01	; 1
+    157e:	50 e0       	ldi	r21, 0x00	; 0
+    1580:	be 01       	movw	r22, r28
+    1582:	61 5e       	subi	r22, 0xE1	; 225
+    1584:	7f 4f       	sbci	r23, 0xFF	; 255
+    1586:	ce 01       	movw	r24, r28
+    1588:	06 96       	adiw	r24, 0x06	; 6
+    158a:	0e 94 84 08 	call	0x1108	; 0x1108 <bubbleSort>
+    158e:	ff 20       	and	r15, r15
+    1590:	09 f4       	brne	.+2      	; 0x1594 <warehouse+0xbc>
+    1592:	66 c0       	rjmp	.+204    	; 0x1660 <warehouse+0x188>
+    1594:	7c c0       	rjmp	.+248    	; 0x168e <warehouse+0x1b6>
+    1596:	b7 01       	movw	r22, r14
+    1598:	0f 2c       	mov	r0, r15
+    159a:	00 0c       	add	r0, r0
+    159c:	88 0b       	sbc	r24, r24
+    159e:	99 0b       	sbc	r25, r25
+    15a0:	0e 94 43 0c 	call	0x1886	; 0x1886 <__floatsisf>
+    15a4:	4b 01       	movw	r8, r22
+    15a6:	5c 01       	movw	r10, r24
+    15a8:	0f 2e       	mov	r0, r31
+    15aa:	f6 e0       	ldi	r31, 0x06	; 6
+    15ac:	cf 2e       	mov	r12, r31
+    15ae:	d1 2c       	mov	r13, r1
+    15b0:	f0 2d       	mov	r31, r0
+    15b2:	cc 0e       	add	r12, r28
+    15b4:	dd 1e       	adc	r13, r29
+    15b6:	ce 0c       	add	r12, r14
+    15b8:	df 1c       	adc	r13, r15
+    15ba:	f6 01       	movw	r30, r12
+    15bc:	80 81       	ld	r24, Z
+    15be:	a8 01       	movw	r20, r16
+    15c0:	be 01       	movw	r22, r28
+    15c2:	6f 5f       	subi	r22, 0xFF	; 255
+    15c4:	7f 4f       	sbci	r23, 0xFF	; 255
+    15c6:	90 e0       	ldi	r25, 0x00	; 0
+    15c8:	0e 94 10 0a 	call	0x1420	; 0x1420 <moveX>
+    15cc:	f6 01       	movw	r30, r12
+    15ce:	80 81       	ld	r24, Z
+    15d0:	90 e0       	ldi	r25, 0x00	; 0
+    15d2:	9a 83       	std	Y+2, r25	; 0x02
+    15d4:	89 83       	std	Y+1, r24	; 0x01
+    15d6:	0f 2e       	mov	r0, r31
+    15d8:	ff e1       	ldi	r31, 0x1F	; 31
+    15da:	cf 2e       	mov	r12, r31
+    15dc:	d1 2c       	mov	r13, r1
+    15de:	f0 2d       	mov	r31, r0
+    15e0:	cc 0e       	add	r12, r28
+    15e2:	dd 1e       	adc	r13, r29
+    15e4:	ce 0c       	add	r12, r14
+    15e6:	df 1c       	adc	r13, r15
+    15e8:	f6 01       	movw	r30, r12
+    15ea:	80 81       	ld	r24, Z
+    15ec:	a8 01       	movw	r20, r16
+    15ee:	be 01       	movw	r22, r28
+    15f0:	6f 5f       	subi	r22, 0xFF	; 255
+    15f2:	7f 4f       	sbci	r23, 0xFF	; 255
+    15f4:	90 e0       	ldi	r25, 0x00	; 0
+    15f6:	0e 94 3e 0a 	call	0x147c	; 0x147c <moveY>
+    15fa:	f6 01       	movw	r30, r12
+    15fc:	80 81       	ld	r24, Z
+    15fe:	90 e0       	ldi	r25, 0x00	; 0
+    1600:	9c 83       	std	Y+4, r25	; 0x04
+    1602:	8b 83       	std	Y+3, r24	; 0x03
+    1604:	88 ee       	ldi	r24, 0xE8	; 232
+    1606:	93 e0       	ldi	r25, 0x03	; 3
+    1608:	0e 94 78 15 	call	0x2af0	; 0x2af0 <delay_ms>
+    160c:	0e 94 8e 03 	call	0x71c	; 0x71c <batteryPercentage>
+    1610:	68 01       	movw	r12, r16
+    1612:	fc e6       	ldi	r31, 0x6C	; 108
+    1614:	cf 0e       	add	r12, r31
+    1616:	d1 1c       	adc	r13, r1
+    1618:	0e 94 12 0c 	call	0x1824	; 0x1824 <__fixunssfsi>
+    161c:	f6 01       	movw	r30, r12
+    161e:	60 83       	st	Z, r22
+    1620:	20 e0       	ldi	r18, 0x00	; 0
+    1622:	30 e0       	ldi	r19, 0x00	; 0
+    1624:	40 e8       	ldi	r20, 0x80	; 128
+    1626:	5f e3       	ldi	r21, 0x3F	; 63
+    1628:	c5 01       	movw	r24, r10
+    162a:	b4 01       	movw	r22, r8
+    162c:	0e 94 9f 0b 	call	0x173e	; 0x173e <__addsf3>
+    1630:	20 e0       	ldi	r18, 0x00	; 0
+    1632:	30 e0       	ldi	r19, 0x00	; 0
+    1634:	48 ec       	ldi	r20, 0xC8	; 200
+    1636:	52 e4       	ldi	r21, 0x42	; 66
+    1638:	0e 94 cf 0c 	call	0x199e	; 0x199e <__mulsf3>
+    163c:	68 01       	movw	r12, r16
+    163e:	fd e6       	ldi	r31, 0x6D	; 109
+    1640:	cf 0e       	add	r12, r31
+    1642:	d1 1c       	adc	r13, r1
+    1644:	0e 94 12 0c 	call	0x1824	; 0x1824 <__fixunssfsi>
+    1648:	f6 01       	movw	r30, r12
+    164a:	60 83       	st	Z, r22
+    164c:	34 96       	adiw	r30, 0x04	; 4
+    164e:	01 90       	ld	r0, Z+
+    1650:	f0 81       	ld	r31, Z
+    1652:	e0 2d       	mov	r30, r0
+    1654:	c8 01       	movw	r24, r16
+    1656:	09 95       	icall
+    1658:	ff ef       	ldi	r31, 0xFF	; 255
+    165a:	ef 1a       	sub	r14, r31
+    165c:	ff 0a       	sbc	r15, r31
+    165e:	02 c0       	rjmp	.+4      	; 0x1664 <warehouse+0x18c>
+    1660:	e1 2c       	mov	r14, r1
+    1662:	f1 2c       	mov	r15, r1
+    1664:	1e 14       	cp	r1, r14
+    1666:	1f 04       	cpc	r1, r15
+    1668:	0c f0       	brlt	.+2      	; 0x166c <warehouse+0x194>
+    166a:	95 cf       	rjmp	.-214    	; 0x1596 <warehouse+0xbe>
+    166c:	a8 01       	movw	r20, r16
+    166e:	be 01       	movw	r22, r28
+    1670:	6f 5f       	subi	r22, 0xFF	; 255
+    1672:	7f 4f       	sbci	r23, 0xFF	; 255
+    1674:	80 e0       	ldi	r24, 0x00	; 0
+    1676:	90 e0       	ldi	r25, 0x00	; 0
+    1678:	0e 94 3e 0a 	call	0x147c	; 0x147c <moveY>
+    167c:	a8 01       	movw	r20, r16
+    167e:	be 01       	movw	r22, r28
+    1680:	6f 5f       	subi	r22, 0xFF	; 255
+    1682:	7f 4f       	sbci	r23, 0xFF	; 255
+    1684:	80 e0       	ldi	r24, 0x00	; 0
+    1686:	90 e0       	ldi	r25, 0x00	; 0
+    1688:	0e 94 10 0a 	call	0x1420	; 0x1420 <moveX>
+    168c:	44 c0       	rjmp	.+136    	; 0x1716 <warehouse+0x23e>
+    168e:	80 91 02 02 	lds	r24, 0x0202	; 0x800202 <charged.2340>
+    1692:	90 91 03 02 	lds	r25, 0x0203	; 0x800203 <charged.2340+0x1>
+    1696:	89 2b       	or	r24, r25
+    1698:	29 f5       	brne	.+74     	; 0x16e4 <warehouse+0x20c>
+    169a:	a8 01       	movw	r20, r16
+    169c:	be 01       	movw	r22, r28
+    169e:	6f 5f       	subi	r22, 0xFF	; 255
+    16a0:	7f 4f       	sbci	r23, 0xFF	; 255
+    16a2:	81 e0       	ldi	r24, 0x01	; 1
+    16a4:	90 e0       	ldi	r25, 0x00	; 0
+    16a6:	0e 94 d0 08 	call	0x11a0	; 0x11a0 <drive>
+    16aa:	82 e5       	ldi	r24, 0x52	; 82
+    16ac:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    16b0:	a8 01       	movw	r20, r16
+    16b2:	be 01       	movw	r22, r28
+    16b4:	6f 5f       	subi	r22, 0xFF	; 255
+    16b6:	7f 4f       	sbci	r23, 0xFF	; 255
+    16b8:	83 e0       	ldi	r24, 0x03	; 3
+    16ba:	90 e0       	ldi	r25, 0x00	; 0
+    16bc:	0e 94 d0 08 	call	0x11a0	; 0x11a0 <drive>
+    16c0:	82 e5       	ldi	r24, 0x52	; 82
+    16c2:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    16c6:	a8 01       	movw	r20, r16
+    16c8:	be 01       	movw	r22, r28
+    16ca:	6f 5f       	subi	r22, 0xFF	; 255
+    16cc:	7f 4f       	sbci	r23, 0xFF	; 255
     16ce:	81 e0       	ldi	r24, 0x01	; 1
     16d0:	90 e0       	ldi	r25, 0x00	; 0
-    16d2:	90 93 03 02 	sts	0x0203, r25	; 0x800203 <charged.2340+0x1>
-    16d6:	80 93 02 02 	sts	0x0202, r24	; 0x800202 <charged.2340>
-    16da:	19 c0       	rjmp	.+50     	; 0x170e <warehouse+0x23e>
-		}
-		else
-		{
-			motorControl('T');
-    16dc:	84 e5       	ldi	r24, 0x54	; 84
-    16de:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-			drive(1, &robot, myCom);
-    16e2:	a8 01       	movw	r20, r16
-    16e4:	be 01       	movw	r22, r28
-    16e6:	6f 5f       	subi	r22, 0xFF	; 255
-    16e8:	7f 4f       	sbci	r23, 0xFF	; 255
-    16ea:	81 e0       	ldi	r24, 0x01	; 1
-    16ec:	90 e0       	ldi	r25, 0x00	; 0
-    16ee:	0e 94 cc 08 	call	0x1198	; 0x1198 <drive>
-			motorControl('L');
-    16f2:	8c e4       	ldi	r24, 0x4C	; 76
-    16f4:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-			drive(3, &robot, myCom);
-    16f8:	a8 01       	movw	r20, r16
-    16fa:	be 01       	movw	r22, r28
-    16fc:	6f 5f       	subi	r22, 0xFF	; 255
-    16fe:	7f 4f       	sbci	r23, 0xFF	; 255
-    1700:	83 e0       	ldi	r24, 0x03	; 3
-    1702:	90 e0       	ldi	r25, 0x00	; 0
-    1704:	0e 94 cc 08 	call	0x1198	; 0x1198 <drive>
-			motorControl('L');
-    1708:	8c e4       	ldi	r24, 0x4C	; 76
-    170a:	0e 94 15 05 	call	0xa2a	; 0xa2a <motorControl>
-			
-		}
-		
-	}
-}
-    170e:	e7 96       	adiw	r28, 0x37	; 55
-    1710:	0f b6       	in	r0, 0x3f	; 63
-    1712:	f8 94       	cli
-    1714:	de bf       	out	0x3e, r29	; 62
-    1716:	0f be       	out	0x3f, r0	; 63
-    1718:	cd bf       	out	0x3d, r28	; 61
-    171a:	df 91       	pop	r29
-    171c:	cf 91       	pop	r28
-    171e:	1f 91       	pop	r17
-    1720:	0f 91       	pop	r16
-    1722:	ff 90       	pop	r15
-    1724:	ef 90       	pop	r14
-    1726:	df 90       	pop	r13
-    1728:	cf 90       	pop	r12
-    172a:	bf 90       	pop	r11
-    172c:	af 90       	pop	r10
-    172e:	9f 90       	pop	r9
-    1730:	8f 90       	pop	r8
-    1732:	7f 90       	pop	r7
-    1734:	6f 90       	pop	r6
-    1736:	5f 90       	pop	r5
-    1738:	4f 90       	pop	r4
+    16d2:	0e 94 d0 08 	call	0x11a0	; 0x11a0 <drive>
+    16d6:	81 e0       	ldi	r24, 0x01	; 1
+    16d8:	90 e0       	ldi	r25, 0x00	; 0
+    16da:	90 93 03 02 	sts	0x0203, r25	; 0x800203 <charged.2340+0x1>
+    16de:	80 93 02 02 	sts	0x0202, r24	; 0x800202 <charged.2340>
+    16e2:	19 c0       	rjmp	.+50     	; 0x1716 <warehouse+0x23e>
+    16e4:	84 e5       	ldi	r24, 0x54	; 84
+    16e6:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    16ea:	a8 01       	movw	r20, r16
+    16ec:	be 01       	movw	r22, r28
+    16ee:	6f 5f       	subi	r22, 0xFF	; 255
+    16f0:	7f 4f       	sbci	r23, 0xFF	; 255
+    16f2:	81 e0       	ldi	r24, 0x01	; 1
+    16f4:	90 e0       	ldi	r25, 0x00	; 0
+    16f6:	0e 94 d0 08 	call	0x11a0	; 0x11a0 <drive>
+    16fa:	8c e4       	ldi	r24, 0x4C	; 76
+    16fc:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    1700:	a8 01       	movw	r20, r16
+    1702:	be 01       	movw	r22, r28
+    1704:	6f 5f       	subi	r22, 0xFF	; 255
+    1706:	7f 4f       	sbci	r23, 0xFF	; 255
+    1708:	83 e0       	ldi	r24, 0x03	; 3
+    170a:	90 e0       	ldi	r25, 0x00	; 0
+    170c:	0e 94 d0 08 	call	0x11a0	; 0x11a0 <drive>
+    1710:	8c e4       	ldi	r24, 0x4C	; 76
+    1712:	0e 94 18 05 	call	0xa30	; 0xa30 <motorControl>
+    1716:	e7 96       	adiw	r28, 0x37	; 55
+    1718:	0f b6       	in	r0, 0x3f	; 63
+    171a:	f8 94       	cli
+    171c:	de bf       	out	0x3e, r29	; 62
+    171e:	0f be       	out	0x3f, r0	; 63
+    1720:	cd bf       	out	0x3d, r28	; 61
+    1722:	df 91       	pop	r29
+    1724:	cf 91       	pop	r28
+    1726:	1f 91       	pop	r17
+    1728:	0f 91       	pop	r16
+    172a:	ff 90       	pop	r15
+    172c:	ef 90       	pop	r14
+    172e:	df 90       	pop	r13
+    1730:	cf 90       	pop	r12
+    1732:	bf 90       	pop	r11
+    1734:	af 90       	pop	r10
+    1736:	9f 90       	pop	r9
+    1738:	8f 90       	pop	r8
     173a:	08 95       	ret
 
 0000173c <__subsf3>:

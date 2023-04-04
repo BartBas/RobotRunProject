@@ -1030,55 +1030,55 @@ END GROUP
  .text.pickOrder
                 0x00000836       0x32 main.o
                 0x00000836                pickOrder
- .text.main     0x00000868       0xd6 main.o
+ .text.main     0x00000868       0xdc main.o
                 0x00000868                main
  .text.initialize
-                0x0000093e       0xac movementManagement.o
-                0x0000093e                initialize
- .text.inch     0x000009ea       0x22 movementManagement.o
-                0x000009ea                inch
- .text.wait     0x00000a0c       0x1e movementManagement.o
-                0x00000a0c                wait
+                0x00000944       0xac movementManagement.o
+                0x00000944                initialize
+ .text.inch     0x000009f0       0x22 movementManagement.o
+                0x000009f0                inch
+ .text.wait     0x00000a12       0x1e movementManagement.o
+                0x00000a12                wait
  .text.motorControl
-                0x00000a2a      0x226 movementManagement.o
-                0x00000a2a                motorControl
+                0x00000a30      0x23c movementManagement.o
+                0x00000a30                motorControl
  .text.lineType
-                0x00000c50      0x19c movementManagement.o
-                0x00000c50                lineType
+                0x00000c6c      0x188 movementManagement.o
+                0x00000c6c                lineType
  .text.manualControl
-                0x00000dec       0x8e movementManagement.o
-                0x00000dec                manualControl
- .text.Spin     0x00000e7a       0x14 movementManagement.o
-                0x00000e7a                Spin
+                0x00000df4       0x8e movementManagement.o
+                0x00000df4                manualControl
+ .text.Spin     0x00000e82       0x14 movementManagement.o
+                0x00000e82                Spin
  .text.parcoursSearch
-                0x00000e8e      0x174 parcour.o
-                0x00000e8e                parcoursSearch
+                0x00000e96      0x174 parcour.o
+                0x00000e96                parcoursSearch
  .text.parcoursRun
-                0x00001002       0x8e parcour.o
-                0x00001002                parcoursRun
+                0x0000100a       0x8e parcour.o
+                0x0000100a                parcoursRun
  .text.parcours
-                0x00001090       0x5e parcour.o
-                0x00001090                parcours
- .text.swap     0x000010ee       0x12 warehouse.o
-                0x000010ee                swap
+                0x00001098       0x5e parcour.o
+                0x00001098                parcours
+ .text.swap     0x000010f6       0x12 warehouse.o
+                0x000010f6                swap
  .text.bubbleSort
-                0x00001100       0x98 warehouse.o
-                0x00001100                bubbleSort
- .text.drive    0x00001198       0xfa warehouse.o
-                0x00001198                drive
+                0x00001108       0x98 warehouse.o
+                0x00001108                bubbleSort
+ .text.drive    0x000011a0       0xfa warehouse.o
+                0x000011a0                drive
  .text.waitForTurn
-                0x00001292       0x26 warehouse.o
-                0x00001292                waitForTurn
+                0x0000129a       0x26 warehouse.o
+                0x0000129a                waitForTurn
  .text.turnRobot
-                0x000012b8      0x160 warehouse.o
-                0x000012b8                turnRobot
- .text.moveX    0x00001418       0x5c warehouse.o
-                0x00001418                moveX
- .text.moveY    0x00001474       0x5c warehouse.o
-                0x00001474                moveY
+                0x000012c0      0x160 warehouse.o
+                0x000012c0                turnRobot
+ .text.moveX    0x00001420       0x5c warehouse.o
+                0x00001420                moveX
+ .text.moveY    0x0000147c       0x5c warehouse.o
+                0x0000147c                moveY
  .text.warehouse
-                0x000014d0      0x26c warehouse.o
-                0x000014d0                warehouse
+                0x000014d8      0x264 warehouse.o
+                0x000014d8                warehouse
  .text.avr-libc.fplib
                 0x0000173c        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(addsf3.o)
                 0x0000173c                __subsf3
@@ -1670,7 +1670,7 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x3414
+.debug_info     0x00000000     0x3429
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_info    0x000005f4      0x581 comunication.o
@@ -1678,9 +1678,9 @@ END GROUP
  .debug_info    0x0000103e      0x6d7 main.o
  .debug_info    0x00001715      0xae7 movementManagement.o
  .debug_info    0x000021fc      0x630 parcour.o
- .debug_info    0x0000282c      0xbe8 warehouse.o
+ .debug_info    0x0000282c      0xbfd warehouse.o
 
-.debug_abbrev   0x00000000     0x11c6
+.debug_abbrev   0x00000000     0x11cd
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x5a2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_abbrev  0x000005a2      0x1ac comunication.o
@@ -1688,26 +1688,26 @@ END GROUP
  .debug_abbrev  0x0000088f      0x20c main.o
  .debug_abbrev  0x00000a9b      0x298 movementManagement.o
  .debug_abbrev  0x00000d33      0x1d9 parcour.o
- .debug_abbrev  0x00000f0c      0x2ba warehouse.o
+ .debug_abbrev  0x00000f0c      0x2c1 warehouse.o
 
-.debug_line     0x00000000     0x1fa5
+.debug_line     0x00000000     0x202d
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x134 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_line    0x00000134      0x56e comunication.o
  .debug_line    0x000006a2      0x2ec display.o
- .debug_line    0x0000098e      0x407 main.o
- .debug_line    0x00000d95      0x83c movementManagement.o
- .debug_line    0x000015d1      0x3ca parcour.o
- .debug_line    0x0000199b      0x60a warehouse.o
+ .debug_line    0x0000098e      0x40d main.o
+ .debug_line    0x00000d9b      0x82e movementManagement.o
+ .debug_line    0x000015c9      0x3ca parcour.o
+ .debug_line    0x00001993      0x69a warehouse.o
 
-.debug_frame    0x00000000      0x548
+.debug_frame    0x00000000      0x534
  *(.debug_frame)
  .debug_frame   0x00000000       0xc0 comunication.o
  .debug_frame   0x000000c0       0x94 display.o
  .debug_frame   0x00000154       0x9c main.o
  .debug_frame   0x000001f0       0xe4 movementManagement.o
  .debug_frame   0x000002d4       0xa4 parcour.o
- .debug_frame   0x00000378      0x1d0 warehouse.o
+ .debug_frame   0x00000378      0x1bc warehouse.o
 
 .debug_str      0x00000000      0xa04
  *(.debug_str)
@@ -1723,16 +1723,16 @@ END GROUP
  .debug_str     0x000008a5       0x79 parcour.o
                                 0x3a5 (size before relaxing)
  .debug_str     0x0000091e       0xe6 warehouse.o
-                                0x43e (size before relaxing)
+                                0x3f4 (size before relaxing)
 
-.debug_loc      0x00000000     0x15a5
+.debug_loc      0x00000000     0x1571
  *(.debug_loc)
  .debug_loc     0x00000000      0x38e comunication.o
  .debug_loc     0x0000038e      0x1f3 display.o
  .debug_loc     0x00000581      0x128 main.o
  .debug_loc     0x000006a9      0x2d8 movementManagement.o
  .debug_loc     0x00000981      0x310 parcour.o
- .debug_loc     0x00000c91      0x914 warehouse.o
+ .debug_loc     0x00000c91      0x8e0 warehouse.o
 
 .debug_macinfo
  *(.debug_macinfo)
