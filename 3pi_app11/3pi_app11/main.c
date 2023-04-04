@@ -66,6 +66,7 @@ int main()
 	
 	initialize(&communications);
 	
+		
 	while(1) 
 	{
 		//updateDisplay(0, batteryPercentage(), homingMode);
@@ -93,7 +94,7 @@ int main()
 					play_from_program_space(welcome);
 					communications.locationx = 0;
 					communications.locationy = 0;
-					pickOrder(&communications);nbv6
+					pickOrder(&communications);
 					communications.locationx = -1;
 					communications.locationy = -1;
 				}
