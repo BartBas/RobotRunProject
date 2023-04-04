@@ -23,8 +23,8 @@ typedef enum
 }objective;
 
 void warehouse(objective objective, Communications *myCom);
-void moveY(int orderPos, piRobot *robot);
-void moveX(int orderPos, piRobot *robot);
+void moveY(int orderPos, piRobot *robot, Communications *myCom);
+void moveX(int orderPos, piRobot *robot, Communications *myCom);
 void turnRobot(char direction, piRobot *myRobot);
 void bubbleSort(char arr[], char orderY[], int n);
 void swap(char *a, char *b);

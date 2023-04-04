@@ -35,7 +35,7 @@ void bubbleSort(char arr[],char orderY[], int n) {
 
 
 
-void drive(int junctions, piRobot *robot)
+void drive(int junctions, piRobot *robot, Communications *myCom)
 {
 	Junctions situatie;
 	motorControl('S');
@@ -66,15 +66,19 @@ void drive(int junctions, piRobot *robot)
 				{
 					case 'W':
 					robot->posX++;
+					myCom->locationx = robot->posX;
 					break;
 					case 'E':
 					robot->posX--;
+					myCom->locationx = robot->posX;
 					break;
 					case 'N':
 					robot->posY++;
+					myCom->locationy = robot->posY;
 					break;
 					case 'S':
 					robot->posY--;
+					myCom->locationy = robot->posY;
 					break;
 				}
 				motorControl('S');
@@ -83,7 +87,7 @@ void drive(int junctions, piRobot *robot)
 					motorControl('P');
 					driving = 0;
 				}
-				
+				myCom->Update(myCom);
 				break;
 			
 			
@@ -96,6 +100,7 @@ void drive(int junctions, piRobot *robot)
 void waitForTurn()
 {
 	Junctions line;
+	line = lineType();
 	delay(15);//Short delay so it won't accidentally think it found the line instantly
 	while(line != Straight)
 	{
@@ -205,7 +210,7 @@ void turnRobot(char direction, piRobot *myRobot)
 }
 
 
-void moveX(int orderPos, piRobot *robot)
+void moveX(int orderPos, piRobot *robot, Communications *myCom)
 {
 	
     int junctions;
@@ -223,7 +228,7 @@ void moveX(int orderPos, piRobot *robot)
             turnRobot('E', robot);
             junctions = robot->posX - orderPos;
         }
-		drive(junctions, robot);
+		drive(junctions, robot, myCom);
         
 		
         
@@ -231,7 +236,7 @@ void moveX(int orderPos, piRobot *robot)
     }
 }
 
-void moveY(int orderPos, piRobot *robot)
+void moveY(int orderPos, piRobot *robot, Communications *myCom)
 {
 
     int junctions;
@@ -247,7 +252,7 @@ void moveY(int orderPos, piRobot *robot)
             junctions = robot->posY - orderPos;
         }
 
-            drive(junctions, robot);
+            drive(junctions, robot, myCom);
         
 
     }
@@ -281,35 +286,38 @@ for(int i=0;i<arraySize;i++)//Getting order positions from the wixel
 			float total = arraySize;
 		
 		
-			moveX(orderX[locations], &robot);
+			moveX(orderX[locations], &robot, myCom);
 			robot.posX = orderX[locations];
-			moveY(orderY[locations], &robot);
+			moveY(orderY[locations], &robot, myCom);
 			robot.posY = orderY[locations];
 			delay(1000);//wait 1 second
-		
+			
+			myCom->batterylvl = batteryPercentage();
+			myCom->magprocess = (((completed+1)/total)*100);
+			myCom->Update(myCom);
 			updateDisplay((((completed+1)/total)*100),batteryPercentage(),logicsBot);
 		}
-			moveY(0, &robot);
-			moveX(0, &robot);
+			moveY(0, &robot, myCom);
+			moveX(0, &robot, myCom);
 	}
 	else
 	{
 		static int charged = 0;
 		if(charged == 0)
 		{
-			drive(1, &robot);
+			drive(1, &robot, myCom);
 			motorControl('R');
-			drive(3, &robot);
+			drive(3, &robot, myCom);
 			motorControl('R');
-			drive(1, &robot);
+			drive(1, &robot, myCom);
 			charged = 1;
 		}
 		else
 		{
 			motorControl('T');
-			drive(1, &robot);
+			drive(1, &robot, myCom);
 			motorControl('L');
-			drive(3, &robot);
+			drive(3, &robot, myCom);
 			motorControl('L');
 			
 		}
