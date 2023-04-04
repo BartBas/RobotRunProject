@@ -274,9 +274,9 @@ for(int i=0;i<arraySize;i++)//Getting order positions from the wixel
 }
 clear();
 lcd_goto_xy(0,0);
-print_character(orderX[0]);
+print_character(orderX[1]);
 lcd_goto_xy(0,1);
-print_character(orderY[0]);
+print_character(orderY[1]);
     bubbleSort(orderX, orderY, arraySize);//Sorts the order positions so that the lowest X position comes first
 	
 	if(objective == orderPicking)//If statement for when the robot just needs to quickly pass the warehouse to get to the charging station
