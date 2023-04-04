@@ -7,6 +7,7 @@
 
 #include "movementManagement.h"
 #include "parcour.h"
+#include "display.h"
 
 #include <pololu/3pi.h>
 #include <avr/pgmspace.h>
@@ -140,6 +141,7 @@ int parcoursRun(char way)
 
 int parcours(char way) 
 {
+	updateDisplay(0, batteryPercentage(), mazeSolver);
 	if (route[0] == '_'){
 		memset(route,0,sizeof route);
 		parcoursSearch();
