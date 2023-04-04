@@ -34,7 +34,8 @@ typedef struct Communications {
 	char magprocess;	// INPUT	% of order completion
 	char locationx;		// INPUT	Location of robot x;  set to -1 for home -2 for order completion
 	char locationy;		// INPUT	Location of robot y;  set to -1 for home -2 for order completion
-	char flag;			// OUTPUT	Flag for when msg received
+	char flag;			// OUTPUT	
+
 	void (*Update)(struct Communications *);
 	
 } Communications;

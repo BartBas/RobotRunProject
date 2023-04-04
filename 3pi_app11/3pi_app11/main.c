@@ -90,6 +90,7 @@ int main()
 				print_long(communications.locationy);
 				if (communications.flag==1)
 				{
+					communications.flag=0;
 					
 					play_from_program_space(welcome);
 					communications.locationx = 0;
