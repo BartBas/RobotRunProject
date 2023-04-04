@@ -99,10 +99,10 @@ void sendACK(Communications *self ){
 }
 
 void Update(Communications *self){
-	char tmp =0;
+	char Flag =0;
 			if (serial_receive_buffer_full()==1){
 				if (self->Recieved[0]==8 && self->Recieved[self->val-1]==101){
-				tmp = 1;
+				Flag = 1;
 				//play_from_program_space(fugue);
 				
 				sendACK(self); // stops here to send acknowledge
@@ -144,7 +144,7 @@ void Update(Communications *self){
 				serial_send(self->msgBuffer, self->val);
 
 				delay_ms(10000); // test
-				if (tmp == 1){
+				if (Flag == 1){
 					serial_receive(self->Recieved,self->val);
 				}		
 }
