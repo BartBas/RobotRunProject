@@ -26,9 +26,11 @@ unsigned int position;
 	Junctions junction;	
 	int last_proportional;
 	int integral;
-			
-void initialize()
+	Communications *myComs;
+	
+void initialize(Communications* communications)
 {
+	myComs = communications;
 	unsigned int counter; // used as a simple timer
 	
 	pololu_3pi_init(2000);
@@ -71,7 +73,7 @@ void println(int x){
 }
 
 void wait(){
-	motorControl('N');
+	set_motors(0,0);
 	
 	while(!button_is_pressed(BUTTON_B)){}
 	wait_for_button_release(BUTTON_B);
@@ -158,7 +160,7 @@ void motorControl(char x){													// function that controlls the motor move
 	unsigned int position = read_line(sensors,IR_EMITTERS_ON);
 	read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 	
-	if(x == 'N')															//Emergency Brake
+	if(myComs->EmergencyStop == 1)															//Emergency Brake
 		set_motors(0,0);	
 	
 	
@@ -248,34 +250,34 @@ void motorControl(char x){													// function that controlls the motor move
 
 
 
-void manualControl(Communications* X){
+void manualControl(){
 int speed = 0;
 
-	if(X->Direction[0] == 1){
+	if(myComs->Direction[0] == 1){
 		set_motors(speed,speed);
 		speed++;
 	}
 	
-	if(X->Direction[1] == 1){
+	if(myComs->Direction[1] == 1){
 		set_motors(-speed,-speed);
 		speed--;
 	}
 	
-	if(X->Direction[2] == 1){
+	if(myComs->Direction[2] == 1){
 		set_motors(speed/2,speed);
 	}
 	
-	if(X->Direction[3] == 1){
+	if(myComs->Direction[3] == 1){
 		set_motors(speed,speed/2);
 	}
 }
 
-void Spin(Communications* X){
+void Spin(){
 	
 	for(int i = 0;i>=255;i++){
 	set_motors(i,-i);	
 	}
-	while(X->EmergencyStop == 1){}
+	while(myComs->EmergencyStop == 1){}
 	for(int i = 255;i<=0;i--){
 		set_motors(i,-i);
 	}

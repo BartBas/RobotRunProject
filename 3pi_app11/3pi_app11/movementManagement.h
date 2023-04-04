@@ -31,11 +31,11 @@ typedef enum {					// enum for the corners and junctions
 void motorControl(char x);
 char lineType();
 void inch();
-void initialize();
+void initialize(Communications* communications);
 void display_readings(const unsigned int *calibrated_values);
 void load_custom_characters();
-void Spin(Communications* X);
-void manualControl(Communications* X);
+void Spin();
+void manualControl();
 
 
 
