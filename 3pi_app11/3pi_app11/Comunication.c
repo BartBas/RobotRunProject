@@ -143,7 +143,7 @@ void Update(Communications *self){
 				self->msgBuffer[self->val-1]=STOP;
 				serial_send(self->msgBuffer, self->val);
 
-				delay_ms(10000); // test
+				//delay_ms(10000); // test
 				if (Flag == 1){
 					serial_receive(self->Recieved,self->val);
 				}		

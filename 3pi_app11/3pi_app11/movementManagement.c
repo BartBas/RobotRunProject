@@ -24,8 +24,7 @@ unsigned int position;
 #include <avr/pgmspace.h>
 
 	Junctions junction;	
-	int last_proportional;
-	int integral;
+
 	Communications *myComs;
 	
 void initialize(Communications* communications)
@@ -187,7 +186,8 @@ void motorControl(char x){													// function that controlls the motor move
 		
 			
 	else if(x == 'S'){												//drive straight and adjusts the robot so it follows the line
-		
+			int last_proportional;
+			int integral;
 		// are not interested in the individual sensor readings.
 		// The "proportional" term should be 0 when we are on the line.
 		int proportional = ((int)position) - 2000;
