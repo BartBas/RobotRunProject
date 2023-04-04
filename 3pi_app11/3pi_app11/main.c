@@ -68,23 +68,32 @@ int main()
 	
 	while(1) 
 	{
-		updateDisplay(0, batteryPercentage(), homingMode);
+		//updateDisplay(0, batteryPercentage(), homingMode);
 		communications.Update(&communications);
 		
 		communications.locationx = -1;
 		communications.locationy = -1;
 		
+		lcd_goto_xy(0, 0);
+		print_long(communications.EmergencyStop);
+		
 		switch (communications.EmergencyStop) {
+			
 			case 0: //0 for clear; 1 for stop; 2 for spin; 3 for manual
-				if (read_battery_millivolts_3pi() < 0.6 * 5200)
+				/*if (read_battery_millivolts_3pi() < 0.6 * 5200)
 				{
 					charge_3pi(&communications);
 				}
-				else if (communications.Orderarx > 0)
+				else*/
+				print_long(communications.locationx);
+				print_long(communications.locationy);
+				if (communications.flag==1)
 				{
+					
+					play_from_program_space(welcome);
 					communications.locationx = 0;
 					communications.locationy = 0;
-					pickOrder(&communications);
+					pickOrder(&communications);nbv6
 					communications.locationx = -1;
 					communications.locationy = -1;
 				}
