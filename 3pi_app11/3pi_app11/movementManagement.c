@@ -268,10 +268,10 @@ void motorControl(char x){													// function that controlls the motor move
 	
 	
 	else if(x == 'P')														//Robot stops on a slow pace
-		for( int i=50;i>=0;i-=2)
+		for( int i=50;i>=0;i-=3)
 		{
 			set_motors(i,i);
-			delay(5);
+			delay(4);
 		}
 		
 		

@@ -38,6 +38,7 @@ void bubbleSort(char arr[],char orderY[], int n) {
 void drive(int junctions, piRobot *robot, Communications *myCom)
 {
 	Junctions situatie;
+	
 	motorControl('S');
 	int driving = 1;
 	int count = 0;
@@ -62,25 +63,25 @@ void drive(int junctions, piRobot *robot, Communications *myCom)
 			case Right_corner:
 			case Straight_right_junction:
 				count++;
-				switch(robot->direction)
-				{
-					case 'W':
-					robot->posX++;
-					myCom->locationx = robot->posX;
-					break;
-					case 'E':
-					robot->posX--;
-					myCom->locationx = robot->posX;
-					break;
-					case 'N':
-					robot->posY++;
-					myCom->locationy = robot->posY;
-					break;
-					case 'S':
-					robot->posY--;
-					myCom->locationy = robot->posY;
-					break;
-				}
+				//switch(robot->direction)
+				//{
+					//case 'W':
+					//robot->posX++;
+					//myCom->locationx = robot->posX;
+					//break;
+					//case 'E':
+					//robot->posX--;
+					//myCom->locationx = robot->posX;
+					//break;
+					//case 'N':
+					//robot->posY++;
+					//myCom->locationy = robot->posY;
+					//break;
+					//case 'S':
+					//robot->posY--;
+					//myCom->locationy = robot->posY;
+					//break;
+				//}
 				motorControl('S');
 				if(count == junctions)
 				{
@@ -105,7 +106,7 @@ void waitForTurn()
 	motorControl('N');
 }
 
-void turnRobot(char direction, piRobot *myRobot)
+void turnRobot(char tdirection, piRobot *myRobot)
 {
     int changing = 1;
 
@@ -115,89 +116,89 @@ void turnRobot(char direction, piRobot *myRobot)
         switch(myRobot->direction)
         {
             case 'N':
-                if(direction == 'E')
+                if(tdirection == 'E')
                 {
                     motorControl('R');
 					waitForTurn();
                     myRobot->direction = 'E';
                 }
-                else if(direction == 'W')
+                else if(tdirection == 'W')
                 {
                     motorControl('L');
 					waitForTurn();
                     myRobot->direction = 'W';
                 }
-                else if(direction == 'S')
+                else if(tdirection == 'S')
                 {
-                    motorControl('T');
+                    motorControl('L');motorControl('L');
 					waitForTurn();
                     myRobot->direction = 'S';
                 }
                 break;
             case 'E':
-                if(direction == 'S')
+                if(tdirection == 'S')
                 {
                     motorControl('R');
 					waitForTurn();
                     myRobot->direction = 'S';
                 }
-                else if(direction == 'W')
+                else if(tdirection == 'W')
                 {
                     motorControl('L');
 					waitForTurn();
                     myRobot->direction = 'W';
                 }
-                else if(direction == 'S')
+                else if(tdirection == 'S')
                 {
-                    motorControl('T');
+                    motorControl('L');motorControl('L');
 					waitForTurn();
                     myRobot->direction = 'S';
                 }
                 break;
             case 'S':
-                if(direction == 'W')
+                if(tdirection == 'W')
                 {
                     motorControl('R');
 					waitForTurn();
                     myRobot->direction = 'W';
                 }
-                else if(direction == 'E')
+                else if(tdirection == 'E')
                 {
                     motorControl('L');
 					waitForTurn();
                     myRobot->direction = 'E';
                 }
-                else if(direction == 'N')
+                else if(tdirection == 'N')
                 {
-                    motorControl('T');
+                    motorControl('L');motorControl('L');
 					waitForTurn();
                     myRobot->direction = 'N';
                 }
                 break;
             case 'W':
-                if(direction == 'N')
+                if(tdirection == 'N')
                 {
 					
                     motorControl('R');
 					waitForTurn();
                     myRobot->direction = 'N';
                 }
-                else if(direction == 'S')
+                else if(tdirection == 'S')
+                {
+	                motorControl('L');
+	                waitForTurn();
+	                myRobot->direction = 'S';
+                }
+                else if(tdirection == 'E')
                 {
                     motorControl('L');
-					waitForTurn();
-                    myRobot->direction = 'S';
-                }
-                else if(direction == 'E')
-                {
-                    motorControl('T');
+					motorControl('L');
 					waitForTurn();
                     myRobot->direction = 'E';
                 }
                 break;
 		}
-		
-				if(myRobot->direction == direction)
+				if(myRobot->direction == tdirection)
 				{
 					changing = 0;
 				}
@@ -261,30 +262,26 @@ void warehouse(objective objective, Communications *myCom)
  robot.direction = 'W';
  robot.posX = 0;
  robot.posY = 1;
- 
- 
- char orderX[25];
- char orderY[25];
-int arraySize = 0;;
-for(int i = 0; i<25;i++)
-{
-	if(myCom->Orderarx[i] != 0)
-	{
-		arraySize++;
-	}
-}
-for(int i=0;i<arraySize;i++)//Getting order positions from the wixel
-{
-	orderX[i] = myCom->Orderarx[i];
-	orderY[i] = myCom->Orderary[i];
-}
+ //char orderX[]={2,5,4,3,1};
+ //char orderY[]={2,1,3,5,2};
+ //int arraySize = 5;
+  char orderX[25];
+  char orderY[25];
+ int arraySize = 0;
+ for(int i = 0; i<25;i++)
+ {
+ 	if(myCom->Orderarx[i] != 0)
+ 	{
+ 		arraySize++;
+ 	}
+ }
+ for(int i=0;i<arraySize;i++)//Getting order positions from the wixel
+ {
+ 	orderX[i] = myCom->Orderarx[i];
+ 	orderY[i] = myCom->Orderary[i];
+ }
 clear();
-lcd_goto_xy(6,0);
-print_long(arraySize);
-lcd_goto_xy(0,0);
-print_long(orderX[1]);
-lcd_goto_xy(0,1);
-print_long(orderY[1]);
+
     bubbleSort(orderX, orderY, arraySize);//Sorts the order positions so that the lowest X position comes first
 	
 	if(objective == orderPicking)//If statement for when the robot just needs to quickly pass the warehouse to get to the charging station
@@ -293,8 +290,7 @@ print_long(orderY[1]);
 		{
 			float completed = locations;
 			float total = arraySize;
-		
-		
+			
 			moveX(orderX[locations], &robot, myCom);
 			robot.posX = orderX[locations];
 			moveY(orderY[locations], &robot, myCom);
@@ -304,10 +300,12 @@ print_long(orderY[1]);
 			myCom->batterylvl = batteryPercentage();
 			myCom->magprocess = (((completed+1)/total)*100);
 			myCom->Update(myCom);
-			//updateDisplay((((completed+1)/total)*100),batteryPercentage(),logicsBot);
+			updateDisplay((((completed+1)/total)*100),batteryPercentage(),logicsBot);
 		}
-			moveY(0, &robot, myCom);
-			moveX(0, &robot, myCom);
+		moveY(1, &robot, myCom);
+			moveX(1, &robot, myCom);
+			
+			
 	}
 	else
 	{

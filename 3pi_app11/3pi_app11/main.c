@@ -50,7 +50,7 @@ void charge_3pi(Communications *communications)
 void pickOrder(Communications *communications)
 {
 	whileBarcode();
-	parcours('T', communications);
+	//parcours('T', communications);
 	warehouse(orderPicking, communications); 	
 	parcours('B', communications);
 	whileLineEnd();

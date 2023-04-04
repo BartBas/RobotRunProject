@@ -36,21 +36,21 @@ void filllocationarrays(Communications *self){
 }
 
 	if (self->Recieved[1]==1){
-		arrx[placement]=0;
-		arry[placement]=0;
+		arrx[placement]=1;
+		arry[placement]=1;
 		placement++;
 	}
 	for (int i=0;i<8;i++){
 		set = ((self->Recieved[2] >> i)  & 0x01);
 		if (i<4){
 			if (set == 1){
-			arrx[placement]=i+1;
-			arry[placement]=0;
+			arrx[placement]=i+1+1;
+			arry[placement]=0+1;
 			placement++;}
 		}else{
 			if (set == 1){
-			arrx[placement]=i-4;
-			arry[placement]=1;
+			arrx[placement]=i-4+1;
+			arry[placement]=1+1;
 			placement++;}
 		}
 	}
@@ -58,18 +58,18 @@ void filllocationarrays(Communications *self){
 			set = ((self->Recieved[3] >> i)  & 0x01);
 			if (i==0){
 				if (set == 1){
-				arrx[placement]=i+4;
-				arry[placement]=1;
+				arrx[placement]=i+4+1;
+				arry[placement]=1+1;
 				placement++;}
 			}else if(i<6){
 				if (set == 1){
-				arrx[placement]=i-1;
-				arry[placement]=2;
+				arrx[placement]=i-1+1;
+				arry[placement]=2+1;
 				placement++;}
 			}else{
 				if (set == 1){
-				arrx[placement]=i-6;
-				arry[placement]=3;
+				arrx[placement]=i-6+1;
+				arry[placement]=3+1;
 				placement++;}
 			}
 		}
@@ -77,13 +77,13 @@ void filllocationarrays(Communications *self){
 			set = ((self->Recieved[4] >> i)  & 0x01);
 			if (i<3){
 				if (set == 1){
-				arrx[placement]=i+2;
-				arry[placement]=3;
+				arrx[placement]=i+2+1;
+				arry[placement]=3+1;
 				placement++;}
 			}else{
 				if (set == 1){
-				arrx[placement]=i-3;
-				arry[placement]=4;
+				arrx[placement]=i-3+1;
+				arry[placement]=4+1;
 				placement++;}
 			}
 		}
