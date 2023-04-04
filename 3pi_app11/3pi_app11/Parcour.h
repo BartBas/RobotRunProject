@@ -10,6 +10,6 @@
 #define PARCOUR_H_
 
 int parcoursSearch();
-int parcours(char way);
+int parcours(char way, Communications *communications);
 
 #endif /* PARCOUR_H_ */

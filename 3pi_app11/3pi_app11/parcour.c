@@ -8,6 +8,7 @@
 #include "movementManagement.h"
 #include "parcour.h"
 #include "display.h"
+#include "Comunication.h"
 
 #include <pololu/3pi.h>
 #include <avr/pgmspace.h>
@@ -20,7 +21,7 @@ char route[20] = "_"; // hardcode SLR
 char routeBack[20];
 int routea = 1;
 
-int parcoursSearch() 
+int parcoursSearch(Communications *communications) 
 {
 	char richting;
 	while(1) 
@@ -109,7 +110,7 @@ int parcoursSearch()
 	return 0;
 }
 
-int parcoursRun(char way) 
+int parcoursRun(char way, Communications *communications) 
 {
 	char richting;
 	for (int i = 0; i < strlen(route); i++) 
@@ -139,16 +140,16 @@ int parcoursRun(char way)
 	return 0;
 }
 
-int parcours(char way) 
+int parcours(char way, Communications *communications) 
 {
 	updateDisplay(0, batteryPercentage(), mazeSolver);
 	if (route[0] == '_'){
 		memset(route,0,sizeof route);
-		parcoursSearch();
+		parcoursSearch(&communications);
 	} 
 	else 
 	{
-		parcoursRun(way);
+		parcoursRun(way, communications);
 	} 
 	return 0;
 }
