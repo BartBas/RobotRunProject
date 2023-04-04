@@ -9,6 +9,8 @@
 #ifndef MOVEMENTMANAGEMENT_H_
 #define MOVEMENTMANAGEMENT_H_
 
+#include "Comunication.h"
+
 typedef enum {					// enum for the corners and junctions
 	Straight,					// ?
 	Line_end,					//
@@ -29,11 +31,11 @@ typedef enum {					// enum for the corners and junctions
 void motorControl(char x);
 char lineType();
 void inch();
-void initialize();
+void initialize(Communications* communications);
 void display_readings(const unsigned int *calibrated_values);
 void load_custom_characters();
-void manualControl(char X);
-
+void Spin();
+void manualControl();
 
 
 

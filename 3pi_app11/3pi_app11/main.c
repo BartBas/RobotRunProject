@@ -9,6 +9,7 @@
 #include "display.h"
 #include "movementManagement.h"
 #include "parcour.h"
+#include "comunication.h"
 
 #include <pololu/3pi.h>
 #include <avr/pgmspace.h>
@@ -23,57 +24,37 @@ void whileBarcode()
 	}
 }
 
-int whileLineEnd()
+void whileLineEnd()
 {
 	while (lineType() != Line_end)
 	{
 		motorControl('S');
 	}
-	return 0;
 }
-int charge_3pi()
+void charge_3pi()
 {
 	whileBarcode();
 	updateDisplay(0, batteryPercentage(), mazeSolver);
 	parcours('T');
 	updateDisplay(0, batteryPercentage(), chargeMode);
 	warehouse(charging);
-	// while robot full
+	delay(5000); // wacht totdat de robot vol is
 	warehouse(charging);
 	whileBarcode();
 	updateDisplay(0, batteryPercentage(), mazeSolver);
 	parcours('B');
 	whileLineEnd();
-	return 0;
+	motorControl('L');
 }
 
-int pickOrder()
+void pickOrder()
 {
-	
 	whileBarcode();
-	//updateDisplay(0, batteryPercentage(), mazeSolver);
 	parcours('T');
-	
-	
-	//updateDisplay(0, batteryPercentage(), orderPicking);
-	//warehouse(orderPicking);
-	//updateDisplay(0, batteryPercentage(), mazeSolver);
-	
-	
-	while (lineType() == Straight)
-	{
-		motorControl('S');
-}
-motorControl('P');
-motorControl('R');
-motorControl('R');
-	whileBarcode();
- 	
+	warehouse(orderPicking); 	
 	parcours('B');
-	motorControl('S');
 	whileLineEnd();
-	motorControl('P');
-	return 0;
+	motorControl('L');
 }
 
 int main()
@@ -81,7 +62,8 @@ int main()
 	play_from_program_space(welcome);
 	initialize();
 	
-	/*while(1) 
+	
+	while(1) 
 	{
 		updateDisplay(0, batteryPercentage(), homingMode);
 		if (read_battery_millivolts_3pi() < 0.6 * 5200) 
@@ -89,10 +71,10 @@ int main()
 			charge_3pi();
 		} 
 		else 
-		{ *///  if order
+		{  //if order
 			pickOrder();
-		//}
-	//}
+		}
+	}
 	
 }
 
