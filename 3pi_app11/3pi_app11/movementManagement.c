@@ -16,14 +16,17 @@ unsigned int position;
 #define Refrence_value 400
 #define turn_value 60
 #define End_Line_Value 200
-	
+
 #include "movementManagement.h"
+#include "Comunication.h"
 
 #include <pololu/3pi.h>
 #include <avr/pgmspace.h>
 
 	Junctions junction;	
-
+	int last_proportional;
+	int integral;
+			
 void initialize()
 {
 	unsigned int counter; // used as a simple timer
@@ -166,6 +169,7 @@ void motorControl(char x){													// function that controlls the motor move
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 		while (sensors[2] <=Refrence_value)
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
+		set_motors(0,0);
 	}
 	
 	
@@ -176,42 +180,39 @@ void motorControl(char x){													// function that controlls the motor move
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 		while (sensors[2] <=Refrence_value)
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
+		set_motors(0,0);
 	}
 		
 			
 	else if(x == 'S'){												//drive straight and adjusts the robot so it follows the line
-		//set_motors(50,50);
 		
-// Get the position of the line.  Note that we *must* provide
-// the "sensors" argument to read_line_sensors_calibrated() here, even though we
-// are not interested in the individual sensor readings.
-int last_proportional;
-// The "proportional" term should be 0 when we are on the line.
-int proportional = ((int)position) - 2000;
+		// are not interested in the individual sensor readings.
+		// The "proportional" term should be 0 when we are on the line.
+		int proportional = ((int)position) - 2000;
 
-// Compute the derivative (change) and integral (sum) of the
-// position.
-int derivative = proportional - last_proportional;
-int integral = integral + proportional;
+		// Compute the derivative (change) and integral (sum) of the
+		// position.
+		int derivative = proportional - last_proportional;
+		integral = integral + proportional;
 
-// Remember the last position.
- last_proportional = proportional;
+		// Remember the last position.
+		 last_proportional = proportional;
  
  
-int power_difference = proportional/100 + integral/300 + derivative*0.10;						// derivative == stuur snelheid
+		int power_difference = proportional/100 + integral/300 + derivative*0.10;						// derivative == stuur snelheid
 
-// Compute the actual motor settings.  We never set either motor
-// to a negative value.
-const int max = 70;
-if(power_difference > max)
-power_difference = max;
-if(power_difference < -max)
-power_difference = -max;
+		// Compute the actual motor settings.  We never set either motor
+		// to a negative value.
+		const int max = 70;
+		if(power_difference > max)
+			power_difference = max;
+		if(power_difference < -max)
+			power_difference = -max;
 
-if(power_difference < 0)
-set_motors(max+power_difference, max);
-else
-set_motors(max, max-power_difference);
+		if(power_difference < 0)
+			set_motors(max+power_difference, max);
+		else
+			set_motors(max, max-power_difference);
 		
 	}
 	
@@ -247,30 +248,35 @@ set_motors(max, max-power_difference);
 
 
 
-void manualControl(char X){
+void manualControl(Communications* X){
 int speed = 0;
 
-	if(X == 'W'){
+	if(X->Direction[0] == 1){
 		set_motors(speed,speed);
 		speed++;
 	}
 	
-	else if(X == 'S'){
+	if(X->Direction[1] == 1){
 		set_motors(-speed,-speed);
 		speed--;
 	}
 	
-	else if(X == 'A'){
+	if(X->Direction[2] == 1){
 		set_motors(speed/2,speed);
 	}
 	
-	else if(X == 'D'){
+	if(X->Direction[3] == 1){
 		set_motors(speed,speed/2);
 	}
+}
+
+void Spin(Communications* X){
 	
-	if(X == 'R'){
-		set_motors(255,-255);
+	for(int i = 0;i>=255;i++){
+	set_motors(i,-i);	
 	}
-	
-	
+	while(X->EmergencyStop == 1){}
+	for(int i = 255;i<=0;i--){
+		set_motors(i,-i);
+	}
 }
