@@ -16,8 +16,7 @@ unsigned int position;
 #define Refrence_value 400
 #define turn_value 60
 #define End_Line_Value 200
-#define Barcode_White 400
-#define Barcode_Black 400
+
 
 #include "movementManagement.h"
 #include "Comunication.h"
