@@ -259,14 +259,20 @@ void warehouse(objective objective, Communications *myCom)
 {
  piRobot robot;
  robot.direction = 'W';
- robot.posX = -1;
- robot.posY = 0;
+ robot.posX = 0;
+ robot.posY = 1;
  
  
  char orderX[25];
  char orderY[25];
-
-int arraySize = 25;
+int arraySize = 0;;
+for(int i = 0; i<25;i++)
+{
+	if(myCom->Orderarx[i] != 0)
+	{
+		arraySize++;
+	}
+}
 for(int i=0;i<arraySize;i++)//Getting order positions from the wixel
 {
 	orderX[i] = myCom->Orderarx[i];
