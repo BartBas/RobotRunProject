@@ -26,13 +26,13 @@ const char fugue[] PROGMEM =
 #define STOP 101
 
 void filllocationarrays(Communications *self){
-	char arrx[26];
-	char arry[26];
+	char arrx[25];
+	char arry[25];
 	char set;
 	int placement=0;
 
-	for (int i=0;i<26;i++){
-	arrx[i]=arry[i]=0;
+	for (int i=0;i<25;i++){
+	arrx[i]=arry[i]=self->Orderary[i]=self->Orderarx[i]=0;
 }
 
 	if (self->Recieved[1]==1){
@@ -42,14 +42,14 @@ void filllocationarrays(Communications *self){
 	}
 	for (int i=0;i<8;i++){
 		set = ((self->Recieved[2] >> i)  & 0x01);
-		if (i<5){
+		if (i<4){
 			if (set == 1){
 			arrx[placement]=i+1;
 			arry[placement]=0;
 			placement++;}
 		}else{
 			if (set == 1){
-			arrx[placement]=i-5;
+			arrx[placement]=i-4;
 			arry[placement]=1;
 			placement++;}
 		}
@@ -87,7 +87,7 @@ void filllocationarrays(Communications *self){
 				placement++;}
 			}
 		}
-	for (int i=0;i<=placement;i++){
+	for (int i=0;i<25;i++){
 		self->Orderarx[i]=arrx[i];
 		self->Orderary[i]=arry[i];
 	}
@@ -130,7 +130,7 @@ void Update(Communications *self){
 					}
 				}
 				
-				if (self->locationx==-1 && self->locationy==-1){
+				if (self->locationx==255 && self->locationy==255){
 					filllocationarrays(self);
 					self->flag =1;
 				}
