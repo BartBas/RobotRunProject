@@ -1,5 +1,6 @@
-warehouse.d warehouse.o: .././warehouse.c .././warehouse.h .././display.h \
- .././movementManagement.h \
+warehouse.d warehouse.o: .././warehouse.c .././warehouse.h \
+ .././Comunication.h .././display.h .././movementManagement.h \
+ .././comunication.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\3pi.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\Pololu3pi/Pololu3pi.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\orangutananalog\orangutananalog.h \
@@ -44,9 +45,13 @@ warehouse.d warehouse.o: .././warehouse.c .././warehouse.h .././display.h \
 
 .././warehouse.h:
 
+.././Comunication.h:
+
 .././display.h:
 
 .././movementManagement.h:
+
+.././comunication.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\3pi.h:
 

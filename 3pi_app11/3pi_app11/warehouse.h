@@ -8,7 +8,7 @@
 
 #ifndef WAREHOUSE_H_
 #define WAREHOUSE_H_
-
+#include "Comunication.h"
 typedef struct
 {
 	int posX;
@@ -22,11 +22,11 @@ typedef enum
 	charging
 }objective;
 
-void warehouse(objective objective);
+void warehouse(objective objective, Communications *myCom);
 void moveY(int orderPos, piRobot *robot);
 void moveX(int orderPos, piRobot *robot);
 void turnRobot(char direction, piRobot *myRobot);
-void bubbleSort(int arr[], int orderY[], int n);
-void swap(int *a, int *b);
+void bubbleSort(char arr[], char orderY[], int n);
+void swap(char *a, char *b);
 
 #endif /* WAREHOUSE2_H_ */
