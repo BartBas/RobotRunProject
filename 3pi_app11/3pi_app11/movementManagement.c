@@ -49,16 +49,16 @@ void initialize(Communications* communications)								// initialize for sensors
 	for(counter=0;counter<80;counter++)
 	{
 		if(counter < 20 || counter >= 60)
-		set_motors(40,-40);
+			set_motors(40,-40);
 		else
-		set_motors(-40,40);
-		calibrate_line_sensors(IR_EMITTERS_ON);
-		delay_ms(20);
+			set_motors(-40,40);
+			calibrate_line_sensors(IR_EMITTERS_ON);
+			delay_ms(20);
 	}
 	set_motors(0,0);
 	
 	while(!button_is_pressed(BUTTON_B)){}
-	wait_for_button_release(BUTTON_B);
+		wait_for_button_release(BUTTON_B);
 	
 	clear();
 }
@@ -79,7 +79,7 @@ void wait(){							// wait function for the robot so it will wait for a button p
 	set_motors(0,0);
 						
 	while(!button_is_pressed(BUTTON_B)){}
-	wait_for_button_release(BUTTON_B);
+		wait_for_button_release(BUTTON_B);
 }
 
 char lineType(){																																								// function that returns the type of junction it detects
@@ -91,10 +91,10 @@ char lineType(){																																								// function that returns
 					read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 					if (sensors[0] >=Refrence_value && sensors[1] >=Refrence_value && sensors[3] >= Refrence_value && sensors[4] >=Refrence_value){
 							while(sensors[0] >= 400 || sensors[4] >=400)
-						{
-							read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-							set_motors(75,75);
-						}
+							{
+								read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
+								set_motors(75,75);
+							}
 						inch();
 						wait();
 						return Barcode;
@@ -329,11 +329,7 @@ void Spin(){																// spin fuction
 		{
 			myComs->Update(myComs);
 		}
-		
-
-
 	}
-	
 	set_motors(0,0);
 	
 }
