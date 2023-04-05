@@ -109,6 +109,9 @@ int main()
 				manualControl();
 				break;
 				
+			case 4:
+				charge_3pi(&communications);
+				break;
 		}
 	}
 	

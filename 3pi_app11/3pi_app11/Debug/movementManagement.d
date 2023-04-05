@@ -1,5 +1,5 @@
 movementManagement.d movementManagement.o: .././movementManagement.c \
- .././movementManagement.h .././Comunication.h \
+ .././movementManagement.h .././Comunication.h .././display.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\3pi.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\Pololu3pi/Pololu3pi.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\orangutananalog\orangutananalog.h \
@@ -45,6 +45,8 @@ movementManagement.d movementManagement.o: .././movementManagement.c \
 .././movementManagement.h:
 
 .././Comunication.h:
+
+.././display.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\pololu\3pi.h:
 

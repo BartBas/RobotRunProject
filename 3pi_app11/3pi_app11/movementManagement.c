@@ -20,6 +20,7 @@ unsigned int position;
 
 #include "movementManagement.h"
 #include "Comunication.h"
+#include "display.h"
 
 #include <pololu/3pi.h>
 #include <avr/pgmspace.h>
@@ -276,11 +277,11 @@ void motorControl(char x){													// function that controlls the motor move
 
 
 
-const char welcomet[] PROGMEM = ">g32>>c32";
 void manualControl(){
 static int speed = 0;
 static unsigned int counter = 0;
-	//play_from_program_space(welcomet);
+
+updateDisplay(0,batteryPercentage(),manual);
 	myComs->Update(myComs);
 	if(myComs->Direction[0] == 1){
 		set_motors(speed,speed);
@@ -344,7 +345,7 @@ static unsigned int counter = 0;
 }
 
 void Spin(){
-	
+	errorDisplay(slipped,0);
 	for(int i = 0;i<=255;i++){
 		set_motors(i,0-i);
 		delay(2);
