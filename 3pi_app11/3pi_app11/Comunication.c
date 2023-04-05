@@ -7,7 +7,7 @@
 #include "Comunication.h"
 #include <pololu/3pi.h>
 #include <avr/pgmspace.h>
-
+#include "display.h"
 const char welcomed[] PROGMEM = ">g32>>c32";
 
 const char fugue[] PROGMEM =
@@ -107,7 +107,7 @@ void Update(Communications *self){
 	
 	
 	char Flag =0;
-	unsigned long timebetweensends = 500;
+	unsigned long timebetweensends = 750;
 	static unsigned long timesincelastsend = 0;
 	
 	if (serial_receive_buffer_full()==1){
@@ -187,8 +187,8 @@ void Communications_INIT(Communications * myCom){
 		
 	//filling in default values
 	myCom->EmergencyStop = 0;
-	myCom->batterylvl	 = 55;
-	myCom->magprocess	 = 20;
+	myCom->batterylvl	 = batteryPercentage();
+	myCom->magprocess	 = 0;
 	myCom->locationx	 = 4;
 	myCom->locationy	 = 5;
 	

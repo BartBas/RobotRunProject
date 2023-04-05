@@ -276,21 +276,65 @@ void motorControl(char x){													// function that controlls the motor move
 
 
 
-
+const char welcomet[] PROGMEM = ">g32>>c32";
 void manualControl(){
-int speed = 0;
-
+static int speed = 0;
+static unsigned int counter = 0;
+	//play_from_program_space(welcomet);
+	myComs->Update(myComs);
 	if(myComs->Direction[0] == 1){
 		set_motors(speed,speed);
-		speed++;
+		if(counter % 20 == 0)
+		{
+			speed++;
+		}
+		if(speed > 25)
+		{
+			speed = 25;
+		}
+		counter++;
+	}
+	else if(myComs->Direction[0] == 0 && myComs->Direction[2] == 0)
+	{
+		set_motors(speed,speed);
+		if(counter % 20 == 0)
+		{
+			speed--;
+		}
+		if(speed < 1)
+		{
+			speed = 0;
+		}
+		counter++;
+	}
+	
+	else if(myComs->Direction[2] == 1){
+		set_motors(speed,speed);
+		if(counter % 20 == 0)
+		{
+			speed--;
+		}
+		if(speed < -25)
+		{
+			speed = -25;
+		}
+		counter++;
+	}
+	else if(myComs->Direction[0] == 1 && myComs->Direction[2] == 0)
+	{
+		set_motors(speed,speed);
+		if(counter % 20 == 0)
+		{
+			speed++;
+		}
+		if(speed > -1)
+		{
+			speed = 0;
+		}
+		counter++;
 	}
 	
 	if(myComs->Direction[1] == 1){
-		set_motors(-speed,-speed);
-		speed--;
-	}
-	
-	if(myComs->Direction[2] == 1){
 		set_motors(speed/2,speed);
 	}
 	
