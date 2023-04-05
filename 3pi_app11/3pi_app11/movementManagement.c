@@ -115,30 +115,21 @@ char lineType(){																																	// function that returns the ty
 			}
 		}
 		
-				else if (sensors[1] >=Refrence_value && sensors[3] >= Refrence_value){																									//Checks if its a X junction or a T junction
+				else if (sensors[0] >= Refrence_value && sensors[4] >= Refrence_value){																									//Checks if its a X junction or a T junction
 					inch();
 					read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 					if (sensors[0] >=Refrence_value && sensors[1] >=Refrence_value && sensors[3] >= Refrence_value && sensors[4] >=Refrence_value){
 						clear();
 						while(sensors[0] >= 400 || sensors[4] >=400)
 						{
-							lcd_goto_xy(0,0);
-							print_long(sensors[1]);
-							lcd_goto_xy(0,1);
-							print_long(sensors[3]);
-							lcd_goto_xy(5,0);
-							print_long(sensors[0]);
-							lcd_goto_xy(5,1);
-							print_long(sensors[4]);
-							
 							read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 							motorControl('S');
 						}
+						inch();
 						wait();
-						clear();
 					return Barcode;
 					}
-					else if (sensors[2] >=Refrence_value){
+					else if (sensors[2] >=Refrence_value || (sensors[1] >= Refrence_value || sensors[3] >= Refrence_value)){
 						println(X_junction);
 						return X_junction;
 					}

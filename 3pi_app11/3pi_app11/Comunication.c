@@ -107,7 +107,7 @@ void Update(Communications *self){
 	
 	
 	char Flag =0;
-	unsigned long timebetweensends = 50;
+	unsigned long timebetweensends = 500;
 	static unsigned long timesincelastsend = 0;
 	
 	if (serial_receive_buffer_full()==1){
