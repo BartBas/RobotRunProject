@@ -75,8 +75,7 @@ int main()
 		communications.locationy = -1;
 		
 		lcd_goto_xy(0, 0);
-		
-		
+						
 		switch (communications.EmergencyStop) {
 			
 			case 1:
