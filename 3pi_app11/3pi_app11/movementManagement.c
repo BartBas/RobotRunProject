@@ -187,7 +187,7 @@ void motorControl(char x){													// function that controlls the motor move
 	unsigned int position = read_line(sensors,IR_EMITTERS_ON);
 	read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 
-	while (analog_read(5) <= 200) {
+	while (analog_read(5) >= 200) {
 		set_motors(0, 0);
 		errorDisplay(object, batteryPercentage());
 	}
