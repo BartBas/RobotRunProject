@@ -116,8 +116,7 @@ void Update(Communications *self){
 			//play_from_program_space(fugue);
 			
 			sendACK(self); // stops here to send acknowledge
-			clear();
-			print_long(self->Recieved[5]);
+			
 			if (self->Recieved[5]==254 || self->Recieved[8]==254){    //enter emergency stop
 				//play_from_program_space(fugue);
 				self->EmergencyStop=1;

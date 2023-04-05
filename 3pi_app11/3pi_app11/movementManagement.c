@@ -189,10 +189,12 @@ void motorControl(char x){													// function that controlls the motor move
 
 	while (analog_read(5) <= 200) {
 		set_motors(0, 0);
+		errorDisplay(object, batteryPercentage());
 	}
 	
 	if(myComs->EmergencyStop == 1)		{													//Emergency Brake
 		set_motors(0,0);
+		errorDisplay(emergency,batteryPercentage());
 	}else if(x == 'L'){														//Turn Left
 		set_motors(-turn_value,turn_value);
 		
@@ -345,7 +347,7 @@ updateDisplay(0,batteryPercentage(),manual);
 }
 
 void Spin(){
-	errorDisplay(slipped,0);
+	errorDisplay(slipped,batteryPercentage());
 	for(int i = 0;i<=255;i++){
 		set_motors(i,0-i);
 		delay(2);
@@ -355,7 +357,6 @@ void Spin(){
 		count++;
 		if(count % 10000 == 0)
 		{
-			clear();
 			myComs->Update(myComs);
 		}
 		
