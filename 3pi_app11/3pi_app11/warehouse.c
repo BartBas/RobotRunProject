@@ -41,19 +41,17 @@ void drive(int junctions, piRobot *robot, Communications *myCom)
 	
 	motorControl('S');
 	int driving = 1;
-	int count = 0;
+	int count = 0;//Count for number of junctions to pass
 	while(driving) {
 		situatie = lineType();
-		//clear();
 		switch (situatie) {
 			case Barcode: // end of parcour
-			//motorControl('N');
-			break;
+			
+				break;
 			
 			case Straight:
-			motorControl('S');
-			break;
-			
+				motorControl('S');
+				break;
 			
 			case Line_end:
 			case X_junction:
@@ -63,25 +61,6 @@ void drive(int junctions, piRobot *robot, Communications *myCom)
 			case Right_corner:
 			case Straight_right_junction:
 				count++;
-				//switch(robot->direction)
-				//{
-					//case 'W':
-					//robot->posX++;
-					//myCom->locationx = robot->posX;
-					//break;
-					//case 'E':
-					//robot->posX--;
-					//myCom->locationx = robot->posX;
-					//break;
-					//case 'N':
-					//robot->posY++;
-					//myCom->locationy = robot->posY;
-					//break;
-					//case 'S':
-					//robot->posY--;
-					//myCom->locationy = robot->posY;
-					//break;
-				//}
 				motorControl('S');
 				if(count == junctions)
 				{
@@ -212,7 +191,6 @@ void moveX(int orderPos, piRobot *robot, Communications *myCom)
 	
     int junctions;
 	
-	
     if(robot->posX != orderPos)
     {
 		
@@ -226,10 +204,6 @@ void moveX(int orderPos, piRobot *robot, Communications *myCom)
             junctions = robot->posX - orderPos;
         }
 		drive(junctions, robot, myCom);
-        
-		
-        
-
     }
 }
 
@@ -248,10 +222,8 @@ void moveY(int orderPos, piRobot *robot, Communications *myCom)
             turnRobot('S', robot);
             junctions = robot->posY - orderPos;
         }
-
             drive(junctions, robot, myCom);
         
-
     }
 }
 
@@ -262,6 +234,9 @@ void warehouse(objective objective, Communications *myCom)
  robot.direction = 'W';
  robot.posX = 0;
  robot.posY = 1;
+ myCom->locationx = 0;
+ myCom-> locationy = 1;
+ 
  //char orderX[]={2,5,4,3,1};
  //char orderY[]={2,1,3,5,2};
  //int arraySize = 5;
@@ -280,7 +255,7 @@ void warehouse(objective objective, Communications *myCom)
  	orderX[i] = myCom->Orderarx[i];
  	orderY[i] = myCom->Orderary[i];
  }
-clear();
+
 
     bubbleSort(orderX, orderY, arraySize);//Sorts the order positions so that the lowest X position comes first
 	
@@ -293,8 +268,10 @@ clear();
 			
 			moveX(orderX[locations], &robot, myCom);
 			robot.posX = orderX[locations];
+			myCom->locationx = robot.posX;
 			moveY(orderY[locations], &robot, myCom);
 			robot.posY = orderY[locations];
+			myCom->locationy = robot.posY;
 			delay(1000);//wait 1 second
 			
 			myCom->batterylvl = batteryPercentage();

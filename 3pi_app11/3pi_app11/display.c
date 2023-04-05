@@ -72,8 +72,5 @@ void errorDisplay(errorStates error, int batteryPercent)
 		case batLow:
 		print("LOW-BAT");
 		break;
-		case NoConnection:
-		print("Con-Fail");
-		break;
 	}
 }

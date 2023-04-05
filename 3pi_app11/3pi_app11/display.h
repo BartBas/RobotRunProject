@@ -22,7 +22,6 @@ typedef enum
 	emergency,
 	object,
 	batLow,
-	NoConnection
 	}errorStates;
 
 

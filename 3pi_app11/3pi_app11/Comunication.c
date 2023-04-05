@@ -130,6 +130,11 @@ void Update(Communications *self){
 			if (self->Recieved[8]==245){                            // Enter Spin Mode
 				self->EmergencyStop=2;
 			}
+			if(self->Recieved[8]==230){
+				self->locationx = -1;
+				self->locationy = -1;
+				
+			}
 			if (self->Recieved[8]==240){                            // Enter Manual Mode
 				self->EmergencyStop=3;
 				for (int i = 0; i < 4; i++){
