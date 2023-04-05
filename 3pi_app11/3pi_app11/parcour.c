@@ -17,11 +17,11 @@
 
 Junctions situatie = Straight;
 
-char route[20] = "_"; // hardcode SLR
+char route[20] = "_"; 
 char routeBack[20];
 int routea = 1;
 
-int parcoursSearch(Communications *communications) 
+int parcoursSearch(Communications *communications) // go to parcour with left hand rule
 {
 	char richting;
 	while(1) 
@@ -33,6 +33,21 @@ int parcoursSearch(Communications *communications)
 			case Straight:
 				motorControl('S');
 				break;
+					
+			case Line_end:
+				motorControl('T');
+				richting = 'T';
+				strncat(route, &richting, 1);
+				break;
+					
+			case Barcode: // end of parcour
+				motorControl('P');
+				return 0;
+			
+			case Straight_right_junction:
+				richting = 'S';
+				strncat(route, &richting, 1);
+				break;
 			
 			case X_junction:
 			case Left_corner:
@@ -40,43 +55,25 @@ int parcoursSearch(Communications *communications)
 			case Straight_left_junction:
 				motorControl('L');
 				richting = 'L';
-				////print_character('L');
 				strncat(route, &richting, 1);
 				break;
 			
 			case Right_corner:
 				motorControl('R');
 				richting = 'R';
-				//print_character('R');
 				strncat(route, &richting, 1);
-				break;
-			
-			case Straight_right_junction:
-				richting = 'S';
-				//print_character('S');
-				strncat(route, &richting, 1);
-				break;
-				
-			case Line_end:
-				motorControl('T');
-				richting = 'T';
-				//print_character('T');
-				strncat(route, &richting, 1);
-				break;
-				
-			case Barcode: // end of parcour
-				motorControl('P');
-				//print_character('B');
-				return 0;
+				break;	
 		}
 		
-		clear();
+		////// testing route
+		/*clear();
 		lcd_goto_xy(0,0);
 		for (int i=0; i <= strlen(route);i++ ){
 		print_character(route[i]);
-		}
+		}*/
 		
-		char richting;	
+		////// find shortest route
+		/*char richting;	
 		if (route[strlen(route)-2] == 'T') 
 		{
 			char char_1 = route[strlen(route)-3];
@@ -104,13 +101,14 @@ int parcoursSearch(Communications *communications)
 			}
 			route[strlen(route)-3] = '\0';
 			strncat(route, &richting, 1);
-		}
+		}*/
 	}
 	routea = 0;	
 	return 0;
 }
 
-int parcoursRun(char way, Communications *communications) 
+////// run shortest route
+/*int parcoursRun(char way, Communications *communications) 
 {
 	char richting;
 	for (int i = 0; i < strlen(route); i++) 
@@ -138,19 +136,20 @@ int parcoursRun(char way, Communications *communications)
 		}
 	}
 	return 0;
-}
+}*/
 
 int parcours(char way, Communications *communications) 
 {
 	updateDisplay(0, batteryPercentage(), mazeSolver);
-	if (route[0] == '_'){
+	if (route[0] == '_')// if it is the first time -> parcoursSearch
+	{		
 		memset(route,0,sizeof route);
-		parcoursSearch(&communications);
+		parcoursSearch(communications);
 	} 
-	else 
+	else						// if it isn't the fist time -> run shortest route
 	{
-	//	parcoursRun(way, communications);
-		parcoursSearch(&communications);
+	//	parcoursRun(way, communications); // run shortest route
+		parcoursSearch(communications);
 	} 
 	return 0;
 }

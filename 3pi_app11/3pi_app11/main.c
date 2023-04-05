@@ -76,19 +76,11 @@ int main()
 		
 		lcd_goto_xy(0, 0);
 						
-		switch (communications.EmergencyStop) {
-			
-			case 1:
-			case 0: //0 for clear; 1 for stop; 2 for spin; 3 for manual
-				/*if (read_battery_millivolts_3pi() < 0.6 * 5200)
-				{
-					charge_3pi(&communications);
-				}
-				else*/
-// 				print_long(communications.locationx);
-// 				print_long(communications.locationy);
-				
-				if (communications.flag==1)
+		switch (communications.EmergencyStop)  // bits from gui
+		{  
+			case 0:
+			case 1: 				
+				if (communications.flag==1) // if order is true
 				{
 					communications.flag=0;
 					
@@ -107,14 +99,9 @@ int main()
 			case 3:
 				manualControl();
 				break;
-				
 			case 4:
 				charge_3pi(&communications);
 				break;
 		}
 	}
-	
 }
-
-
-
