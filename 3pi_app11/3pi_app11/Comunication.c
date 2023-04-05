@@ -105,6 +105,8 @@ void sendACK(Communications *self ){
 
 void Update(Communications *self){
 	char Flag =0;
+	unsigned long timebetweensends = 50;
+	static unsigned long timesincelastsend = 0;
 			if (serial_receive_buffer_full()==1){
 				if (self->Recieved[0]==8 && self->Recieved[self->val-1]==101){
 				Flag = 1;
@@ -136,7 +138,8 @@ void Update(Communications *self){
 				}
 				}
 			}
-			
+			if (timesincelastsend+50==millis()){
+				timesincelastsend=millis();
 				for (char i=0;i<self->val;i++){
 					self->msgBuffer[i]=i;
 				}
@@ -152,7 +155,8 @@ void Update(Communications *self){
 				//delay_ms(10000); // test
 				if (Flag == 1){
 					serial_receive(self->Recieved,self->val);
-				}		
+				}
+			}
 }
 
 void fillarrays(Communications *self){
