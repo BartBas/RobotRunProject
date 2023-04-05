@@ -149,7 +149,8 @@ int parcours(char way, Communications *communications)
 	} 
 	else 
 	{
-		parcoursRun(way, communications);
+	//	parcoursRun(way, communications);
+		parcoursSearch(&communications);
 	} 
 	return 0;
 }

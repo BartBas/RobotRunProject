@@ -65,7 +65,6 @@ int main()
 	Communications_INIT(&communications);
 	
 	initialize(&communications);
-	
 		
 	while(1) 
 	{

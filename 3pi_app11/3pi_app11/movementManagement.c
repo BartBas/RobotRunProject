@@ -85,8 +85,32 @@ void wait(){
 char lineType(){																																	// function that returns the type of junction it detects
 	while(1){																																		// >= 500 = black line		<=500 = white
 		read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-					
-		if (sensors[0] >=Refrence_value && sensors[1] >= Refrence_value && sensors[4] <= Refrence_value ){																							//Checks if its a left corner or a straight with left corner
+
+			if (sensors[0] >= Refrence_value && sensors[4] >= Refrence_value){																									//Checks if its a X junction or a T junction
+					inch();
+					read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
+					if (sensors[0] >=Refrence_value && sensors[1] >=Refrence_value && sensors[3] >= Refrence_value && sensors[4] >=Refrence_value){
+						clear();
+						while(sensors[0] >= 400 || sensors[4] >=400)
+						{
+							read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
+							set_motors(75,75);
+						}
+						inch();
+						wait();
+						return Barcode;
+					}
+					else if (sensors[2] >=Refrence_value || (sensors[1] >= Refrence_value || sensors[3] >= Refrence_value)){
+						println(X_junction);
+						return X_junction;
+					}
+					else {
+						println(T_junction);
+						return T_junction;
+					}
+				}
+							
+		else if (sensors[0] >=Refrence_value && sensors[1] >= Refrence_value && sensors[4] <= Refrence_value ){																							//Checks if its a left corner or a straight with left corner
 			inch();
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 			
@@ -115,30 +139,6 @@ char lineType(){																																	// function that returns the ty
 			}
 		}
 		
-				else if (sensors[0] >= Refrence_value && sensors[4] >= Refrence_value){																									//Checks if its a X junction or a T junction
-					inch();
-					read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-					if (sensors[0] >=Refrence_value && sensors[1] >=Refrence_value && sensors[3] >= Refrence_value && sensors[4] >=Refrence_value){
-						clear();
-						while(sensors[0] >= 400 || sensors[4] >=400)
-						{
-							read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-							motorControl('S');
-						}
-						inch();
-						wait();
-					return Barcode;
-					}
-					else if (sensors[2] >=Refrence_value || (sensors[1] >= Refrence_value || sensors[3] >= Refrence_value)){
-						println(X_junction);
-						return X_junction;
-					}
-					else {
-						println(T_junction);
-						return T_junction;
-					}
-				}
-				
 				else if(sensors[2] <= End_Line_Value && sensors[1] <=End_Line_Value && sensors[3] <=End_Line_Value){
 					println(Line_end);																													// check if the line ends
 					return Line_end;
@@ -178,15 +178,21 @@ char lineType(){																																	// function that returns the ty
 }
 
 void motorControl(char x){													// function that controlls the motor movement and the turns
+
+		
+
+
 	myComs->Update(myComs);
 	unsigned int position = read_line(sensors,IR_EMITTERS_ON);
 	read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
+
+	while (analog_read(5) <= 200) {
+		set_motors(0, 0);
+	}
 	
-	if(myComs->EmergencyStop == 1)															//Emergency Brake
-		set_motors(0,0);	
-	
-	
-	else if(x == 'L'){														//Turn Left
+	if(myComs->EmergencyStop == 1)		{													//Emergency Brake
+		set_motors(0,0);
+	}else if(x == 'L'){														//Turn Left
 		set_motors(-turn_value,turn_value);
 		
 		while (sensors[2] >=Refrence_value)
