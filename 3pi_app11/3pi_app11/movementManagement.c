@@ -304,11 +304,24 @@ int speed = 0;
 
 void Spin(){
 	
-	for(int i = 0;i>=255;i++){
-	set_motors(i,-i);	
+	for(int i = 0;i<=255;i++){
+		set_motors(i,0-i);
+		delay(2);
 	}
-	while(myComs->EmergencyStop == 1){}
-	for(int i = 255;i<=0;i--){
-		set_motors(i,-i);
+	int count = 0;
+	while(myComs->EmergencyStop == 2){
+		count++;
+		if(count % 10000 == 0)
+		{
+			clear();
+			myComs->Update(myComs);
+		}
+		
+
+
 	}
+	
+	set_motors(0,0);
+
+	
 }

@@ -100,63 +100,68 @@ void sendACK(Communications *self ){
 						tmp[0]=START;
 						tmp[1]=255;
 						tmp[2]=STOP;
-						serial_send_blocking(tmp,self->val);
+						serial_send_blocking(tmp,4);
 }
 
 void Update(Communications *self){
+	
+	
 	char Flag =0;
 	unsigned long timebetweensends = 50;
 	static unsigned long timesincelastsend = 0;
-			if (serial_receive_buffer_full()==1){
-				if (self->Recieved[0]==8 && self->Recieved[self->val-1]==101){
-				Flag = 1;
+	
+	if (serial_receive_buffer_full()==1){
+		if (self->Recieved[0]==8 && self->Recieved[self->val-1]==101){
+			Flag = 1;
+			//play_from_program_space(fugue);
+			
+			sendACK(self); // stops here to send acknowledge
+			clear();
+			print_long(self->Recieved[5]);
+			if (self->Recieved[5]==254 || self->Recieved[8]==254){    //enter emergency stop
 				//play_from_program_space(fugue);
-				
-				sendACK(self); // stops here to send acknowledge
-				if (self->Recieved[5]==254 || self->EmergencyStop==1){	//enter emergency stop
-									play_from_program_space(fugue);
-					self->EmergencyStop=1;
-				}
-				
-				if (self->Recieved[8]==250 && self->EmergencyStop==1){	// Leave emergency stop
-					self->EmergencyStop=0;
-				}
-				
-				if (self->Recieved[8]==245){							// Enter Spin Mode
-					self->EmergencyStop=3;
-				}
-				if (self->Recieved[8]==240){							// Enter Manual Mode
-					self->EmergencyStop=4;
-					for (int i = 0; i < 4; i++){
-						self->Direction[i]=self->Recieved[i+9];
-					}
-				}
-				
-				if (self->locationx==255 && self->locationy==255){
-					filllocationarrays(self);
-					self->flag =1;
-				}
+				self->EmergencyStop=1;
+			}
+			
+			if (self->Recieved[8]==250){    // Leave emergency stop
+				self->EmergencyStop=0;
+			}
+			
+			if (self->Recieved[8]==245){                            // Enter Spin Mode
+				self->EmergencyStop=2;
+			}
+			if (self->Recieved[8]==240){                            // Enter Manual Mode
+				self->EmergencyStop=3;
+				for (int i = 0; i < 4; i++){
+					self->Direction[i]=self->Recieved[i+9];
 				}
 			}
-			if (timesincelastsend+50==millis()){
-				timesincelastsend=millis();
-				for (char i=0;i<self->val;i++){
-					self->msgBuffer[i]=i;
-				}
-				self->msgBuffer[0]=START;
-				self->msgBuffer[1]=self->batterylvl;
-				self->msgBuffer[2]=self->magprocess;
-				self->msgBuffer[3]=self->locationx;
-				self->msgBuffer[4]=self->locationy;
-				self->msgBuffer[5]=self->EmergencyStop;
-				self->msgBuffer[self->val-1]=STOP;
-				serial_send(self->msgBuffer, self->val);
+			
+			if (self->locationx==255 && self->locationy==255){
+				filllocationarrays(self);
+				self->flag =1;
+			}
+		}
+	}
+ if (timesincelastsend+timebetweensends<=get_ms()){
+	 timesincelastsend=get_ms();
+	 for (char i=0;i<self->val;i++){
+		 self->msgBuffer[i]=i;
+	 }
+	 self->msgBuffer[0]=START;
+	 self->msgBuffer[1]=self->batterylvl;
+	 self->msgBuffer[2]=self->magprocess;
+	 self->msgBuffer[3]=self->locationx;
+	 self->msgBuffer[4]=self->locationy;
+	 self->msgBuffer[5]=self->EmergencyStop;
+	 self->msgBuffer[self->val-1]=STOP;
+	 serial_send(self->msgBuffer, self->val);
 
-				//delay_ms(10000); // test
-				if (Flag == 1){
-					serial_receive(self->Recieved,self->val);
-				}
-			}
+	 //delay_ms(10000); // test
+	 if (Flag == 1){
+		 serial_receive(self->Recieved,self->val);
+	 }
+ }
 }
 
 void fillarrays(Communications *self){

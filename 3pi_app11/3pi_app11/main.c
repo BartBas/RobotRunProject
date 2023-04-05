@@ -80,14 +80,16 @@ int main()
 		
 		switch (communications.EmergencyStop) {
 			
+			case 1:
 			case 0: //0 for clear; 1 for stop; 2 for spin; 3 for manual
 				/*if (read_battery_millivolts_3pi() < 0.6 * 5200)
 				{
 					charge_3pi(&communications);
 				}
 				else*/
-				print_long(communications.locationx);
-				print_long(communications.locationy);
+// 				print_long(communications.locationx);
+// 				print_long(communications.locationy);
+				
 				if (communications.flag==1)
 				{
 					communications.flag=0;
