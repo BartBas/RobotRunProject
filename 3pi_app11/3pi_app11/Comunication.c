@@ -123,8 +123,8 @@ void Update(Communications *self){
 				self->EmergencyStop=1;
 			}
 			
-			if (self->Recieved[8]==250){    // Leave emergency stop
-				self->EmergencyStop=0;
+			if (self->Recieved[8]==250){    // Charging
+				self->EmergencyStop=4;
 			}
 			
 			if (self->Recieved[8]==245){                            // Enter Spin Mode
