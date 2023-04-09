@@ -15,6 +15,9 @@
 #include <avr/pgmspace.h>
 
 
+const char sound[] PROGMEM = ">g32>>c32";
+
+
 void swap(char *a, char *b) {
     int temp = *a;
     *a = *b;
@@ -272,6 +275,7 @@ void warehouse(objective objective, Communications *myCom)
 			moveY(orderY[locations], &robot, myCom);
 			robot.posY = orderY[locations];
 			myCom->locationy = robot.posY;
+			play_from_program_space(sound);
 			delay(1000);//wait 1 second
 			
 			myCom->batterylvl = batteryPercentage();
@@ -291,7 +295,7 @@ void warehouse(objective objective, Communications *myCom)
 		{
 			drive(1, &robot, myCom);
 			motorControl('R');
-			drive(3, &robot, myCom);
+			drive(4, &robot, myCom);
 			motorControl('R');
 			drive(1, &robot, myCom);
 			charged = 1;
@@ -301,10 +305,8 @@ void warehouse(objective objective, Communications *myCom)
 			motorControl('T');
 			drive(1, &robot, myCom);
 			motorControl('L');
-			drive(3, &robot, myCom);
+			drive(4, &robot, myCom);
 			motorControl('L');
-			
 		}
-		
 	}
 }

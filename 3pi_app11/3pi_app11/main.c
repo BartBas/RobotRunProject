@@ -31,17 +31,19 @@ void whileLineEnd()
 		motorControl('S');
 	}
 }
+
 void charge_3pi(Communications *communications)
 {
 	whileBarcode();
-	updateDisplay(0, batteryPercentage(), mazeSolver);
 	parcours('T', communications);
 	updateDisplay(0, batteryPercentage(), chargeMode);
 	warehouse(charging, communications);
-	delay(5000);								// wacht totdat de robot vol is
+	for (int i = 0; i < 10; i++) {// wacht totdat de robot vol is
+		play_from_program_space(welcome);
+		delay(500);
+	}								
 	warehouse(charging, communications);
 	whileBarcode();
-	updateDisplay(0, batteryPercentage(), mazeSolver);
 	parcours('B', communications);
 	whileLineEnd();
 	motorControl('L');
@@ -52,13 +54,15 @@ void pickOrder(Communications *communications)
 	whileBarcode();
 	parcours('T', communications);
 	warehouse(orderPicking, communications); 	
+	whileBarcode();
 	parcours('B', communications);
 	whileLineEnd();
 	motorControl('L');
 }
 
 int main()
-{
+{ 
+	
 	play_from_program_space(welcome);
 	
 	Communications communications;
@@ -66,15 +70,16 @@ int main()
 	
 	initialize(&communications);
 		
+		
+		
+		unsigned int sensors[5];	
 	while(1) 
 	{
-		//updateDisplay(0, batteryPercentage(), homingMode);
+		updateDisplay(0, batteryPercentage(), homingMode);
 		communications.Update(&communications);
 		
 		communications.locationx = -1;
-		communications.locationy = -1;
-		
-		lcd_goto_xy(0, 0);
+		communications.locationy = -1;		
 						
 		switch (communications.EmergencyStop)  // bits from gui
 		{  
@@ -91,16 +96,18 @@ int main()
 					communications.locationx = -1;
 					communications.locationy = -1;
 				}
-				break;
 				delay(100);
-			case 2:
-				Spin();
 				break;
+			case 2:
+			Spin();
+			break;
 			case 3:
 				manualControl();
 				break;
 			case 4:
 				charge_3pi(&communications);
+				communications.EmergencyStop = 0;
+				communications.flag=0;
 				break;
 		}
 	}

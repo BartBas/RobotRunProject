@@ -13,9 +13,9 @@
 
 unsigned int sensors[5];			// an array to hold sensor values
 unsigned int position;
-#define Refrence_value 400
+#define Refrence_value 500
 #define turn_value 60
-#define End_Line_Value 200
+#define End_Line_Value 300
 
 
 #include "movementManagement.h"
@@ -82,72 +82,72 @@ void wait(){							// wait function for the robot so it will wait for a button p
 		wait_for_button_release(BUTTON_B);
 }
 
-char lineType(){																																								// function that returns the type of junction it detects
-	while(1){																																									// >= black line		<=white
-		read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-
-			if (sensors[0] >= Refrence_value && sensors[4] >= Refrence_value){																									//Checks if its A "Barcode", a X junction or a T junction and returns the junction
+char lineType(){																																								// function that returns the type of junction it detects																																								// >= black line		<=white
+	read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
+		if (sensors[1] >= Refrence_value && sensors[3] >= Refrence_value){																									//Checks if its A "Barcode", a X junction or a T junction and returns the junction
+				inch();
+				read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
+				
+				if (sensors[0] >=Refrence_value && sensors[1] >=Refrence_value && sensors[3] >= Refrence_value && sensors[4] >=Refrence_value){
+					set_motors(75,75);
+						while(sensors[0] >= Refrence_value || sensors[4] >=Refrence_value)
+						{
+							read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
+						}
 					inch();
-					read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-					if (sensors[0] >=Refrence_value && sensors[1] >=Refrence_value && sensors[3] >= Refrence_value && sensors[4] >=Refrence_value){
-							while(sensors[0] >= 400 || sensors[4] >=400)
-							{
-								read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-								set_motors(75,75);
-							}
-						inch();
-						wait();
-						return Barcode;
-					}
-					else if (sensors[2] >=Refrence_value || (sensors[1] >= Refrence_value || sensors[3] >= Refrence_value)){
-						println(X_junction);
-						return X_junction;
-					}
-					else {
-						println(T_junction);
-						return T_junction;
-					}
+					delay(1000);
+					return Barcode;
 				}
-							
-		else if (sensors[0] >=Refrence_value && sensors[1] >= Refrence_value && sensors[4] <= Refrence_value ){																	//Checks if its a left corner or a straight with left corner and returns the junction
-			inch();
-			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-			
-			if (sensors[2] >= Refrence_value || sensors[3] >=Refrence_value){
-				println(Straight_left_junction);
-				return Straight_left_junction;
-			}
-			else{
-				println(Left_corner);
-				return Left_corner;
-			}
-		}
-		
-		
-		else if (sensors[3] >=Refrence_value && sensors[4] >= Refrence_value && sensors[0] <= Refrence_value){																	//Checks if its a right corner or a straight with right corner and returns the junction
-			inch();
-			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-			
-			if (sensors[2] >= Refrence_value || sensors[1] >=Refrence_value){
-				println(Straight_right_junction);
-				return Straight_right_junction;
-			}
-			else{
-				println(Straight_left_junction);
-				return Right_corner;
-			}
-		}
-		
-				else if(sensors[2] <= End_Line_Value && sensors[1] <=End_Line_Value && sensors[3] <=End_Line_Value){															// check if the line ends and returns the junction
-					println(Line_end);																													
-					return Line_end;
+				
+				else if (sensors[2] >=Refrence_value || (sensors[1] >= Refrence_value || sensors[3] >= Refrence_value)){
+					println(X_junction);
+					return X_junction;
 				}
-		else{																																									// else its a straight
-			return Straight;
-		}
-		
+				else if(sensors[2] <= Refrence_value){
+					println(T_junction);
+					return T_junction;
+				}
+				
+			}
+			
 	
+							
+	else if (sensors[0] >=Refrence_value && sensors[1] >= Refrence_value && sensors[4] <= Refrence_value ){																	//Checks if its a left corner or a straight with left corner and returns the junction
+		inch();
+		read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
+			
+		if (sensors[2] >= Refrence_value || sensors[3] >=Refrence_value){
+			println(Straight_left_junction);
+			return Straight_left_junction;
+		}
+		else{
+			println(Left_corner);
+			return Left_corner;
+		}
 	}
+		
+		
+	else if (sensors[3] >=300 && sensors[4] >= 300 && sensors[0] <= Refrence_value){																	//Checks if its a right corner or a straight with right corner and returns the junction
+		inch();
+		read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
+			
+		if (sensors[2] >= Refrence_value || sensors[1] >=Refrence_value){
+			println(Straight_right_junction);
+			return Straight_right_junction;
+		}
+		else {
+			println(Straight_left_junction);
+			return Right_corner;
+		}
+	}
+	
+	else if(sensors[0] <= End_Line_Value && sensors[1] <=End_Line_Value && sensors[2] <= End_Line_Value &&sensors[3] <= End_Line_Value &&sensors[4] <=End_Line_Value){															// check if the line ends and returns the junction
+		println(Line_end);																													
+		return Line_end;
+	}
+																																										// else its a straight
+		return Straight;
+	
 }
 
 void motorControl(char x){																																					// function that controls the motor movement and the turns
@@ -259,11 +259,11 @@ updateDisplay(0,batteryPercentage(),manual);
 		set_motors(speed,speed);
 		if(counter % 20 == 0)
 		{
-			speed++;
+			speed +=10;
 		}
-		if(speed > 25)
+		if(speed > 100)
 		{
-			speed = 25;
+			speed = 100;
 		}
 		counter++;
 	}
@@ -272,7 +272,7 @@ updateDisplay(0,batteryPercentage(),manual);
 		set_motors(speed,speed);
 		if(counter % 20 == 0)
 		{
-			speed--;
+			speed-=10;
 		}
 		if(speed < 1)
 		{
@@ -285,11 +285,11 @@ updateDisplay(0,batteryPercentage(),manual);
 		set_motors(speed,speed);
 		if(counter % 20 == 0)
 		{
-			speed--;
+			speed-=10;
 		}
-		if(speed < -25)
+		if(speed < -100)
 		{
-			speed = -25;
+			speed = -100;
 		}
 		counter++;
 	}
@@ -298,7 +298,7 @@ updateDisplay(0,batteryPercentage(),manual);
 		set_motors(speed,speed);
 		if(counter % 20 == 0)
 		{
-			speed++;
+			speed += 10;
 		}
 		if(speed > -1)
 		{
@@ -331,5 +331,4 @@ void Spin(){																// spin fuction
 		}
 	}
 	set_motors(0,0);
-	
 }

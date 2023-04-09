@@ -26,8 +26,7 @@ int parcoursSearch(Communications *communications) // go to parcour with left ha
 	char richting;
 	while(1) 
 	{
-		situatie = lineType();
-		
+		situatie = lineType();		
 		switch (situatie) 
 		{
 			case Straight:
@@ -73,7 +72,7 @@ int parcoursSearch(Communications *communications) // go to parcour with left ha
 		}*/
 		
 		////// find shortest route
-		/*char richting;	
+		char richting;	
 		if (route[strlen(route)-2] == 'T') 
 		{
 			char char_1 = route[strlen(route)-3];
@@ -101,14 +100,14 @@ int parcoursSearch(Communications *communications) // go to parcour with left ha
 			}
 			route[strlen(route)-3] = '\0';
 			strncat(route, &richting, 1);
-		}*/
+		}
 	}
 	routea = 0;	
 	return 0;
 }
 
-////// run shortest route
-/*int parcoursRun(char way, Communications *communications) 
+// run shortest route
+int parcoursRun(char way, Communications *communications) 
 {
 	char richting;
 	for (int i = 0; i < strlen(route); i++) 
@@ -136,7 +135,7 @@ int parcoursSearch(Communications *communications) // go to parcour with left ha
 		}
 	}
 	return 0;
-}*/
+}
 
 int parcours(char way, Communications *communications) 
 {
@@ -148,8 +147,8 @@ int parcours(char way, Communications *communications)
 	} 
 	else						// if it isn't the fist time -> run shortest route
 	{
-	//	parcoursRun(way, communications); // run shortest route
-		parcoursSearch(communications);
+		parcoursRun(way, communications); // run shortest route
+	//	parcoursSearch(communications);
 	} 
 	return 0;
 }
