@@ -13,7 +13,9 @@
 
 unsigned int sensors[5];			// an array to hold sensor values
 unsigned int position;
-#define Refrence_value 500
+#define Refrence_value_onder	200
+#define Refrence_value			350
+#define Refrence_value_boven	400
 #define turn_value 60
 #define End_Line_Value 300
 
@@ -82,15 +84,20 @@ void wait(){							// wait function for the robot so it will wait for a button p
 		wait_for_button_release(BUTTON_B);
 }
 
+void blub() {
+	
+}
+
 char lineType(){																																								// function that returns the type of junction it detects																																								// >= black line		<=white
 	read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-		if (sensors[1] >= Refrence_value && sensors[3] >= Refrence_value){																									//Checks if its A "Barcode", a X junction or a T junction and returns the junction
+	
+		if (sensors[1] >= Refrence_value_boven && sensors[3] >= Refrence_value_boven){																									//Checks if its A "Barcode", a X junction or a T junction and returns the junction
 				inch();
 				read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 				
-				if (sensors[0] >=Refrence_value && sensors[1] >=Refrence_value && sensors[3] >= Refrence_value && sensors[4] >=Refrence_value){
+				if (sensors[0] > Refrence_value_boven && sensors[1] > Refrence_value_boven && sensors[3] > Refrence_value_boven && sensors[4] > Refrence_value_boven){
 					set_motors(75,75);
-						while(sensors[0] >= Refrence_value || sensors[4] >=Refrence_value)
+						while(sensors[0] > Refrence_value_boven || sensors[4]  > Refrence_value_boven)
 						{
 							read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 						}
@@ -99,11 +106,11 @@ char lineType(){																																								// function that returns
 					return Barcode;
 				}
 				
-				else if (sensors[2] >=Refrence_value || (sensors[1] >= Refrence_value || sensors[3] >= Refrence_value)){
+				else if (sensors[2] > Refrence_value_boven || (sensors[1] > Refrence_value_boven || sensors[3]  > Refrence_value_boven)){
 					println(X_junction);
 					return X_junction;
 				}
-				else if(sensors[2] <= Refrence_value){
+				else if(sensors[2] < Refrence_value_onder){
 					println(T_junction);
 					return T_junction;
 				}
@@ -112,11 +119,11 @@ char lineType(){																																								// function that returns
 			
 	
 							
-	else if (sensors[0] >=Refrence_value && sensors[1] >= Refrence_value && sensors[4] <= Refrence_value ){																	//Checks if its a left corner or a straight with left corner and returns the junction
+	else if (sensors[0] > Refrence_value_boven && sensors[1] > Refrence_value_boven && sensors[4] < Refrence_value ){																	//Checks if its a left corner or a straight with left corner and returns the junction
 		inch();
 		read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 			
-		if (sensors[2] >= Refrence_value || sensors[3] >=Refrence_value){
+		if (sensors[2] > Refrence_value_boven || sensors[3]  > Refrence_value_boven){
 			println(Straight_left_junction);
 			return Straight_left_junction;
 		}
@@ -127,11 +134,11 @@ char lineType(){																																								// function that returns
 	}
 		
 		
-	else if (sensors[3] >=300 && sensors[4] >= 300 && sensors[0] <= Refrence_value){																	//Checks if its a right corner or a straight with right corner and returns the junction
+	else if (sensors[3] > 300 && sensors[4] > 300 && sensors[0] < Refrence_value_onder){																	//Checks if its a right corner or a straight with right corner and returns the junction
 		inch();
 		read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 			
-		if (sensors[2] >= Refrence_value || sensors[1] >=Refrence_value){
+		if (sensors[2] > Refrence_value_boven || sensors[1]  > Refrence_value_boven){
 			println(Straight_right_junction);
 			return Straight_right_junction;
 		}
@@ -141,7 +148,7 @@ char lineType(){																																								// function that returns
 		}
 	}
 	
-	else if(sensors[0] <= End_Line_Value && sensors[1] <=End_Line_Value && sensors[2] <= End_Line_Value &&sensors[3] <= End_Line_Value &&sensors[4] <=End_Line_Value){															// check if the line ends and returns the junction
+	else if(sensors[0] < End_Line_Value && sensors[1] < End_Line_Value && sensors[2] < End_Line_Value &&sensors[3] < End_Line_Value &&sensors[4] < End_Line_Value){															// check if the line ends and returns the junction
 		println(Line_end);																													
 		return Line_end;
 	}
@@ -169,9 +176,9 @@ void motorControl(char x){																																					// function that 
 	else if(x == 'L'){																																						//Turn Left
 		set_motors(-turn_value,turn_value);
 		
-		while (sensors[2] >=Refrence_value)
+		while (sensors[2] > Refrence_value_onder)
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-		while (sensors[2] <=Refrence_value)
+		while (sensors[2] < Refrence_value_boven)
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 		set_motors(0,0);
 	}

@@ -26,6 +26,8 @@ int parcoursSearch(Communications *communications) // go to parcour with left ha
 	char richting;
 	while(1) 
 	{
+		
+		updateDisplay(0, batteryPercentage(), mazeSolver);
 		situatie = lineType();		
 		switch (situatie) 
 		{
@@ -112,6 +114,7 @@ int parcoursRun(char way, Communications *communications)
 	char richting;
 	for (int i = 0; i < strlen(route); i++) 
 	{
+		updateDisplay(0, batteryPercentage(), mazeSolver);
 		while (lineType() == Straight)
 		{
 			motorControl('S');
@@ -139,7 +142,6 @@ int parcoursRun(char way, Communications *communications)
 
 int parcours(char way, Communications *communications) 
 {
-	updateDisplay(0, batteryPercentage(), mazeSolver);
 	if (route[0] == '_')// if it is the first time -> parcoursSearch
 	{		
 		memset(route,0,sizeof route);
