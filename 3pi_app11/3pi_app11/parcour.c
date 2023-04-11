@@ -16,7 +16,7 @@
 #include <string.h>
 
 Junctions situatie = Straight;
-	const char Beep[] PROGMEM = ">g32";
+	
 char route[20] = "_"; 
 char routeBack[20];
 int routea = 1;
@@ -67,11 +67,11 @@ int parcoursSearch(Communications *communications) // go to parcour with left ha
 		}
 		
 		////// testing route
-		/*clear();
-		lcd_goto_xy(0,0);
-		for (int i=0; i <= strlen(route);i++ ){
-		print_character(route[i]);
-		}*/
+// 		clear();
+// 		lcd_goto_xy(0,0);
+// 		for (int i=0; i <= strlen(route);i++ ){
+// 		print_character(route[i]);
+//		}
 		
 		////// find shortest route
 		char richting;	
@@ -119,7 +119,14 @@ int parcoursRun(char way, Communications *communications)
 		{
 			motorControl('S');
 		}
-		play_from_program_space(Beep);
+		
+		if (lineType() == Line_end) {
+			clear();
+			lcd_goto_xy(0, 0);
+			print("parcours lost");
+			while(1);
+		}
+		
 		if (way == 'T') {
 			motorControl(route[i]);
 		} 
@@ -151,7 +158,7 @@ int parcours(char way, Communications *communications)
 	else						// if it isn't the fist time -> run shortest route
 	{
 		parcoursRun(way, communications); // run shortest route
-	//	parcoursSearch(communications);
+		//parcoursSearch(communications);
 	} 
 	return 0;
 }

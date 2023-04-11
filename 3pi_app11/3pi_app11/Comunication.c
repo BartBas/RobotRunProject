@@ -129,10 +129,15 @@ void Update(Communications *self){
 			if (self->Recieved[8]==245){                            // Enter Spin Mode
 				self->EmergencyStop=2;
 			}
+			if (self->locationx==255 && self->locationy==255){
+				filllocationarrays(self);
+				self->flag =1;
+			}
 			if(self->Recieved[8]==230){
-				self->locationx = -1;
+				self->locationx = -1;  
 				self->locationy = -1;
-				
+				self->flag = 0;
+				//play_from_program_space(welcomed);
 			}
 			if (self->Recieved[8]==240){                            // Enter Manual Mode
 				self->EmergencyStop=3;
@@ -141,10 +146,7 @@ void Update(Communications *self){
 				}
 			}
 			
-			if (self->locationx==255 && self->locationy==255){
-				filllocationarrays(self);
-				self->flag =1;
-			}
+			
 		}
 	}
  if (timesincelastsend+timebetweensends<=get_ms()){

@@ -16,7 +16,7 @@ unsigned int position;
 #define Reference_Lower_Value	200
 #define Reference_Upper_Value	400
 #define turn_value 60
-#define End_Line_Value 300
+#define End_Line_Value 200
 
 #include "movementManagement.h"
 #include "Comunication.h"
@@ -27,7 +27,7 @@ unsigned int position;
 
 Junctions junction;
 Communications *myComs;
-
+const char Beep[] PROGMEM = ">g32>>c22>>g32";
 int last_proportional;				// values for the PID Controller
 int integral;
 	
@@ -71,9 +71,7 @@ void inch(){							//drives the robot a bit forward
 
 void wait(){							// wait function for the robot so it will wait for a button press B
 	set_motors(0,0);
-						
-	while(!button_is_pressed(BUTTON_B)){}
-		wait_for_button_release(BUTTON_B);
+	delay(1000);
 }
 
 char lineType(){																																								// function that returns the type of junction it detects																																								// >= black line		<=white
@@ -104,7 +102,7 @@ char lineType(){																																								// function that returns
 	}
 	
 							
-	else if (sensors[0] > 300 && sensors[1] > 300 && sensors[4] < Reference_Lower_Value ){																	//Checks if its a left corner or a straight with left corner and returns the junction
+	else if (sensors[0] > 400 && sensors[1] > 400 && sensors[4] < 350 ){																	//Checks if its a left corner or a straight with left corner and returns the junction
 		inch();
 		read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 			
@@ -117,7 +115,7 @@ char lineType(){																																								// function that returns
 	}
 		
 		
-	else if (sensors[3] > 300 && sensors[4] > 300 && sensors[0] < Reference_Lower_Value){																	//Checks if its a right corner or a straight with right corner and returns the junction
+	else if (sensors[3] > 300 && sensors[4] > 300 && sensors[0] < 200){																	//Checks if its a right corner or a straight with right corner and returns the junction
 		inch();
 		read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 			
@@ -129,7 +127,7 @@ char lineType(){																																								// function that returns
 		}
 	}
 	
-	else if(sensors[0] < End_Line_Value && sensors[1] < End_Line_Value && sensors[2] < End_Line_Value &&sensors[3] < End_Line_Value &&sensors[4] < End_Line_Value){															// check if the line ends and returns the junction																												
+	else if(sensors[0] < End_Line_Value && sensors[1] < End_Line_Value && sensors[2] < End_Line_Value && sensors[3] < End_Line_Value && sensors[4] < End_Line_Value){											// check if the line ends and returns the junction																												
 		return Line_end;
 	}
 	
@@ -146,6 +144,7 @@ void motorControl(char x){																																					// function that 
 	while (analog_read(7) >= 200) {																																			// Checks if there is an object infront of it, if there is it stops the motor and gives feedback to the display
 		set_motors(0, 0);
 		errorDisplay(object, batteryPercentage());
+		play_from_program_space(Beep);
 	}
 
 		
@@ -256,7 +255,7 @@ updateDisplay(0,batteryPercentage(),manual);
 		}
 		counter++;
 	}
-	else if(myComs->Direction[0] == 0 && myComs->Direction[2] == 0)			// decrease speed without button press
+	else if(myComs->Direction[0] == 0 && myComs->Direction[2] == 0 && speed > 0)			// decrease speed without button press
 	{
 		set_motors(speed,speed);
 		if(counter % 20 == 0)
@@ -282,7 +281,7 @@ updateDisplay(0,batteryPercentage(),manual);
 		}
 		counter++;
 	}
-	else if(myComs->Direction[0] == 1 && myComs->Direction[2] == 0)			// Increases button speed when below 0
+	else if(myComs->Direction[0] == 0 && myComs->Direction[2] == 0 && speed < 0)			// Increases button speed when below 0
 	{
 		set_motors(speed,speed);
 		if(counter % 20 == 0)

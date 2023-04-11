@@ -15,7 +15,7 @@
 #include <avr/pgmspace.h>
 
 const char welcome[] PROGMEM = ">g32>>c32";
-
+const char orderDone[] PROGMEM = ">g32>>g32>>g32>>>c22";
 void whileBarcode()
 {
 	while (lineType() != Barcode)
@@ -36,7 +36,7 @@ void charge_3pi(Communications *communications)
 {
 	whileBarcode();
 	parcours('T', communications);
-	updateDisplay(0, batteryPercentage(), chargeMode);
+	errorDisplay(batLow,0);
 	warehouse(charging, communications);
 	for (int i = 0; i < 10; i++) {// wacht totdat de robot vol is
 		play_from_program_space(welcome);
@@ -58,6 +58,7 @@ void pickOrder(Communications *communications)
 	parcours('B', communications);
 	whileLineEnd();
 	motorControl('L');
+	play_from_program_space(orderDone);
 }
 
 int main()
@@ -71,21 +72,20 @@ int main()
 	initialize(&communications);
 		
 		
-		
-		unsigned int sensors[5];	
+	communications.locationx = -1;
+	communications.locationy = -1;
 	while(1) 
 	{
 		updateDisplay(0, batteryPercentage(), homingMode);
 		communications.Update(&communications);
 		
-		communications.locationx = -1;
-		communications.locationy = -1;		
+				
 						
 		switch (communications.EmergencyStop)  // bits from gui
 		{  
 			case 0:
 			case 1: 				
-				if (communications.flag==1) // if order is true
+				if (communications.flag==1) // if order is true AND finish order button is pressed
 				{
 					communications.flag=0;
 					
@@ -93,8 +93,9 @@ int main()
 					communications.locationx = 0;
 					communications.locationy = 0;
 					pickOrder(&communications);
-					communications.locationx = -1;
-					communications.locationy = -1;
+					communications.locationx = -2;
+					communications.locationy = -2;
+					while(communications.locationx == -2);
 				}
 				delay(100);
 				break;

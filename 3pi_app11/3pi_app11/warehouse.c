@@ -80,7 +80,7 @@ void waitForTurn()
 {
 	Junctions line;
 	line = lineType();
-	delay(15);//Short delay so it won't accidentally think it found the line instantly
+	delay(25);//Short delay so it won't accidentally think it found the line instantly
 	while(line != Straight)
 	{
 		line  = lineType();
@@ -112,7 +112,8 @@ void turnRobot(char tdirection, piRobot *myRobot)
                 }
                 else if(tdirection == 'S')
                 {
-                    motorControl('L');motorControl('L');
+                    motorControl('L');
+					if(myRobot->posX != 5){motorControl('L');}
 					waitForTurn();
                     myRobot->direction = 'S';
                 }
@@ -174,7 +175,7 @@ void turnRobot(char tdirection, piRobot *myRobot)
                 else if(tdirection == 'E')
                 {
                     motorControl('L');
-					motorControl('L');
+					if(myRobot->posY != 1){motorControl('L');}
 					waitForTurn();
                     myRobot->direction = 'E';
                 }
