@@ -1427,7 +1427,7 @@ char lineType(){																																								// function that returns
 	}
 	
 							
-	else if (sensors[0] > Reference_Upper_Value && sensors[1] > Reference_Upper_Value && sensors[4] < Reference_Lower_Value ){																	//Checks if its a left corner or a straight with left corner and returns the junction
+	else if (sensors[0] > Reference_Upper_Value && sensors[1] > Reference_Upper_Value && sensors[4] < 350 ){																	//Checks if its a left corner or a straight with left corner and returns the junction
      ad0:	20 91 11 02 	lds	r18, 0x0211	; 0x800211 <sensors>
      ad4:	30 91 12 02 	lds	r19, 0x0212	; 0x800212 <sensors+0x1>
      ad8:	21 39       	cpi	r18, 0x91	; 145
@@ -1440,8 +1440,8 @@ char lineType(){																																								// function that returns
      ae6:	00 f1       	brcs	.+64     	; 0xb28 <lineType+0x14c>
      ae8:	40 91 19 02 	lds	r20, 0x0219	; 0x800219 <sensors+0x8>
      aec:	50 91 1a 02 	lds	r21, 0x021A	; 0x80021a <sensors+0x9>
-     af0:	48 3c       	cpi	r20, 0xC8	; 200
-     af2:	51 05       	cpc	r21, r1
+     af0:	4e 35       	cpi	r20, 0x5E	; 94
+     af2:	51 40       	sbci	r21, 0x01	; 1
      af4:	c8 f4       	brcc	.+50     	; 0xb28 <lineType+0x14c>
 		inch();
      af6:	0e 94 dd 04 	call	0x9ba	; 0x9ba <inch>
@@ -1451,16 +1451,16 @@ char lineType(){																																								// function that returns
      afe:	92 e0       	ldi	r25, 0x02	; 2
      b00:	0e 94 b5 17 	call	0x2f6a	; 0x2f6a <read_line_sensors_calibrated>
 			
-		if (sensors[2] > Reference_Upper_Value || sensors[3]  > Reference_Upper_Value){
+		if (sensors[2] > 300 || sensors[3]  > 300){
      b04:	80 91 15 02 	lds	r24, 0x0215	; 0x800215 <sensors+0x4>
      b08:	90 91 16 02 	lds	r25, 0x0216	; 0x800216 <sensors+0x5>
-     b0c:	81 39       	cpi	r24, 0x91	; 145
+     b0c:	8d 32       	cpi	r24, 0x2D	; 45
      b0e:	91 40       	sbci	r25, 0x01	; 1
      b10:	08 f0       	brcs	.+2      	; 0xb14 <lineType+0x138>
      b12:	54 c0       	rjmp	.+168    	; 0xbbc <lineType+0x1e0>
      b14:	80 91 17 02 	lds	r24, 0x0217	; 0x800217 <sensors+0x6>
      b18:	90 91 18 02 	lds	r25, 0x0218	; 0x800218 <sensors+0x7>
-     b1c:	81 39       	cpi	r24, 0x91	; 145
+     b1c:	8d 32       	cpi	r24, 0x2D	; 45
      b1e:	91 40       	sbci	r25, 0x01	; 1
      b20:	08 f4       	brcc	.+2      	; 0xb24 <lineType+0x148>
      b22:	4e c0       	rjmp	.+156    	; 0xbc0 <lineType+0x1e4>
@@ -1557,11 +1557,11 @@ char lineType(){																																								// function that returns
 	return Straight;
      bb8:	80 e0       	ldi	r24, 0x00	; 0
      bba:	08 95       	ret
-	else if (sensors[0] > Reference_Upper_Value && sensors[1] > Reference_Upper_Value && sensors[4] < Reference_Lower_Value ){																	//Checks if its a left corner or a straight with left corner and returns the junction
+	else if (sensors[0] > Reference_Upper_Value && sensors[1] > Reference_Upper_Value && sensors[4] < 350 ){																	//Checks if its a left corner or a straight with left corner and returns the junction
 		inch();
 		read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 			
-		if (sensors[2] > Reference_Upper_Value || sensors[3]  > Reference_Upper_Value){
+		if (sensors[2] > 300 || sensors[3]  > 300){
 			return Straight_left_junction;
      bbc:	86 e0       	ldi	r24, 0x06	; 6
      bbe:	08 95       	ret

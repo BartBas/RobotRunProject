@@ -105,11 +105,11 @@ char lineType(){																																								// function that returns
 	}
 	
 							
-	else if (sensors[0] > Reference_Upper_Value && sensors[1] > Reference_Upper_Value && sensors[4] < Reference_Lower_Value ){																	//Checks if its a left corner or a straight with left corner and returns the junction
+	else if (sensors[0] > Reference_Upper_Value && sensors[1] > Reference_Upper_Value && sensors[4] < 350 ){																	//Checks if its a left corner or a straight with left corner and returns the junction
 		inch();
 		read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 			
-		if (sensors[2] > Reference_Upper_Value || sensors[3]  > Reference_Upper_Value){
+		if (sensors[2] > 300 || sensors[3]  > 300){
 			return Straight_left_junction;
 		}
 		else {
