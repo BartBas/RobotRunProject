@@ -13,9 +13,8 @@
 
 unsigned int sensors[5];			// an array to hold sensor values
 unsigned int position;
-#define Refrence_value_onder	200
-#define Refrence_value			350
-#define Refrence_value_boven	400
+#define Reference_Lower_Value	200
+#define Reference_Upper_Value	400
 #define turn_value 60
 #define End_Line_Value 300
 
@@ -71,12 +70,6 @@ void inch(){							//drives the robot a bit forward
 	set_motors(0,0);
 }
 
-void println(int x){					//"print" function for trouble shooting
-	/*clear();
-	lcd_goto_xy(0,0);
-	print(x);	*/
-}
-
 void wait(){							// wait function for the robot so it will wait for a button press B
 	set_motors(0,0);
 						
@@ -84,76 +77,65 @@ void wait(){							// wait function for the robot so it will wait for a button p
 		wait_for_button_release(BUTTON_B);
 }
 
-void blub() {
-	
-}
-
 char lineType(){																																								// function that returns the type of junction it detects																																								// >= black line		<=white
 	read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 	
-		if (sensors[1] >= Refrence_value_boven && sensors[3] >= Refrence_value_boven){																									//Checks if its A "Barcode", a X junction or a T junction and returns the junction
-				inch();
+	if (sensors[1] >= Reference_Upper_Value && sensors[3] >= Reference_Upper_Value){																									//Checks if its A "Barcode", a X junction or a T junction and returns the junction
+		inch();
+		read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
+		
+		if (sensors[0] > Reference_Upper_Value && sensors[1] > Reference_Upper_Value && sensors[3] > Reference_Upper_Value && sensors[4] > Reference_Upper_Value){
+			set_motors(75,75);
+			while(sensors[0] > Reference_Upper_Value || sensors[4]  > Reference_Upper_Value)
+			{
 				read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-				
-				if (sensors[0] > Refrence_value_boven && sensors[1] > Refrence_value_boven && sensors[3] > Refrence_value_boven && sensors[4] > Refrence_value_boven){
-					set_motors(75,75);
-						while(sensors[0] > Refrence_value_boven || sensors[4]  > Refrence_value_boven)
-						{
-							read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-						}
-					inch();
-					delay(1000);
-					return Barcode;
-				}
-				
-				else if (sensors[2] > Refrence_value_boven || (sensors[1] > Refrence_value_boven || sensors[3]  > Refrence_value_boven)){
-					println(X_junction);
-					return X_junction;
-				}
-				else if(sensors[2] < Refrence_value_onder){
-					println(T_junction);
-					return T_junction;
-				}
-				
 			}
-			
+			inch();
+			delay(1000);
+			return Barcode;
+		}
+		
+		else if (sensors[2] > Reference_Upper_Value || (sensors[1] > Reference_Upper_Value || sensors[3]  > Reference_Upper_Value)){
+			return X_junction;
+		}
+		else if(sensors[2] < Reference_Lower_Value){
+			return T_junction;
+		}
+		
+	}
 	
 							
-	else if (sensors[0] > Refrence_value_boven && sensors[1] > Refrence_value_boven && sensors[4] < Refrence_value ){																	//Checks if its a left corner or a straight with left corner and returns the junction
+	else if (sensors[0] > Reference_Upper_Value && sensors[1] > Reference_Upper_Value && sensors[4] < Reference_Lower_Value ){																	//Checks if its a left corner or a straight with left corner and returns the junction
 		inch();
 		read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 			
-		if (sensors[2] > Refrence_value_boven || sensors[3]  > Refrence_value_boven){
-			println(Straight_left_junction);
+		if (sensors[2] > Reference_Upper_Value || sensors[3]  > Reference_Upper_Value){
 			return Straight_left_junction;
 		}
-		else{
-			println(Left_corner);
+		else {
 			return Left_corner;
 		}
 	}
 		
 		
-	else if (sensors[3] > 300 && sensors[4] > 300 && sensors[0] < Refrence_value_onder){																	//Checks if its a right corner or a straight with right corner and returns the junction
+	else if (sensors[3] > Reference_Upper_Value && sensors[4] > Reference_Upper_Value && sensors[0] < Reference_Lower_Value){																	//Checks if its a right corner or a straight with right corner and returns the junction
 		inch();
 		read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 			
-		if (sensors[2] > Refrence_value_boven || sensors[1]  > Refrence_value_boven){
-			println(Straight_right_junction);
+		if (sensors[2] > Reference_Upper_Value || sensors[1]  > Reference_Upper_Value){
 			return Straight_right_junction;
 		}
 		else {
-			println(Straight_left_junction);
 			return Right_corner;
 		}
 	}
 	
-	else if(sensors[0] < End_Line_Value && sensors[1] < End_Line_Value && sensors[2] < End_Line_Value &&sensors[3] < End_Line_Value &&sensors[4] < End_Line_Value){															// check if the line ends and returns the junction
-		println(Line_end);																													
+	else if(sensors[0] < End_Line_Value && sensors[1] < End_Line_Value && sensors[2] < End_Line_Value &&sensors[3] < End_Line_Value &&sensors[4] < End_Line_Value){															// check if the line ends and returns the junction																												
 		return Line_end;
 	}
-																																										// else its a straight
-		return Straight;
+	
+																																									// else its a straight
+	return Straight;
 	
 }
 
@@ -173,12 +155,13 @@ void motorControl(char x){																																					// function that 
 		errorDisplay(emergency,batteryPercentage());	
 	}
 	
+	
 	else if(x == 'L'){																																						//Turn Left
 		set_motors(-turn_value,turn_value);
 		
-		while (sensors[2] > Refrence_value_onder)
+		while (sensors[2] > Reference_Lower_Value)
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-		while (sensors[2] < Refrence_value_boven)
+		while (sensors[2] < Reference_Upper_Value)
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 		set_motors(0,0);
 	}
@@ -187,9 +170,9 @@ void motorControl(char x){																																					// function that 
 	else if(x == 'R'){																																						//Turn Right
 		set_motors(turn_value,-turn_value);
 		
-		while (sensors[2] > Refrence_value_onder)
+		while (sensors[2] > Reference_Lower_Value)
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-		while (sensors[2] < Refrence_value_boven)
+		while (sensors[2] < Reference_Upper_Value)
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 		set_motors(0,0);
 	}
@@ -229,9 +212,9 @@ void motorControl(char x){																																					// function that 
 	else if(x == 'B'){																																							//Reverse while following the line
 		set_motors(-50,-50);
 		
-		if (sensors[3] >=Refrence_value)
+		if (sensors[3] >=Reference_Upper_Value)
 			set_motors(-50,-55);
-		if (sensors[1] >=Refrence_value)
+		if (sensors[1] >=Reference_Upper_Value)
 			set_motors(-55,-50);
 	}
 	
@@ -239,7 +222,7 @@ void motorControl(char x){																																					// function that 
 	else if(x == 'T'){																																							// Turn around
 		set_motors(-turn_value,turn_value);
 		
-		while (sensors[2] <=Refrence_value)
+		while (sensors[2] <=Reference_Lower_Value)
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 	}
 	

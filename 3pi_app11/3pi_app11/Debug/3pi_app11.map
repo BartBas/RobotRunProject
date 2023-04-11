@@ -140,9 +140,7 @@ Discarded input sections
  .bss           0x00000000        0x0 movementManagement.o
  .text._pololu_atmel_studio_6_workaround
                 0x00000000        0xc movementManagement.o
- .text.println  0x00000000        0x2 movementManagement.o
  .text.wait     0x00000000       0x1e movementManagement.o
- .text.blub     0x00000000        0x2 movementManagement.o
  .data.w.2217   0x00000000        0x1 movementManagement.o
  .text          0x00000000        0x0 parcour.o
  .data          0x00000000        0x0 parcour.o
@@ -1546,9 +1544,9 @@ END GROUP
  *(.bss*)
  .bss.timesincelastsend.2232
                 0x008001f9        0x4 comunication.o
- .bss.counter.2285
+ .bss.counter.2280
                 0x008001fd        0x2 movementManagement.o
- .bss.speed.2284
+ .bss.speed.2279
                 0x008001ff        0x2 movementManagement.o
  .bss.situatie  0x00800201        0x1 parcour.o
                 0x00800201                situatie
@@ -1685,7 +1683,7 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x1c8
+.debug_aranges  0x00000000      0x1b8
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x48 comunication.o
@@ -1694,55 +1692,55 @@ END GROUP
  .debug_aranges
                 0x00000080       0x48 main.o
  .debug_aranges
-                0x000000c8       0x68 movementManagement.o
+                0x000000c8       0x58 movementManagement.o
  .debug_aranges
-                0x00000130       0x38 parcour.o
+                0x00000120       0x38 parcour.o
  .debug_aranges
-                0x00000168       0x60 warehouse.o
+                0x00000158       0x60 warehouse.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x36b6
+.debug_info     0x00000000     0x3673
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_info    0x000005f4      0x5ab comunication.o
  .debug_info    0x00000b9f      0x4a7 display.o
  .debug_info    0x00001046      0x701 main.o
- .debug_info    0x00001747      0xcec movementManagement.o
- .debug_info    0x00002433      0x5e1 parcour.o
- .debug_info    0x00002a14      0xca2 warehouse.o
+ .debug_info    0x00001747      0xca9 movementManagement.o
+ .debug_info    0x000023f0      0x5e1 parcour.o
+ .debug_info    0x000029d1      0xca2 warehouse.o
 
-.debug_abbrev   0x00000000     0x1257
+.debug_abbrev   0x00000000     0x1218
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x5a2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_abbrev  0x000005a2      0x1b4 comunication.o
  .debug_abbrev  0x00000756      0x141 display.o
  .debug_abbrev  0x00000897      0x233 main.o
- .debug_abbrev  0x00000aca      0x2ee movementManagement.o
- .debug_abbrev  0x00000db8      0x1d9 parcour.o
- .debug_abbrev  0x00000f91      0x2c6 warehouse.o
+ .debug_abbrev  0x00000aca      0x2af movementManagement.o
+ .debug_abbrev  0x00000d79      0x1d9 parcour.o
+ .debug_abbrev  0x00000f52      0x2c6 warehouse.o
 
-.debug_line     0x00000000     0x20fc
+.debug_line     0x00000000     0x20d0
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x134 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_line    0x00000134      0x59d comunication.o
  .debug_line    0x000006d1      0x2e0 display.o
  .debug_line    0x000009b1      0x3c5 main.o
- .debug_line    0x00000d76      0x9b1 movementManagement.o
- .debug_line    0x00001727      0x329 parcour.o
- .debug_line    0x00001a50      0x6ac warehouse.o
+ .debug_line    0x00000d76      0x985 movementManagement.o
+ .debug_line    0x000016fb      0x329 parcour.o
+ .debug_line    0x00001a24      0x6ac warehouse.o
 
-.debug_frame    0x00000000      0x564
+.debug_frame    0x00000000      0x544
  *(.debug_frame)
  .debug_frame   0x00000000       0xdc comunication.o
  .debug_frame   0x000000dc       0x94 display.o
  .debug_frame   0x00000170       0xa4 main.o
- .debug_frame   0x00000214      0x104 movementManagement.o
- .debug_frame   0x00000318       0x80 parcour.o
- .debug_frame   0x00000398      0x1cc warehouse.o
+ .debug_frame   0x00000214       0xe4 movementManagement.o
+ .debug_frame   0x000002f8       0x80 parcour.o
+ .debug_frame   0x00000378      0x1cc warehouse.o
 
-.debug_str      0x00000000      0xa99
+.debug_str      0x00000000      0xa8c
  *(.debug_str)
  .debug_str     0x00000000      0x208 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_str     0x00000208      0x2f1 comunication.o
@@ -1751,11 +1749,11 @@ END GROUP
                                 0x2c5 (size before relaxing)
  .debug_str     0x00000678      0x1ac main.o
                                 0x3e6 (size before relaxing)
- .debug_str     0x00000824      0x125 movementManagement.o
-                                0x502 (size before relaxing)
- .debug_str     0x00000949       0x69 parcour.o
+ .debug_str     0x00000824      0x118 movementManagement.o
+                                0x4f5 (size before relaxing)
+ .debug_str     0x0000093c       0x69 parcour.o
                                 0x383 (size before relaxing)
- .debug_str     0x000009b2       0xe7 warehouse.o
+ .debug_str     0x000009a5       0xe7 warehouse.o
                                 0x467 (size before relaxing)
 
 .debug_loc      0x00000000     0x16ae
@@ -1785,14 +1783,14 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x1e0
+.debug_ranges   0x00000000      0x1d0
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x38 comunication.o
  .debug_ranges  0x00000038       0x28 display.o
  .debug_ranges  0x00000060       0x38 main.o
- .debug_ranges  0x00000098       0x70 movementManagement.o
- .debug_ranges  0x00000108       0x40 parcour.o
- .debug_ranges  0x00000148       0x98 warehouse.o
+ .debug_ranges  0x00000098       0x60 movementManagement.o
+ .debug_ranges  0x000000f8       0x40 parcour.o
+ .debug_ranges  0x00000138       0x98 warehouse.o
 
 .debug_macro
  *(.debug_macro)
