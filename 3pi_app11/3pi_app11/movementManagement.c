@@ -18,7 +18,6 @@ unsigned int position;
 #define turn_value 60
 #define End_Line_Value 300
 
-
 #include "movementManagement.h"
 #include "Comunication.h"
 #include "display.h"
@@ -28,7 +27,7 @@ unsigned int position;
 
 Junctions junction;
 Communications *myComs;
-	
+
 int last_proportional;				// values for the PID Controller
 int integral;
 	
@@ -105,11 +104,11 @@ char lineType(){																																								// function that returns
 	}
 	
 							
-	else if (sensors[0] > Reference_Upper_Value && sensors[1] > Reference_Upper_Value && sensors[4] < 350 ){																	//Checks if its a left corner or a straight with left corner and returns the junction
+	else if (sensors[0] > 300 && sensors[1] > 300 && sensors[4] < Reference_Lower_Value ){																	//Checks if its a left corner or a straight with left corner and returns the junction
 		inch();
 		read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 			
-		if (sensors[2] > 300 || sensors[3]  > 300){
+		if (sensors[2] > Reference_Upper_Value || sensors[3]  > Reference_Upper_Value){
 			return Straight_left_junction;
 		}
 		else {
@@ -118,7 +117,7 @@ char lineType(){																																								// function that returns
 	}
 		
 		
-	else if (sensors[3] > Reference_Upper_Value && sensors[4] > Reference_Upper_Value && sensors[0] < Reference_Lower_Value){																	//Checks if its a right corner or a straight with right corner and returns the junction
+	else if (sensors[3] > 300 && sensors[4] > 300 && sensors[0] < Reference_Lower_Value){																	//Checks if its a right corner or a straight with right corner and returns the junction
 		inch();
 		read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 			

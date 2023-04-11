@@ -16,7 +16,7 @@
 #include <string.h>
 
 Junctions situatie = Straight;
-
+	const char Beep[] PROGMEM = ">g32";
 char route[20] = "_"; 
 char routeBack[20];
 int routea = 1;
@@ -119,6 +119,7 @@ int parcoursRun(char way, Communications *communications)
 		{
 			motorControl('S');
 		}
+		play_from_program_space(Beep);
 		if (way == 'T') {
 			motorControl(route[i]);
 		} 
