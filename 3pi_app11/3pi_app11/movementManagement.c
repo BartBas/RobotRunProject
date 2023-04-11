@@ -187,9 +187,9 @@ void motorControl(char x){																																					// function that 
 	else if(x == 'R'){																																						//Turn Right
 		set_motors(turn_value,-turn_value);
 		
-		while (sensors[2] >=Refrence_value)
+		while (sensors[2] > Refrence_value_onder)
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
-		while (sensors[2] <=Refrence_value)
+		while (sensors[2] < Refrence_value_boven)
 			read_line_sensors_calibrated(sensors,IR_EMITTERS_ON);
 		set_motors(0,0);
 	}
